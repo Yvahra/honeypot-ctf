@@ -55,7 +55,7 @@ fi
 # Modify SSH configuration
 echo "Modifying SSH configuration..."
 sed -i "s/#Port 22/Port ${SSH_PORT}/g" "$SSH_CONFIG_FILE"
-sed -i "s/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/g" "$SSH_CONFIG_FILE"
+sed -i "s/#ListenAddress 127.0.0.1/ListenAddress 127.0.0.1/g" "$SSH_CONFIG_FILE"
 sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin no/g" "$SSH_CONFIG_FILE"
 sed -i "s/#PasswordAuthentication yes/PasswordAuthentication no/g" "$SSH_CONFIG_FILE" #Disable Password Auth
 sed -i "s/#PubkeyAuthentication yes/PubkeyAuthentication yes/g" "$SSH_CONFIG_FILE" #Enable Key auth
