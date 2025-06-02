@@ -59,8 +59,11 @@ echo "Modifying SSH configuration..."
 sed -i "s/#Port 22/Port ${SSH_PORT}/g" "$SSH_CONFIG_FILE"
 sed -i "s/#ListenAddress 127.0.0.1/ListenAddress 127.0.0.1/g" "$SSH_CONFIG_FILE"
 sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin no/g" "$SSH_CONFIG_FILE"
-sed -i "s/#PasswordAuthentication yes/PasswordAuthentication yes/g" "$SSH_CONFIG_FILE" #Enable Password Auth
-sed -i "s/#PubkeyAuthentication yes/PubkeyAuthentication no/g" "$SSH_CONFIG_FILE" #Disable Key auth
+sed -i "s/#PasswordAuthentication no/PasswordAuthentication yes/g" "$SSH_CONFIG_FILE"  # Ensure Password Authentication is enabled
+sed -i "s/PasswordAuthentication yes/PasswordAuthentication yes/g" "$SSH_CONFIG_FILE"  # Be sure Password Authentication is enabled (remove any previous 'no')
+sed -i "s/#PubkeyAuthentication yes/PubkeyAuthentication no/g" "$SSH_CONFIG_FILE"  # Disable Pubkey Authentication
+sed -i "s/PubkeyAuthentication yes/PubkeyAuthentication no/g" "$SSH_CONFIG_FILE"  #Ensure pubkey is disabled (remove any previous 'yes')
+
 
 #Ensure PubkeyAuthentication is enabled and PasswordAuthentication is disabled
 grep -q '^PubkeyAuthentication no' "$SSH_CONFIG_FILE" || echo "PubkeyAuthentication no" >> "$SSH_CONFIG_FILE"
