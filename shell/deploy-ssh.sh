@@ -4,9 +4,8 @@
 
 # --- Configuration ---
 SSH_PORT=$1
-SSH_USER="user-ssh" # Dedicated user.
-USER_PASSWD="user-passwd" # User password
-SSH_GROUP="sshgroup" #  Dedicated group.
+SSH_USER=$2 # Dedicated user.
+SSH_GROUP="deploy-group" #  Dedicated group.
 AUTHORIZED_KEYS_FILE="/home/${SSH_USER}/.ssh/authorized_keys" # Where public keys will be stored.
 # --- End Configuration ---
 
@@ -15,32 +14,6 @@ if [[ $EUID -ne 0 ]]; then
   echo "This script must be run as root.  Try 'sudo bash $0'"
   exit 1
 fi
-
-# 1. Create the user if it doesn't exist
-id "$SSH_USER" >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-  echo "Creating user '$SSH_USER'..."
-  groupadd -f "$SSH_GROUP" # add the group. -f means it won't complain if it exists.
-  useradd -m -g "$SSH_GROUP" -s /bin/bash "$SSH_USER"
-  # Set a password for the user (highly recommended for security!)
-  #  You can uncomment this and change the password:
-  echo "$SSH_USER:$USER_PASSWD" | chpasswd
-  #  OR generate a random password:
-  # PASSWORD=$(openssl rand -base64 12)
-  # echo "$SSH_USER:$PASSWORD" | chpasswd
-  echo "New password for $SSH_USER: $PASSWORD" # Important! Securely store or change this immediately!
-
-else
-  echo "User '$SSH_USER' already exists."
-fi
-
-# 2. Create .ssh directory and authorized_keys file
-mkdir -p "/home/${SSH_USER}/.ssh"
-chown -R "$SSH_USER":"$SSH_GROUP" "/home/${SSH_USER}/.ssh"
-chmod 700 "/home/${SSH_USER}/.ssh"
-touch "$AUTHORIZED_KEYS_FILE"
-chown "$SSH_USER":"$SSH_GROUP" "$AUTHORIZED_KEYS_FILE"
-chmod 600 "$AUTHORIZED_KEYS_FILE"
 
 
 # 3. Configure SSH daemon
