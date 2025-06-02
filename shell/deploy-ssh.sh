@@ -40,12 +40,6 @@ grep -q '^PasswordAuthentication no' "$SSH_CONFIG_FILE" || echo "PasswordAuthent
 
 
 
-#Ensure PubkeyAuthentication is enabled and PasswordAuthentication is disabled
-grep -q '^PubkeyAuthentication no' "$SSH_CONFIG_FILE" || echo "PubkeyAuthentication no" >> "$SSH_CONFIG_FILE"
-grep -q '^PasswordAuthentication yes' "$SSH_CONFIG_FILE" || echo "PasswordAuthentication yes" >> "$SSH_CONFIG_FILE"
-
-
-
 # Optional: Limit which users can login via SSH.  This adds extra security.
 #  Uncomment the following lines to only allow the specified user(s)
 echo "AllowUsers $SSH_USER" >> "$SSH_CONFIG_FILE"
