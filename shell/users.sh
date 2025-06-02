@@ -163,22 +163,22 @@ cp "../ssh-user-keys/id_rsa.pub" "/home/ssh-user/.ssh/id_rsa.pub"
 # AGENT
 
 # 1. Create the user if it doesn't exist
-id "agent" >/dev/null 2>&1
+id "player" >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-  echo "Creating user 'agent'..."
+  echo "Creating user 'player'..."
   groupadd -f "players" # add the group. -f means it won't complain if it exists.
-  useradd -m -g "players" -s /bin/bash "agent"
-  echo "agent:iwanttopawn" | chpasswd
+  useradd -m -g "players" -s /bin/bash "player"
+  echo "player:iwanttopawn" | chpasswd
   #echo "New password for $SSH_USER: $PASSWORD" # Important! Securely store or change this immediately!
 else
-  echo "User 'ssh-user' already exists."
+  echo "User 'player' already exists."
 fi
 
 # 2. Create .ssh directory and authorized_keys file
-mkdir -p "/home/agent/.ssh"
-chown -R "agent":"players" "/home/agent/.ssh"
-chmod 700 "/home/agent/.ssh"
-touch "/home/agent/.ssh/authorized_keys"
-chown "agent":"players" "/home/agent/.ssh/authorized_keys"
-chmod 600 "/home/agent/.ssh/authorized_keys"
+mkdir -p "/home/player/.ssh"
+chown -R "agent":"players" "/home/player/.ssh"
+chmod 700 "/home/player/.ssh"
+touch "/home/player/.ssh/authorized_keys"
+chown "agent":"players" "/home/player/.ssh/authorized_keys"
+chmod 600 "/home/player/.ssh/authorized_keys"
 
