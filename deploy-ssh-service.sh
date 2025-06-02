@@ -4,9 +4,8 @@
 
 # --- Configuration ---
 SSH_PORT=$1
-SSH_USER="sshenjoyer" # Dedicated user.
-USER_PASSWD="ilovessh" # User password
-SSH_PASSWD="letmein" # SSH password
+SSH_USER="user-ssh" # Dedicated user.
+USER_PASSWD="user-passwd" # User password
 SSH_GROUP="sshgroup" #  Dedicated group.
 AUTHORIZED_KEYS_FILE="/home/${SSH_USER}/.ssh/authorized_keys" # Where public keys will be stored.
 # --- End Configuration ---
