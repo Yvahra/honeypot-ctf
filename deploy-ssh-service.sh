@@ -3,7 +3,7 @@
 # Script to deploy an SSH service on port 22001
 
 # --- Configuration ---
-SSH_PORT="22001"
+SSH_PORT=$1
 SSH_USER="sshenjoyer" # Dedicated user.
 USER_PASSWD="ilovessh" # User password
 SSH_PASSWD="letmein" # SSH password
