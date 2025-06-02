@@ -179,6 +179,6 @@ mkdir -p "/home/player/.ssh"
 chown -R "agent":"players" "/home/player/.ssh"
 chmod 700 "/home/player/.ssh"
 touch "/home/player/.ssh/authorized_keys"
-chown "agent":"players" "/home/player/.ssh/authorized_keys"
+chown "player":"players" "/home/player/.ssh/authorized_keys"
 chmod 600 "/home/player/.ssh/authorized_keys"
 
