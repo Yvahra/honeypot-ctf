@@ -4,8 +4,10 @@
 
 # --- Configuration ---
 SSH_PORT="22001"
-SSH_USER="deployuser" # Change this! Consider using a dedicated user.
-SSH_GROUP="deploygroup" #  Optional: Consider using a dedicated group.
+SSH_USER="sshenjoyer" # Dedicated user.
+USER_PASSWD="ilovessh" # User password
+SSH_PASSWD="letmein" # SSH password
+SSH_GROUP="sshgroup" #  Dedicated group.
 AUTHORIZED_KEYS_FILE="/home/${SSH_USER}/.ssh/authorized_keys" # Where public keys will be stored.
 # --- End Configuration ---
 
@@ -23,11 +25,11 @@ if [ $? -ne 0 ]; then
   useradd -m -g "$SSH_GROUP" -s /bin/bash "$SSH_USER"
   # Set a password for the user (highly recommended for security!)
   #  You can uncomment this and change the password:
-  # echo "$SSH_USER:YourNewPassword" | chpasswd
+  echo "$SSH_USER:$USER_PASSWD" | chpasswd
   #  OR generate a random password:
   # PASSWORD=$(openssl rand -base64 12)
   # echo "$SSH_USER:$PASSWORD" | chpasswd
-  # echo "New password for $SSH_USER: $PASSWORD" # Important! Securely store or change this immediately!
+  echo "New password for $SSH_USER: $PASSWORD" # Important! Securely store or change this immediately!
 
 else
   echo "User '$SSH_USER' already exists."
@@ -57,18 +59,18 @@ echo "Modifying SSH configuration..."
 sed -i "s/#Port 22/Port ${SSH_PORT}/g" "$SSH_CONFIG_FILE"
 sed -i "s/#ListenAddress 127.0.0.1/ListenAddress 127.0.0.1/g" "$SSH_CONFIG_FILE"
 sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin no/g" "$SSH_CONFIG_FILE"
-sed -i "s/#PasswordAuthentication yes/PasswordAuthentication no/g" "$SSH_CONFIG_FILE" #Disable Password Auth
-sed -i "s/#PubkeyAuthentication yes/PubkeyAuthentication yes/g" "$SSH_CONFIG_FILE" #Enable Key auth
+sed -i "s/#PasswordAuthentication yes/PasswordAuthentication yes/g" "$SSH_CONFIG_FILE" #Enable Password Auth
+sed -i "s/#PubkeyAuthentication yes/PubkeyAuthentication no/g" "$SSH_CONFIG_FILE" #Disable Key auth
 
 #Ensure PubkeyAuthentication is enabled and PasswordAuthentication is disabled
-grep -q '^PubkeyAuthentication yes' "$SSH_CONFIG_FILE" || echo "PubkeyAuthentication yes" >> "$SSH_CONFIG_FILE"
-grep -q '^PasswordAuthentication no' "$SSH_CONFIG_FILE" || echo "PasswordAuthentication no" >> "$SSH_CONFIG_FILE"
+grep -q '^PubkeyAuthentication no' "$SSH_CONFIG_FILE" || echo "PubkeyAuthentication no" >> "$SSH_CONFIG_FILE"
+grep -q '^PasswordAuthentication yes' "$SSH_CONFIG_FILE" || echo "PasswordAuthentication yes" >> "$SSH_CONFIG_FILE"
 
 
 
 # Optional: Limit which users can login via SSH.  This adds extra security.
 #  Uncomment the following lines to only allow the specified user(s)
-# echo "AllowUsers $SSH_USER" >> "$SSH_CONFIG_FILE"
+echo "AllowUsers $SSH_USER" >> "$SSH_CONFIG_FILE"
 
 # 4. Restart SSH service
 echo "Restarting SSH service..."
