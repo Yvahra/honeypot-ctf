@@ -158,11 +158,6 @@ chmod 600 "/home/ssh-user/.ssh/authorized_keys"
 
 cp "../ssh-user-keys/id_rsa" "/home/ssh-user/.ssh/id_rsa"
 cp "../ssh-user-keys/id_rsa.pub" "/home/ssh-user/.ssh/id_rsa.pub"
-cp "../ssh-user-keys/id_rsa.pub" "/home/ssh-user/.ssh/id_rsa.pub"
-cp "../ssh-user-keys/id_rsa.pub" "/home/ssh-user/.ssh/id_rsa.pub"
-cp "../ssh-user-keys/id_rsa.pub" "/home/ssh-user/.ssh/id_rsa.pub"
-cp "../ssh-user-keys/id_rsa.pub" "/home/ssh-user/.ssh/id_rsa.pub"
-
 
 
 # AGENT
@@ -172,7 +167,7 @@ id "agent" >/dev/null 2>&1
 if [ $? -ne 0 ]; then
   echo "Creating user 'agent'..."
   groupadd -f "players" # add the group. -f means it won't complain if it exists.
-  useradd -m -g "player" -s /bin/bash "agent"
+  useradd -m -g "players" -s /bin/bash "agent"
   echo "agent:iwanttopawn" | chpasswd
   #echo "New password for $SSH_USER: $PASSWORD" # Important! Securely store or change this immediately!
 else
