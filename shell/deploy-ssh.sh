@@ -3,8 +3,8 @@
 # Script to deploy an SSH service on port 22001
 
 # --- Configuration ---
-SSH_PORT=$1
-SSH_USER=$2 # Dedicated user.
+CONPOT_SSH_PORT=$1
+CONPOT_SSH_USER=$2 # Dedicated user.
 SSH_GROUP="deploy-group" #  Dedicated group.
 AUTHORIZED_KEYS_FILE="/home/${SSH_USER}/.ssh/authorized_keys" # Where public keys will be stored.
 # --- End Configuration ---
