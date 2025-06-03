@@ -18,10 +18,10 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Check for Docker
-if ! command -v docker &> /dev/null; then
-  echo "Error: Docker is not installed.  Please install Docker before running this script."
-  exit 1
-fi
+#if ! command -v docker &> /dev/null; then
+#  echo "Error: Docker is not installed.  Please install Docker before running this script."
+#  exit 1
+#fi
 
 # Check if Conpot Docker container exists - and remove it if you want a fresh start.
 CONPOT_CONTAINER_NAME="conpot"  # Or whatever name you've given your Conpot container
