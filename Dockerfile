@@ -14,6 +14,7 @@ RUN apk add --no-cache \
 	py3-pip python3-dev libffi-dev openssl-dev gcc libc-dev rust cargo make \
 	openssh \
 	rsyslog \
+	shadow-utils.x86_64 \
 #	git \
 #	&& pip install --upgrade pip \
 #	&& pip install -U docker-compose==${DOCKER_COMPOSE_VERSION} \
