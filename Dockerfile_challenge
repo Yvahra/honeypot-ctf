@@ -1,0 +1,26 @@
+# Use the Docker-in-Docker (DinD) image.  Important: This image is NOT for production!
+FROM docker:dind
+
+# Set the working directory
+WORKDIR /app
+
+# Install Git (required for cloning repos)
+RUN apk add --no-cache git
+
+# Copy the Dockerfiles (and any other relevant files)
+COPY . .
+
+# Run a script to build and run the other Dockerfiles.
+# This script builds all Dockerfiles in the current directory.  Modify it
+# as needed if you want to build only specific Dockerfiles or pass arguments.
+# This assumes the Dockerfiles are named Dockerfile.xxx (e.g., Dockerfile.kippo).
+# You might need to adjust this based on how you want to structure your build process
+# and which files you need.
+RUN mkdir -p /scripts
+#COPY build_and_run.sh /scripts/build_and_run.sh
+#RUN chmod +x /scripts/build_and_run.sh
+
+COPY . .
+
+# Run the build and run script
+#CMD ["/scripts/build_and_run.sh"]
