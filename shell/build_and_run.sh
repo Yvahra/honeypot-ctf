@@ -31,7 +31,7 @@ build_and_run_dockerfile Dockerfile.cowrie cowrie-honeypot "-p 2222:2222"
 build_and_run_dockerfile Dockerfile.ssh ssh-server "-p 2222:2222" # add -e etc.
 
 # --- Start log analyzer script in background---
-/usr/bin/python3 /scripts/log_analyzer.py &
+/usr/bin/python3 /scripts/alarm.py &
 
 echo "Log analyzer started in background."
 
