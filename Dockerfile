@@ -32,39 +32,23 @@ RUN echo "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config && \
 	echo "ClientAliveCountMax 720" >> /etc/ssh/sshd_config
 
 RUN groupadd -f "players" \
-	useradd -m -g "players" -s /bin/bash "player"\
- 	echo "player:iwanttopawn" | chpasswd \
-	mkdir -p "/home/player/.ssh" \
-	chown -R "player":"players" "/home/player/.ssh" \
-	chmod 700 "/home/player/.ssh" \
-	touch "/home/player/.ssh/authorized_keys" \
-	chown "player":"players" "/home/player/.ssh/authorized_keys" \
-	chmod 600 "/home/player/.ssh/authorized_keys" \
-	cp "/etc/ssh/sshd_config" "/etc/ssh/sshd_config.bck" \
-	echo "Port 22" >> "/etc/ssh/sshd_config" \
-	echo "PermitRootLogin no" >> "/etc/ssh/sshd_config" \
-	echo "PasswordAuthentication no" >> "/etc/ssh/sshd_config" \
-	echo "PubkeyAuthentication no" >> "/etc/ssh/sshd_config" \
-	echo "AllowUsers player" >> "/etc/ssh/sshd_config"\
-
-
-#echo "TCPKeepAlive $TCP_KEEP_ALIVE" >> "$TEMP_CONFIG"
-#echo "ClientAliveInterval $CLIENT_ALIVE_INTERVAL" >> "$TEMP_CONFIG"
-#echo "ClientAliveCountMax $CLIENT_ALIVE_COUNT_MAX" >> "$TEMP_CONFIG"
-
-# Append any other existing configuration options.  We'll grep out the old versions of
-# parameters that we just set, and keep the rest.
-#grep -vE "^(Port|PermitRootLogin|PasswordAuthentication|PubkeyAuthentication|AllowUsers|DenyUsers|TCPKeepAlive|ClientAliveInterval|ClientAliveCountMax)" "$SSH_CONFIG" >> "$TEMP_CONFIG"
-
-# Move the new config into place.
-#mv "$TEMP_CONFIG" "$SSH_CONFIG"
-
-# 5. Set SSH permissions
-	chmod 600 "$SSH_CONFIG" \
-	chown root:root "$SSH_CONFIG" \
-	systemctl restart sshd
-
-
+	&& useradd -m -g "players" -s /bin/bash "player"\
+ 	&& echo "player:iwanttopawn" | chpasswd \
+	&& mkdir -p "/home/player/.ssh" \
+	&& chown -R "player":"players" "/home/player/.ssh" \
+	&& chmod 700 "/home/player/.ssh" \
+	&& touch "/home/player/.ssh/authorized_keys" \
+	&& chown "player":"players" "/home/player/.ssh/authorized_keys" \
+	&& chmod 600 "/home/player/.ssh/authorized_keys" \
+	&& cp "/etc/ssh/sshd_config" "/etc/ssh/sshd_config.bck" \
+	&& echo "Port 22" >> "/etc/ssh/sshd_config" \
+	&& echo "PermitRootLogin no" >> "/etc/ssh/sshd_config" \
+	&& echo "PasswordAuthentication no" >> "/etc/ssh/sshd_config" \
+	&& echo "PubkeyAuthentication no" >> "/etc/ssh/sshd_config" \
+	&& echo "AllowUsers player" >> "/etc/ssh/sshd_config"\
+	&& chmod 600 "$SSH_CONFIG" \
+	&& chown root:root "$SSH_CONFIG" \
+	&& systemctl restart sshd
 
 # Set the working directory
 RUN mkdir -p app/
