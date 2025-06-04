@@ -50,7 +50,7 @@ RUN echo "PubkeyAuthentication no" >> "/etc/ssh/sshd_config"
 RUN echo "AllowUsers player" >> "/etc/ssh/sshd_config"
 RUN chmod 600 /etc/ssh/sshd_config 
 RUN chown root:root /etc/ssh/sshd_config
-RUN rc-service sshd restart
+RUN service ssh restart
 
 # Set the working directory
 RUN mkdir -p app/
