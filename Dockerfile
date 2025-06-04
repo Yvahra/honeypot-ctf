@@ -15,10 +15,10 @@ RUN apk add --no-cache python3 py3-pip
 COPY . /app
 
 # Install Python dependencies for the analyzer
-RUN pip3 install --no-cache-dir -r analyzer_requirements.txt
+# RUN pip3 install --no-cache-dir -r analyzer_requirements.txt
 
 # Make the scripts executable
-RUN chmod +x /scripts/build_and_run.sh /scripts/log_analyzer.py
+# RUN chmod +x /scripts/build_and_run.sh /scripts/log_analyzer.py
 
 # Run the build and run script, and then the log analyzer in the background
-CMD ["/scripts/build_and_run.sh"]
+# CMD ["/scripts/build_and_run.sh"]
