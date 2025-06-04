@@ -32,25 +32,25 @@ RUN echo "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config && \
 	echo "ClientAliveInterval 120" >> /etc/ssh/sshd_config && \  
 	echo "ClientAliveCountMax 720" >> /etc/ssh/sshd_config
 
-RUN groupadd -f "players" \
-	&& useradd -m -g "players" -s /bin/sh "player"\
- 	&& echo "player:iwanttopawn" | chpasswd \
-	&& mkdir -p "/home/player" \
-	&& mkdir -p "/home/player/.ssh" \
-	&& chown -R "player":"players" "/home/player/.ssh" \
-	&& chmod 700 "/home/player/.ssh" \
-	&& touch "/home/player/.ssh/authorized_keys" \
-	&& chown "player":"players" "/home/player/.ssh/authorized_keys" \
-	&& chmod 600 "/home/player/.ssh/authorized_keys" \
-	&& cp "/etc/ssh/sshd_config" "/etc/ssh/sshd_config.bck" \
-	&& echo "Port 22" >> "/etc/ssh/sshd_config" \
-	&& echo "PermitRootLogin no" >> "/etc/ssh/sshd_config" \
-	&& echo "PasswordAuthentication no" >> "/etc/ssh/sshd_config" \
-	&& echo "PubkeyAuthentication no" >> "/etc/ssh/sshd_config" \
-	&& echo "AllowUsers player" >> "/etc/ssh/sshd_config"\
-	&& chmod 600 "$SSH_CONFIG" \
-	&& chown root:root "$SSH_CONFIG" \
-	&& systemctl restart sshd
+RUN groupadd -f "players" 
+RUN useradd -m -g "players" -s /bin/sh "player"
+RUN echo "player:iwanttopawn" | chpasswd 
+RUN mkdir -p "/home/player"
+RUN mkdir -p "/home/player/.ssh" 
+RUN chown -R "player":"players" "/home/player/.ssh" 
+RUN chmod 700 "/home/player/.ssh" 
+RUN touch "/home/player/.ssh/authorized_keys" 
+RUN chown "player":"players" "/home/player/.ssh/authorized_keys" 
+RUN chmod 600 "/home/player/.ssh/authorized_keys" 
+RUN cp "/etc/ssh/sshd_config" "/etc/ssh/sshd_config.bck" 
+RUN echo "Port 22" >> "/etc/ssh/sshd_config" 
+RUN echo "PermitRootLogin no" >> "/etc/ssh/sshd_config" 
+RUN echo "PasswordAuthentication no" >> "/etc/ssh/sshd_config" 
+RUN echo "PubkeyAuthentication no" >> "/etc/ssh/sshd_config" 
+RUN echo "AllowUsers player" >> "/etc/ssh/sshd_config"
+RUN chmod 600 "$SSH_CONFIG" 
+RUN chown root:root "$SSH_CONFIG" 
+RUN systemctl restart sshd
 
 # Set the working directory
 RUN mkdir -p app/
