@@ -3,17 +3,17 @@
 # Script to build (if needed) and run the dind-analyzer container
 
 # Check if the image exists
-if docker images -q honeypot-challenge > /dev/null 2>&1; then
-  echo "honeypot-challenge image exists."
-else
-  echo "honeypot-challenge image does not exist. Building..."
-  docker build -t honeypot-challenge .  # Assumes Dockerfile is in the current directory
-  if [ $? -ne 0 ]; then
-    echo "Error building honeypot-challenge image. Exiting."
-    exit 1
-  fi
-  echo "honeypot-challenge image built successfully."
-fi
+#if docker images -q honeypot-challenge > /dev/null 2>&1; then
+#  echo "honeypot-challenge image exists."
+#else
+echo "honeypot-challenge image does not exist. Building..."
+docker build -t honeypot-challenge .  # Assumes Dockerfile is in the current directory
+#  if [ $? -ne 0 ]; then
+#    echo "Error building honeypot-challenge image. Exiting."
+#    exit 1
+#  fi
+echo "honeypot-challenge image built successfully."
+#fi
 
 
 # Stop and remove any existing container (optional but useful)
