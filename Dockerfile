@@ -33,8 +33,9 @@ RUN echo "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config && \
 	echo "ClientAliveCountMax 720" >> /etc/ssh/sshd_config
 
 RUN groupadd -f "players" \
-	&& useradd -m -g "players" -s /bin/bash "player"\
+	&& useradd -m -g "players" -s /bin/sh "player"\
  	&& echo "player:iwanttopawn" | chpasswd \
+	&& mkdir -p "/home/player" \
 	&& mkdir -p "/home/player/.ssh" \
 	&& chown -R "player":"players" "/home/player/.ssh" \
 	&& chmod 700 "/home/player/.ssh" \
