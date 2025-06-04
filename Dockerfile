@@ -47,6 +47,8 @@ RUN echo "Port 2222" >> "/etc/ssh/sshd_config"
 RUN echo "PermitRootLogin no" >> "/etc/ssh/sshd_config" 
 RUN echo "PasswordAuthentication yes" >> "/etc/ssh/sshd_config" 
 RUN echo "PubkeyAuthentication no" >> "/etc/ssh/sshd_config" 
+RUN echo "ClientAliveInterval 300" >> "/etc/ssh/sshd_config"
+RUN echo "ClientAliveCountMax 3" >> "/etc/ssh/sshd_config"
 #RUN echo "AllowUsers player" >> "/etc/ssh/sshd_config"
 RUN chmod 600 /etc/ssh/sshd_config 
 RUN chown root:root /etc/ssh/sshd_config
