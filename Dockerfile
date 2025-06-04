@@ -40,14 +40,14 @@ RUN mkdir -p "/home/player/.ssh"
 RUN chown -R "player":"players" "/home/player/.ssh" 
 RUN chmod 700 "/home/player/.ssh" 
 RUN touch "/home/player/.ssh/authorized_keys" 
-RUN chown "player":"players" "/home/player/.ssh/authorized_keys" 
+#RUN chown "player":"players" "/home/player/.ssh/authorized_keys" 
 RUN chmod 600 "/home/player/.ssh/authorized_keys" 
 RUN cp "/etc/ssh/sshd_config" "/etc/ssh/sshd_config.bck" 
-RUN echo "Port 22" >> "/etc/ssh/sshd_config" 
+RUN echo "Port 2222" >> "/etc/ssh/sshd_config" 
 RUN echo "PermitRootLogin no" >> "/etc/ssh/sshd_config" 
-RUN echo "PasswordAuthentication no" >> "/etc/ssh/sshd_config" 
+RUN echo "PasswordAuthentication yes" >> "/etc/ssh/sshd_config" 
 RUN echo "PubkeyAuthentication no" >> "/etc/ssh/sshd_config" 
-RUN echo "AllowUsers player" >> "/etc/ssh/sshd_config"
+#RUN echo "AllowUsers player" >> "/etc/ssh/sshd_config"
 RUN chmod 600 /etc/ssh/sshd_config 
 RUN chown root:root /etc/ssh/sshd_config
 # RUN service ssh restart
@@ -64,7 +64,7 @@ RUN apk add --no-cache python3 py3-pip
 
 # Copy the Dockerfiles and other relevant files
 COPY . /app
-COPY ./ssh-user-keys/id_rsa /root/.ssh/authorized_keys
+#COPY ./ssh-user-keys/id_rsa /root/.ssh/authorized_keys
 RUN chmod u=r,g=,o= /root/.ssh/authorized_keys 
 
 # Update package lists
