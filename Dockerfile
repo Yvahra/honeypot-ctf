@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 # --- Configuration ---
-ARG SSH_PORT=22001
+ARG SSH_PORT=22
 ARG SSH_USER=player
 ARG SSH_GROUP=players
 ARG SSH_PASSWORD=iwanttheflag
@@ -47,6 +47,9 @@ RUN echo "export LC_ALL=C" >> /root/.bashrc # Fix locale issues
 
 # Expose the SSH port (not strictly necessary, but good practice)
 EXPOSE ${SSH_PORT}
+
+# Generate SSH host keys (if they don't exist)
+RUN ssh-keygen -A
 
 # Start SSH service
 CMD ["/usr/sbin/sshd", "-D"]
