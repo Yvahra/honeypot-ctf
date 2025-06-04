@@ -48,8 +48,8 @@ RUN echo "PermitRootLogin no" >> "/etc/ssh/sshd_config"
 RUN echo "PasswordAuthentication no" >> "/etc/ssh/sshd_config" 
 RUN echo "PubkeyAuthentication no" >> "/etc/ssh/sshd_config" 
 RUN echo "AllowUsers player" >> "/etc/ssh/sshd_config"
-RUN chmod 600 "$SSH_CONFIG" 
-RUN chown root:root "$SSH_CONFIG" 
+RUN chmod 600 /etc/ssh/sshd_config 
+RUN chown root:root /etc/ssh/sshd_config
 RUN systemctl restart sshd
 
 # Set the working directory
