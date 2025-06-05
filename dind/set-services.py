@@ -58,7 +58,7 @@ def up_kippo(ip:str):
 
 
 services = assign_services()
-for i in range(services):
+for i in range(len(services)):
   f = open("/app/dind/logs/gen-"+str(GEN)+".txt", "w")
   f.write(str(services) + ": " + str(LIST_IP))
   if services[i] == SSH_SERVICE:
