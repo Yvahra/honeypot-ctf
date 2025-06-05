@@ -95,7 +95,7 @@ RUN ssh-keygen -A
 #RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh/
 
 # Create a custom Docker network with a subnet
-RUN docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
+# RUN docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
 
 # Define environment variables
 ENV CHILD_IMAGE my-child-container
