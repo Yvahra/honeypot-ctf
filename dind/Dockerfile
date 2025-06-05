@@ -84,6 +84,13 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 #  chmod 600 /home/${SSH_USER}/.ssh/authorized_keys
 #RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh/
 
+
+#Add the ForceCommands and Allow TCP, make the chroot
+
+RUN sed -i '$a ForceCommand /usr/local/bin/chroot_start.sh' /etc/ssh/sshd_config
+RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
+RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
+
 # SSH Configuration
 
 RUN ssh-keygen -A
