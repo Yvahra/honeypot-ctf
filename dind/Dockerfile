@@ -39,7 +39,7 @@ RUN mkdir -p /home/player/jail
 #RUN cp /bin/whoami /home/player/jail
 #RUN cp /bin/date /home/player/jail
 #RUN cp /bin/uname /home/player/jail
-RUN cp /bin/sh /home/player/jail # For basic shell functionality
+#RUN cp /bin/sh /home/player/jail # For basic shell functionality
 #RUN cp /bin/mkdir /home/player/jail # create dir
 
 # Create a home directory inside the jail (optional)
@@ -87,7 +87,7 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 
 #Add the ForceCommands and Allow TCP, make the chroot
 
-RUN sed -i '$a ForceCommand /usr/local/bin/chroot_start.sh' /etc/ssh/sshd_config
+RUN sed -i '$a ForceCommand /usr/bin/chroot_start.sh' /etc/ssh/sshd_config
 RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
 RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 
