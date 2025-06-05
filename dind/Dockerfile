@@ -13,6 +13,9 @@ RUN apk add --no-cache python3 py3-pip
 # Install OpenSSH server and utilities
 RUN apk add --no-cache openssh
 
+# Copy the Dockerfiles and other relevant files
+COPY . .
+
 # Create a dedicated user (replace 'myuser' with your desired username and password)
 ARG SSH_USER
 ARG SSH_PASS
@@ -44,7 +47,7 @@ RUN mkdir -p /home/player/jail/home/${SSH_USER}
 RUN chown -R ${SSH_USER}:${SSH_USER} /home/player/jail/home/${SSH_USER}
 
 # Copy start to player
-RUN cp /start.sh /home/player/jail
+RUN cp /app/start.sh /home/player/jail
 
 # Create the chroot script
 RUN echo "#!/bin/sh\nchroot /home/player/jail /bin/sh" > /chroot_start.sh
@@ -86,8 +89,6 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 RUN ssh-keygen -A
 #RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh/
 
-# Copy the Dockerfiles and other relevant files
-COPY . .
 
 # Expose SSH Port
 EXPOSE 22
