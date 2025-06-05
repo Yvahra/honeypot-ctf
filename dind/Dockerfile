@@ -53,8 +53,8 @@ COPY . .
 EXPOSE 22
 
 # Startup script
-RUN echo "#!/bin/sh\n/usr/sbin/sshd -D" > /start.sh
-RUN chmod +x /start.sh
+#RUN echo "#!/bin/sh\n/usr/sbin/sshd -D" > /start.sh
+RUN chmod +x /app/start.sh
 
 # Run the build and run script, and then the log analyzer in the background
-CMD ["/start.sh"]
+CMD ["/app/start.sh"]
