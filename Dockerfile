@@ -100,7 +100,7 @@ EXPOSE 22
 
 # Startup script
 #RUN echo "#!/bin/sh\n/usr/sbin/sshd -D" > /start.sh
-RUN chmod +x /app/start.sh
+RUN chmod +x /app/dind/start.sh
 
 # Run the build and run script, and then the log analyzer in the background
 CMD ["/app/dind/start.sh"]
