@@ -1,0 +1,8 @@
+#!/bin/sh
+allowed=$1
+set -- $SSH_ORIGINAL_COMMAND
+if [ "$1" = "$allowed" ]; then
+exec "$@"
+fi
+echo you may only $allowed, denied: $@ >&2
+exit 1`
