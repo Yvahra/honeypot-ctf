@@ -60,7 +60,7 @@ docker build -t X --build-arg SSH_USER=user --build-arg SSH_PASS=ilovessh .
 ```
 Run the Docker container
 ```sh
-docker run --name X_c --net mynetwork X
+docker run --name X_c --net mynetwork --ip 172.20.0.1X X
 ```
 Connect as root
 ```sh
