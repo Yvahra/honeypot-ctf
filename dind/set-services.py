@@ -57,7 +57,7 @@ def up_kippo(ip:str):
   pass
 
 
-services = generate_random_list()
+services = assign_services()
 for i in range(services):
   f = open("/app/dind/logs/gen-"+str(GEN)+".txt", "w")
   f.write(str(services) + ": " + str(LIST_IP))
