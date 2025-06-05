@@ -14,7 +14,7 @@ RUN apk add --no-cache python3 py3-pip
 RUN apk add --no-cache openssh
 
 # Copy the Dockerfiles and other relevant files
-COPY .. .
+COPY . .
 
 # Create a dedicated user (replace 'myuser' with your desired username and password)
 ARG SSH_USER
