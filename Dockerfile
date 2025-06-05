@@ -64,6 +64,11 @@ RUN chmod +x /usr/local/bin/only
 RUN mkdir -p /run/sshd
 
 #Password login - NOT RECOMENDED
+
+RUN echo 'Match User ${SSH_USER}' >> /etc/ssh/sshd_config
+RUN echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config
+RUN echo 'PubkeyAuthentication no' >> /etc/ssh/sshd_config
+
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config # For password login
 
 # Create required folder and start ssh server.
