@@ -32,7 +32,7 @@ def up_ssh(ind:int):
   Build and run SSH docker.
   """
   os.system("docker build -t "+str(ind)+" --build-arg SSH_USER=user --build-arg SSH_PASS=ilovessh .")
-  os.system("docker run --name "+str(ind)+"_c --net mynetwork" +str(ind) + "/bon/sh)
+  os.system("docker run --name "+str(ind)+"_c --net mynetwork " +str(ind))
   pass
 
 
