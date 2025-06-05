@@ -19,6 +19,46 @@ ARG SSH_PASS
 RUN adduser -D ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 
+
+
+# Create the chroot directory
+RUN mkdir -p /home/player/jail
+
+# Copy essential binaries and libraries to the chroot directory
+# You may need to adjust this list based on the commands you want to allow
+# For example, if you want the player to use python inside their shell:
+#RUN cp /usr/bin/python3 /home/player/jail/
+#RUN cp /lib/ld-linux-x86-64.so.2 /home/player/jail/
+#RUN cp /bin/sh /home/player/jail
+#RUN cp /bin/pwd /home/player/jail
+#RUN cp /bin/cat /home/player/jail
+#RUN cp /bin/echo /home/player/jail
+#RUN cp /bin/whoami /home/player/jail
+#RUN cp /bin/date /home/player/jail
+#RUN cp /bin/uname /home/player/jail
+#RUN cp /bin/sh /home/player/jail # For basic shell functionality
+#RUN cp /bin/mkdir /home/player/jail # create dir
+
+# Create a home directory inside the jail (optional)
+RUN mkdir -p /home/player/jail/home/${SSH_USER}
+RUN chown -R ${SSH_USER}:${SSH_USER} /home/player/jail/home/${SSH_USER}
+
+# Copy start to player
+RUN cp /start.sh /home/player/jail
+
+# Create the chroot script
+RUN echo "#!/bin/sh\nchroot /home/player/jail /bin/sh" > /chroot_start.sh
+
+# Copy the chroot Script
+RUN cp /chroot_start.sh /usr/bin
+
+# Allow chroot_start.sh to execute.
+RUN chmod +x /usr/bin/chroot_start.sh
+
+# Copy the program to the main
+RUN cp /usr/bin/chroot_start.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/chroot_start.sh
+
 # SSH Configuration
 RUN mkdir -p /run/sshd
 
