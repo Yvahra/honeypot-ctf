@@ -25,7 +25,7 @@ RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 
 
 # Create the chroot directory
-RUN mkdir -p /home/player/jail
+#RUN mkdir -p /home/player/jail
 
 # Copy essential binaries and libraries to the chroot directory
 # You may need to adjust this list based on the commands you want to allow
@@ -43,24 +43,22 @@ RUN mkdir -p /home/player/jail
 #RUN cp /bin/mkdir /home/player/jail # create dir
 
 # Create a home directory inside the jail (optional)
-RUN mkdir -p /home/player/jail/home/${SSH_USER}
-RUN chown -R ${SSH_USER}:${SSH_USER} /home/player/jail/home/${SSH_USER}
+#RUN mkdir -p /home/player/jail/home/${SSH_USER}
+#RUN chown -R ${SSH_USER}:${SSH_USER} /home/player/jail/home/${SSH_USER}
 
 # Copy start to player
-RUN cp /app/start.sh /home/player/jail
+#RUN cp /app/start.sh /home/player/jail
 
 # Create the chroot script
-RUN echo "#!/bin/sh\nchroot /home/player/jail /bin/sh" > /chroot_start.sh
+#RUN echo "#!/bin/sh\nchroot /home/player/jail /bin/sh" > /chroot_start.sh
 
 # Copy the chroot Script
-RUN cp /chroot_start.sh /usr/bin
+#RUN cp /chroot_start.sh /usr/bin
 
 # Allow chroot_start.sh to execute.
-RUN chmod +x /usr/bin/chroot_start.sh
+COPY only /usr/local/bin/only
+RUN chmod +x /usr/local/bin/only
 
-# Copy the program to the main
-RUN cp /usr/bin/chroot_start.sh /usr/local/bin
-RUN chmod +x /usr/local/bin/chroot_start.sh
 
 # SSH Configuration
 RUN mkdir -p /run/sshd
@@ -87,7 +85,7 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 
 #Add the ForceCommands and Allow TCP, make the chroot
 
-RUN sed -i '$a ForceCommand /usr/bin/chroot_start.sh' /etc/ssh/sshd_config
+RUN sed -i '$a ForceCommand only ssh' /etc/ssh/sshd_config
 RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
 RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 
