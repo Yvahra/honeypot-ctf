@@ -1,3 +1,3 @@
 #!/bin/sh
-python3 "/app/dind/set-services.py"
+python3 "/app/dind/start-services.py"
 /usr/sbin/sshd -D
