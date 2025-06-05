@@ -39,7 +39,7 @@ RUN mkdir -p /home/player/jail
 #RUN cp /bin/whoami /home/player/jail
 #RUN cp /bin/date /home/player/jail
 #RUN cp /bin/uname /home/player/jail
-#RUN cp /bin/sh /home/player/jail # For basic shell functionality
+RUN cp /bin/sh /home/player/jail # For basic shell functionality
 #RUN cp /bin/mkdir /home/player/jail # create dir
 
 # Create a home directory inside the jail (optional)
