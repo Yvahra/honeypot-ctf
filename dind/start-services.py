@@ -20,7 +20,7 @@ def assign_services() -> list[int]:
       list: A list containing the numbers 1, 2, 3, and 4 in a random order.
   """
   f = open("/app/dind/.gen","w")
-  f.write(str(GEN+1)+ "/n")
+  f.write(str(GEN+1)+ "\n")
   f.close()
   my_list = [SSH_SERVICE, CONPOT_SERVICE, COWRIE_SERVICE, KIPPO_SERVICE]
   random.shuffle(my_list)
