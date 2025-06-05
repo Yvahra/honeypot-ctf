@@ -68,16 +68,16 @@ RUN mkdir -p /run/sshd
 RUN echo 'Match User ${SSH_USER}' >> /etc/ssh/sshd_config
 RUN echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config
 RUN echo 'PubkeyAuthentication no' >> /etc/ssh/sshd_config
+RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config # Not root login.
 
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config # For password login
+# RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config # For password login
 
 # Create required folder and start ssh server.
 RUN mkdir -p /home/${SSH_USER}/.ssh
 
-RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config # Not root login.
 # Permit password login
-RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
-RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+# RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
+# RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
 # Add user to SSHD
 
