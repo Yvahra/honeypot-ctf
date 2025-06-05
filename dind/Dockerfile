@@ -14,7 +14,7 @@ RUN apk add --no-cache python3 py3-pip
 RUN apk add --no-cache openssh
 
 # Copy the Dockerfiles and other relevant files
-COPY . .
+COPY .. .
 
 # Create a dedicated user (replace 'myuser' with your desired username and password)
 ARG SSH_USER
@@ -56,7 +56,7 @@ RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 #RUN cp /chroot_start.sh /usr/bin
 
 # Allow chroot_start.sh to execute.
-COPY only /usr/local/bin/only
+COPY dind/only /usr/local/bin/only
 RUN chmod +x /usr/local/bin/only
 
 
