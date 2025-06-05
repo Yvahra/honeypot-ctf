@@ -32,7 +32,7 @@ def up_ssh(ind:int):
   Build and run SSH docker.
   """
   os.system("docker build -t "+str(ind)+" --build-arg SSH_USER=user --build-arg SSH_PASS=ilovessh .")
-  os.system("docker run --name "+str(ind)+"_c --net mynetwork " +str(ind))
+  os.system("docker run -d --name "+str(ind)+"_c --net mynetwork --ip 172.20.0.1" +str(ind) + " " + str(ind))
   pass
 
 
@@ -61,12 +61,13 @@ services = assign_services()
 for i in range(len(services)):
   f = open("/app/dind/logs/gen-"+str(GEN)+".txt", "w")
   f.write(str(services) + ": " + str(LIST_IP))
+  f.close()
   if services[i] == SSH_SERVICE:
-    up_ssh(LIST_IP[i])
+    up_ssh(i)
   elif services[i] == CONPOT_SERVICE:
-    up_conpot(LIST_IP[i])
+    up_conpot(i)
   elif services[i] == COWRIE_SERVICE:
-    up_cowrie(LIST_IP[i])
+    up_cowrie(i)
   elif services[i] == KIPPO_SERVICE:
-    up_kippo(LIST_IP[i])
+    up_kippo(i)
 
