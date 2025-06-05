@@ -1,33 +1,52 @@
+# Use the official Ubuntu image as the base
 FROM ubuntu:latest
 
-# Update package lists
-RUN apt-get update && apt-get upgrade -y
+# Update the package lists and install OpenSSH server
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        openssh-server \
+        sudo \
+        && \
+    rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
-# Install OpenSSH server and utilities
-RUN apt-get install -y openssh-server sudo
-
-# Create a dedicated user (replace 'myuser' with your desired username)
-ARG SSH_USER=myuser
-ARG SSH_PASS=mypassword
+# Create a non-root user (Highly Recommended for Security)
+ARG SSH_USER 
+ARG SSH_PASS  
+ARG SSH_PORT
 RUN useradd -m -s /bin/bash ${SSH_USER}
-RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
-RUN usermod -aG sudo ${SSH_USER} # Add user to sudo group
+RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd  # **WARNING:  Never hardcode passwords in production!**
+# RUN usermod -aG sudo ${SSH_USER}  # Add user to the sudo group
 
-# SSH configuration
+# SSH Configuration
 RUN mkdir /var/run/sshd
-RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config
-RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config # For simplicity, password auth is on.  USE KEY-BASED AUTH IN PRODUCTION
-RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config # Change default port
+
+# Configure SSH:  Allow password authentication (for example purposes, but not recommended)
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config  # Disable root login
+RUN sed -i 's/#Port 22/Port ${SSH_PORT}/g' /etc/ssh/sshd_config # Port settings.
+# Optionally, use a specific port
+#RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config  # Change the SSH port if needed
+
+# SSH key configuration (Recommended for Production):
+# Instead of password authentication, use SSH keys.  First, uncomment and modify this block.
+# ARG SSH_PUB_KEY  # Define an argument to pass the public key at build time
+# RUN mkdir -p /home/${SSH_USER}/.ssh
+# RUN echo "${SSH_PUB_KEY}" >> /home/${SSH_USER}/.ssh/authorized_keys
+# RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh
+# RUN chmod 700 /home/${SSH_USER}/.ssh
+# RUN chmod 600 /home/${SSH_USER}/.ssh/authorized_keys
+
+# Start SSHD as an entrypoint
+# Set the shell
+ENV SHELL /bin/bash
 
 # Expose the SSH port
-EXPOSE 2222
+EXPOSE 22
 
-# Startup script
-RUN echo "#!/bin/bash\n/usr/sbin/sshd -D" > /start.sh
-RUN chmod +x /start.sh
+# Configure SSH
+CMD ["/usr/sbin/sshd", "-D"]  # Start the SSH daemon in the foreground
 
-# Switch to the SSH user
-USER ${SSH_USER}
-
-# Command to run when the container starts
-CMD ["/start.sh"]
+# Optional:  Add a startup script (useful if you need to do other setup)
+# RUN echo '#!/bin/bash\n/usr/sbin/sshd -D' > /start.sh
+# RUN chmod +x /start.sh
+# CMD ["/start.sh"]
