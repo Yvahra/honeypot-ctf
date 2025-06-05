@@ -14,8 +14,8 @@ RUN apk add --no-cache python3 py3-pip
 RUN apk add --no-cache openssh
 
 # Create a dedicated user (replace 'myuser' with your desired username and password)
-ARG SSH_USER=player
-ARG SSH_PASS=iwanttheflag
+ARG SSH_USER
+ARG SSH_PASS
 RUN adduser -D ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 
