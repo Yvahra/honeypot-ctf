@@ -37,7 +37,7 @@ sudo docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
 ```
 Build the docker image
 ```sh
-sudo docker build -t challenge --buold-arg SSH_USER=player --build-arg SSH_PASS=iwanttheflag .
+sudo docker build -t challenge --build-arg SSH_USER=player --build-arg SSH_PASS=iwanttheflag .
 ```
 Run the Docker container
 ```sh
