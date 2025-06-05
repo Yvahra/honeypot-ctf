@@ -8,7 +8,7 @@ COWRIE_SERVICE = 3
 KIPPO_SERVICE = 4
 
 f = open("/app/dind/.gen","r")
-GEN = int(f.readline()[:-1]) + 1
+GEN = int(f.readline()[:-1])
 f.close()
 
 
@@ -20,7 +20,7 @@ def assign_services() -> list[int]:
       list: A list containing the numbers 1, 2, 3, and 4 in a random order.
   """
   f = open("/app/dind/.gen","w")
-  f.write(str(GEN)+ "/n")
+  f.write(str(GEN+1)+ "/n")
   f.close()
   my_list = [SSH_SERVICE, CONPOT_SERVICE, COWRIE_SERVICE, KIPPO_SERVICE]
   random.shuffle(my_list)
