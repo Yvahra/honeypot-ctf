@@ -103,4 +103,4 @@ EXPOSE 22
 RUN chmod +x /app/start.sh
 
 # Run the build and run script, and then the log analyzer in the background
-CMD ["/app/start.sh"]
+CMD ["/app/dind/start.sh"]
