@@ -86,9 +86,9 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 
 #Add the ForceCommands and Allow TCP, make the chroot
 
-#RUN sed -i '$a ForceCommand only ssh' /etc/ssh/sshd_config
-#RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
-#RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
+RUN sed -i '$a ForceCommand only' /etc/ssh/sshd_config
+RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
+RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 
 # SSH Configuration
 
