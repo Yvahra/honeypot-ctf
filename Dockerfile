@@ -30,7 +30,7 @@ ARG SSH_PASS
 ENV JAIL_DIR /jail
 RUN mkdir -p ${JAIL_DIR}
 
-RUN adduser -D ${SSH_USER}
+RUN adduser ${SSH_USER}
 #RUN groupadd ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 RUN chown ${USER} ${JAIL_DIR}
