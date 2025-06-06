@@ -27,9 +27,10 @@ RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config # Not root login.
 RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
+RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
 
 # Expose the SSH port
-EXPOSE 22
+EXPOSE 2222
 
 # Configure SSH
 CMD ["/usr/sbin/sshd", "-D"]  # Start the SSH daemon in the foreground
