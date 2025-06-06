@@ -33,7 +33,7 @@ RUN mkdir -p ${JAIL_DIR}
 RUN adduser -D ${SSH_USER}
 #RUN groupadd ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
-RUN chown ${USER}:${USER} ${JAIL_DIR}
+RUN chown ${USER} ${JAIL_DIR}
 RUN mkdir -p ${JAIL_DIR}/home/${USER}
 RUN chown ${USER}:${USER} ${JAIL_DIR}/home/${USER}
 
