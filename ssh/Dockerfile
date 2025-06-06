@@ -12,7 +12,7 @@ RUN apt-get update && \
 # Create a non-root user (Highly Recommended for Security)
 ARG SSH_USER 
 ARG SSH_PASS 
-RUN useradd -m -s /bin/bash ${SSH_USER}
+RUN useradd -u 1000 -m -s /bin/bash ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd  
 # RUN usermod -aG sudo ${SSH_USER}  # Add user to the sudo group
 
