@@ -83,6 +83,8 @@ RUN ssh-keygen -A
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/lib/x86_64-linux-gnu
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/usr/lib/
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/usr/bin/
+RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/etc/
+RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/dev/
 RUN cp /bin/sh ${JAIL_DIR}/bin/
 RUN cp /bin/ls ${JAIL_DIR}/bin/
 RUN cp /bin/pwd ${JAIL_DIR}/bin/
@@ -91,6 +93,9 @@ RUN cp /usr/lib/libz.so.1 ${JAIL_DIR}/usr/lib/
 RUN cp /lib/libc.musl-x86_64.so.1 ${JAIL_DIR}/usr/lib/
 RUN cp /lib/ld-musl-x86_64.so.1 ${JAIL_DIR}/lib/
 RUN cp /usr/bin/ssh ${JAIL_DIR}/usr/bin/
+RUN getent passwd > ${JAIL_DIR}/etc/passwd
+RUN getent group > ${JAIL_DIR}/etc/group
+RUN cp /dev/tty ${JAIL_DIR}/dev/
 
 # Create directories and files needed by the user
 RUN mkdir -p ${JAIL_DIR}/home/${USER}
@@ -99,7 +104,7 @@ RUN mkdir -p ${JAIL_DIR}/home/${USER}
 # Create /dev inside the jail (for tty/terminal)
 RUN mkdir -p ${JAIL_DIR}/dev
 RUN mknod -m 666 ${JAIL_DIR}/dev/null c 1 3
-RUN mknod -m 600 ${JAIL_DIR}/dev/tty c 5 0
+RUN mknod -m 666 ${JAIL_DIR}/dev/tty c 5 0
 # Add minimal device to the jail
 
 # Chroot configuration
