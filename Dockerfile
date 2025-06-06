@@ -81,6 +81,7 @@ RUN ssh-keygen -A
 
 # Copy necessary binaries and libraries into the jail (minimal set for basic commands)
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/lib/x86_64-linux-gnu
+RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/usr/lib/
 RUN cp /bin/sh ${JAIL_DIR}/bin/
 RUN cp /bin/ls ${JAIL_DIR}/bin/
 RUN cp /bin/pwd ${JAIL_DIR}/bin/
