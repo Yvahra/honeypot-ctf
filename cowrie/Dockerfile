@@ -12,7 +12,7 @@ ARG COWRIE_DATA=/opt/cowrie_data  # Data location
 ARG COWRIE_PORT=2222         # port number to expose.
 ARG SSH_PORT=22              # The internal SSH port for Cowrie
 ARG SSH_USER=sshuser             # Custom SSH user
-ARG SSH_PASSWORD=mysecurepassword  # **CHANGE THIS!** Custom SSH user password
+ARG SSH_PASS=mysecurepassword  # **CHANGE THIS!** Custom SSH user password
 ARG UID=1000                     # User id for ssh user to ensure same as docker
 ARG GID=1000                     # Group id for ssh user
 
