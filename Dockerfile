@@ -7,6 +7,12 @@ WORKDIR /app
 # Install Git (required for cloning repos)
 RUN apk add --no-cache git
 
+# Install necessary tools
+#RUN apk add openssh-server && \
+#    bash && \
+#    && rm -rf /var/lib/apt/lists/*
+
+
 # Install Python and pip
 RUN apk add --no-cache python3 py3-pip
 
@@ -25,40 +31,9 @@ RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 # RUN git clone https://github.com/cowrie/cowrie.git
 
 
-# Create the chroot directory
-#RUN mkdir -p /home/player/jail
-
-# Copy essential binaries and libraries to the chroot directory
-# You may need to adjust this list based on the commands you want to allow
-# For example, if you want the player to use python inside their shell:
-#RUN cp /usr/bin/python3 /home/player/jail/
-#RUN cp /lib/ld-linux-x86-64.so.2 /home/player/jail/
-#RUN cp /bin/sh /home/player/jail
-#RUN cp /bin/pwd /home/player/jail
-#RUN cp /bin/cat /home/player/jail
-#RUN cp /bin/echo /home/player/jail
-#RUN cp /bin/whoami /home/player/jail
-#RUN cp /bin/date /home/player/jail
-#RUN cp /bin/uname /home/player/jail
-#RUN cp /bin/sh /home/player/jail # For basic shell functionality
-#RUN cp /bin/mkdir /home/player/jail # create dir
-
-# Create a home directory inside the jail (optional)
-#RUN mkdir -p /home/player/jail/home/${SSH_USER}
-#RUN chown -R ${SSH_USER}:${SSH_USER} /home/player/jail/home/${SSH_USER}
-
-# Copy start to player
-#RUN cp /app/start.sh /home/player/jail
-
-# Create the chroot script
-#RUN echo "#!/bin/sh\nchroot /home/player/jail /bin/sh" > /chroot_start.sh
-
-# Copy the chroot Script
-#RUN cp /chroot_start.sh /usr/bin
-
 # Allow chroot_start.sh to execute.
-COPY dind/only /usr/local/bin/only
-RUN chmod +x /usr/local/bin/only
+#COPY dind/only /usr/local/bin/only
+#RUN chmod +x /usr/local/bin/only
 
 
 # SSH Configuration
@@ -86,23 +61,50 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 
 #Add the ForceCommands and Allow TCP, make the chroot
 
-RUN sed -i '$a ForceCommand only ssh' /etc/ssh/sshd_config
-RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
-RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
+#RUN sed -i '$a ForceCommand only ssh' /etc/ssh/sshd_config
+#RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
+#RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 
 # SSH Configuration
 
 RUN ssh-keygen -A
+
+# Define jail directory
+ENV JAIL_DIR /jail
+RUN mkdir -p ${JAIL_DIR}
+
+# Copy necessary binaries and libraries into the jail (minimal set for basic commands)
+RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/lib/x86_64-linux-gnu
+RUN cp /bin/bash ${JAIL_DIR}/bin/
+RUN cp /bin/ls ${JAIL_DIR}/bin/
+RUN cp /bin/pwd ${JAIL_DIR}/bin/
+RUN cp /lib/x86_64-linux-gnu/libc.so.6 ${JAIL_DIR}/lib/x86_64-linux-gnu/
+RUN cp /lib64/ld-linux-x86-64.so.2 ${JAIL_DIR}/lib64/
+
+# Create directories and files needed by the user
+RUN mkdir -p ${JAIL_DIR}/home/${USER}
+RUN chown ${USER}:${USER} ${JAIL_DIR}/home/${USER}
+
+# Create /dev inside the jail (for tty/terminal)
+RUN mkdir -p ${JAIL_DIR}/dev
+RUN mknod -m 666 ${JAIL_DIR}/dev/null c 1 3
+RUN mknod -m 600 ${JAIL_DIR}/dev/tty c 5 0
+# Add minimal device to the jail
+
+# Chroot configuration
+RUN echo "Match User ${USER}" >> /etc/ssh/sshd_config
+RUN echo "  ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
+
 #RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh/
 
 # Create a custom Docker network with a subnet
 # RUN docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
 
 # Define environment variables
-ENV CHILD_IMAGE my-child-container
-ENV CHILD_CONTAINER_NAME child-container-1
-ENV CHILD_IP_ADDRESS 172.20.0.10  # Static IP for child-container-1
-ENV CHILD_SSH_PORT 22
+#ENV CHILD_IMAGE my-child-container
+#ENV CHILD_CONTAINER_NAME child-container-1
+#ENV CHILD_IP_ADDRESS 172.20.0.10  # Static IP for child-container-1
+#ENV CHILD_SSH_PORT 22
 
 # Expose SSH Port
 EXPOSE 22
