@@ -84,7 +84,7 @@ RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/lib/x86_64-linux-gnu
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/usr/lib/
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/usr/bin/
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/etc/
-RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/dev/
+#RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/dev/
 RUN cp /bin/sh ${JAIL_DIR}/bin/
 RUN cp /bin/ls ${JAIL_DIR}/bin/
 RUN cp /bin/pwd ${JAIL_DIR}/bin/
@@ -95,7 +95,7 @@ RUN cp /lib/ld-musl-x86_64.so.1 ${JAIL_DIR}/lib/
 RUN cp /usr/bin/ssh ${JAIL_DIR}/usr/bin/
 RUN getent passwd > ${JAIL_DIR}/etc/passwd
 RUN getent group > ${JAIL_DIR}/etc/group
-RUN cp /dev/tty ${JAIL_DIR}/dev/
+# RUN cp /dev/tty ${JAIL_DIR}/dev/
 
 # Create directories and files needed by the user
 RUN mkdir -p ${JAIL_DIR}/home/${USER}
