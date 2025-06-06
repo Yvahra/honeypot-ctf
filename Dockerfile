@@ -22,7 +22,7 @@ ARG SSH_PASS
 RUN adduser -D ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 
-RUN git clone https://github.com/cowrie/cowrie.git
+# RUN git clone https://github.com/cowrie/cowrie.git
 
 
 # Create the chroot directory
