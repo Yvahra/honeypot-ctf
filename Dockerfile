@@ -75,7 +75,7 @@ RUN mkdir -p ${JAIL_DIR}
 
 # Copy necessary binaries and libraries into the jail (minimal set for basic commands)
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/lib/x86_64-linux-gnu
-RUN cp /bin/bash ${JAIL_DIR}/bin/
+RUN cp /bin/sh ${JAIL_DIR}/bin/
 RUN cp /bin/ls ${JAIL_DIR}/bin/
 RUN cp /bin/pwd ${JAIL_DIR}/bin/
 RUN cp /lib/x86_64-linux-gnu/libc.so.6 ${JAIL_DIR}/lib/x86_64-linux-gnu/
