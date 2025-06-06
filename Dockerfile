@@ -87,8 +87,8 @@ RUN cp /bin/ls ${JAIL_DIR}/bin/
 RUN cp /bin/pwd ${JAIL_DIR}/bin/
 RUN cp /usr/lib/libcrypto.so.3 ${JAIL_DIR}/usr/lib/
 RUN cp /usr/lib/libz.so.1 ${JAIL_DIR}/usr/lib/
-RUN cp /lib/libc.musl-x86_64.so.& ${JAIL_DIR}/usr/lib/
-RUN cp /lib/ld-musl-x86_64.so.1 ${JAIL_DIR}/lib/
+# RUN cp /lib/libc.musl-x86_64.so.& ${JAIL_DIR}/usr/lib/
+# RUN cp /lib/ld-musl-x86_64.so.1 ${JAIL_DIR}/lib/
 
 # Create directories and files needed by the user
 RUN mkdir -p ${JAIL_DIR}/home/${USER}
