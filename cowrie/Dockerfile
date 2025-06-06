@@ -1,52 +1,75 @@
-# Use an existing Python base image
-FROM python:3.9-slim-buster
+FROM ubuntu:latest  # Or your preferred base image
 
-# Set the working directory inside the container
-WORKDIR /cowrie
+# --- Metadata ---
+LABEL maintainer="Your Name"
+LABEL description="Dockerfile for deploying Cowrie SSH Honeypot with custom SSH user"
 
-# Install system dependencies required by Cowrie
-RUN apt-get update && apt-get install -y \
-    git \
-    python3-dev \
-    libffi-dev \
-    libssl-dev \
-    build-essential \
-    python3-virtualenv \
-    tcpdump \
+# --- Configuration ---
+ARG COWRIE_USER=cowrie          # User to run Cowrie
+ARG COWRIE_GROUP=cowriegroup
+ARG COWRIE_HOME=/home/$COWRIE_USER/cowrie
+ARG COWRIE_DATA=/opt/cowrie_data  # Data location
+ARG COWRIE_PORT=2222         # port number to expose.
+ARG SSH_PORT=22              # The internal SSH port for Cowrie
+ARG SSH_USER=sshuser             # Custom SSH user
+ARG SSH_PASSWORD=mysecurepassword  # **CHANGE THIS!** Custom SSH user password
+ARG UID=1000                     # User id for ssh user to ensure same as docker
+ARG GID=1000                     # Group id for ssh user
+
+# --- Install Dependencies ---
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git python3 python3-virtualenv libssl-dev libffi-dev build-essential \
+    python3-openssl python3-twisted openssh-server \
     && rm -rf /var/lib/apt/lists/*
 
-# Clone the Cowrie repository
-RUN git clone https://github.com/cowrie/cowrie.git .
+# --- Create Cowrie User and Group ---
+RUN groupadd $COWRIE_GROUP
+RUN useradd -m -g $COWRIE_GROUP -s /bin/bash $COWRIE_USER
 
-# Create a virtual environment
-RUN virtualenv -p python3 .env
-ENV VIRTUAL_ENV=/cowrie/.env
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+# --- Create SSH User and Group ---
+RUN groupadd --gid $GID sshgroup
+RUN useradd -m -u $UID -g sshgroup -s /bin/bash $SSH_USER
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# --- Set SSH User Password ---
+RUN echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
 
-# Copy cowrie.cfg (you'll need to create this file)
-COPY cowrie.cfg /cowrie/cowrie.cfg
+# --- Configure SSH for Custom User ---
+RUN mkdir /home/$SSH_USER/.ssh
+RUN chown -R $SSH_USER:$SSH_USER /home/$SSH_USER/.ssh
+#RUN chmod 700 /home/$SSH_USER/.ssh  #redundant
 
-# Copy user-mapping.txt if you're using it
-# COPY user-mapping.txt /cowrie/user-mapping.txt
+# --- Allow Password Authentication (for custom user) ---
+RUN sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 
-# Expose the SSH port (default is 2222, but configurable)
-EXPOSE 2222
+# --- Prevent Root Login ---
+RUN sed -i 's/^PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config
 
-# Set environment variables (optional, but good practice)
-ENV HONEYPOT_USER=cowrie
-ENV HONEYPOT_PASS=cowrie
+# --- Create Data directory and setup permissions. ---
+RUN mkdir -p $COWRIE_DATA
+RUN chown -R $COWRIE_USER:$COWRIE_GROUP $COWRIE_DATA
+RUN chmod 770 $COWRIE_DATA  # ensure all user has rw access to the directory.
 
-# Create a user for Cowrie (security best practice)
-RUN adduser --disabled-password --gecos "" ${HONEYPOT_USER}
+# --- Clone Cowrie Repository and configure permissions ---
+RUN git clone https://github.com/cowrie/cowrie.git $COWRIE_HOME
+RUN chown -R $COWRIE_USER:$COWRIE_GROUP $COWRIE_HOME
+RUN chmod +x $COWRIE_HOME/bin/cowrie
 
-# Set permissions for the honeypot user
-RUN chown -R ${HONEYPOT_USER}:${HONEYPOT_USER} /cowrie
+# --- Set Cowrie Home Directory as Working Directory ---
+WORKDIR $COWRIE_HOME
 
-# Switch to the honeypot user
-USER ${HONEYPOT_USER}
+# --- Create Virtual Environment and install dependencies ---
+USER $COWRIE_USER  # Important, change user.
 
-# Start Cowrie
-CMD ["./bin/cowrie", "start"]
+RUN python3 -m venv venv
+RUN . venv/bin/activate
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Configure ports.
+EXPOSE $COWRIE_PORT
+
+# Create entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# --- Run Cowrie ---
+CMD ["/entrypoint.sh"]
