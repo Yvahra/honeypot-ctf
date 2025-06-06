@@ -25,8 +25,16 @@ COPY . .
 # Create a dedicated user (replace 'myuser' with your desired username and password)
 ARG SSH_USER
 ARG SSH_PASS
+
+# Define jail directory
+ENV JAIL_DIR /jail
+RUN mkdir -p ${JAIL_DIR}
+
 RUN adduser -D ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
+RUN chown ${JAIL_USER}:${JAIL_USER} ${JAIL_DIR}
+RUN mkdir -p ${JAIL_DIR}/home/${USER}
+RUN chown ${USER}:${USER} ${JAIL_DIR}/home/${USER}
 
 # RUN git clone https://github.com/cowrie/cowrie.git
 
@@ -69,9 +77,6 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 
 RUN ssh-keygen -A
 
-# Define jail directory
-ENV JAIL_DIR /jail
-RUN mkdir -p ${JAIL_DIR}
 
 # Copy necessary binaries and libraries into the jail (minimal set for basic commands)
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/lib/x86_64-linux-gnu
