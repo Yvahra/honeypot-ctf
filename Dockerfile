@@ -89,7 +89,7 @@ RUN cp /bin/pwd ${JAIL_DIR}/bin/
 
 # Create directories and files needed by the user
 RUN mkdir -p ${JAIL_DIR}/home/${USER}
-RUN chown ${USER}:${USER} ${JAIL_DIR}/home/${USER}
+# RUN chown ${USER}:${USER} ${JAIL_DIR}/home/${USER}
 
 # Create /dev inside the jail (for tty/terminal)
 RUN mkdir -p ${JAIL_DIR}/dev
