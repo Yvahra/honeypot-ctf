@@ -7,17 +7,17 @@
 # due to the access to the network
 # You can customize this.
 
-if [ "$SSH_ORIGINAL_COMMAND" ]; then
-  exec bash -c "$SSH_ORIGINAL_COMMAND"
-else
-  exec bash -l
-fi
-
-
-#allowed=$1
-#set -- $SSH_ORIGINAL_COMMAND
-#if [ "$1" = "$allowed" ]; then
-#exec "$@"
+#if [ "$SSH_ORIGINAL_COMMAND" ]; then
+#  exec bash -c "$SSH_ORIGINAL_COMMAND"
+#else
+#  exec bash -l
 #fi
-#echo you may only $allowed, denied: $@ >&2
-#exit 1
+
+
+allowed=$1
+set -- $SSH_ORIGINAL_COMMAND
+if [ "$1" = "$allowed" ]; then
+exec "$@"
+fi
+echo you may only $allowed, denied: $@ >&2
+exit 1
