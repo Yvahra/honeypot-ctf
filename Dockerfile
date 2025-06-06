@@ -78,8 +78,8 @@ RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/lib/x86_64-linux-gnu
 RUN cp /bin/sh ${JAIL_DIR}/bin/
 RUN cp /bin/ls ${JAIL_DIR}/bin/
 RUN cp /bin/pwd ${JAIL_DIR}/bin/
-RUN cp /lib/x86_64-linux-gnu/libc.so.6 ${JAIL_DIR}/lib/x86_64-linux-gnu/
-RUN cp /lib64/ld-linux-x86-64.so.2 ${JAIL_DIR}/lib64/
+#RUN cp /lib/x86_64-linux-gnu/libc.so.6 ${JAIL_DIR}/lib/x86_64-linux-gnu/
+#RUN cp /lib64/ld-linux-x86-64.so.2 ${JAIL_DIR}/lib64/
 
 # Create directories and files needed by the user
 RUN mkdir -p ${JAIL_DIR}/home/${USER}
