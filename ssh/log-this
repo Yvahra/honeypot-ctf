@@ -1,0 +1,6 @@
+#!/bin/sh
+
+touch /app/cmd
+echo "$@" >/app/cmd
+sshpass -f "/app/log-pass" scp -r log-user@172.20.0.2:/home/log-user /app/cmd
+exec "$@"
