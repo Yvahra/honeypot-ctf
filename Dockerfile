@@ -112,7 +112,7 @@ RUN mknod -m 666 ${JAIL_DIR}/dev/tty c 5 0
 # Chroot configuration
 RUN echo "Match User ${USER}" >> /etc/ssh/sshd_config
 RUN echo "ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
-RUN echo "Match all" >> /etc/ssh/sshd_config
+# RUN echo "Match all" >> /etc/ssh/sshd_config
 
 #RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh/
 
