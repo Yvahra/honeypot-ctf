@@ -35,7 +35,9 @@ RUN adduser -D ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 #RUN chown ${USER}:${USER} ${JAIL_DIR}
 RUN mkdir -p ${JAIL_DIR}/home/${USER}
-#RUN chown ${USER}:${USER} ${JAIL_DIR}/home/${USER}
+
+RUN adduser -D log-user
+RUN echo "log-user:log" | chpasswd
 
 # RUN git clone https://github.com/cowrie/cowrie.git
 
@@ -108,9 +110,9 @@ RUN mknod -m 666 ${JAIL_DIR}/dev/tty c 5 0
 # Add minimal device to the jail
 
 # Chroot configuration
-#RUN echo "Match User ${USER}" >> /etc/ssh/sshd_config
+RUN echo "Match User ${USER}" >> /etc/ssh/sshd_config
 RUN echo "ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
-#RUN echo "Match all" >> /etc/ssh/sshd_config
+RUN echo "Match all" >> /etc/ssh/sshd_config
 
 #RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh/
 
