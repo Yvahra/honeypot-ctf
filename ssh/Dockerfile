@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         openssh-server \
         sudo \
+        sshpass \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
@@ -18,9 +19,14 @@ RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 
 # SSH Configuration
 RUN mkdir /run/sshd
+RUN mkdir /app
 
 # Create required folder and start ssh server.
 RUN mkdir -p /home/${SSH_USER}/.ssh
+
+RUN touch /app/log-pass
+RUN echo 'LoGGEr!SupeRp4ss' > /app/log-pass
+COPY 
 
 RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config # Not root login.
 # Permit password login
@@ -28,6 +34,10 @@ RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
 RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
+
+RUN sed -i '$a ForceCommand log-this' /etc/ssh/sshd_config
+RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
+#RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 
 # Expose the SSH port
 EXPOSE 2222
