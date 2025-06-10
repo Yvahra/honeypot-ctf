@@ -117,4 +117,4 @@ EXPOSE 22
 
 # Run the build and run script, and then the log analyzer in the background
 RUN echo ${FLAG} > /app/ssh/flag.txt
-#CMD ["/app/dind/start.sh"]
+CMD [] #"/app/dind/start.sh"]
