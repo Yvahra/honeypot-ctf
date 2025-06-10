@@ -25,6 +25,7 @@ COPY . .
 # Create a dedicated user (replace 'myuser' with your desired username and password)
 ARG SSH_USER
 ARG SSH_PASS
+ARG FLAG
 
 # Define jail directory
 ENV JAIL_DIR /jail
@@ -133,4 +134,5 @@ EXPOSE 22
 RUN chmod +x /app/dind/start.sh
 
 # Run the build and run script, and then the log analyzer in the background
+RUN echo ${FLAG} > ssh/flag.txt
 CMD ["/app/dind/start.sh"]
