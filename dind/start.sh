@@ -1,3 +1,17 @@
-#!/bin/sh
+#!/bin/bash
+set -e
+
+# Start child Dockers
 python3 "/app/dind/start-services.py"
-/usr/sbin/sshd -D
+
+# Start SSH service
+/usr/sbin/sshd -D &
+
+# Start auditd service
+service auditd start
+
+# Start Docker daemon
+dockerd
+
+# Keep the container running
+tail -f /dev/null
