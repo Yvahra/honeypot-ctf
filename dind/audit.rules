@@ -1,0 +1,3 @@
+# Capture command line arguments
+-a always,exit -F arch=b32 -S execve -F success=0 -F auid>=1000 -k user_commands
+-a always,exit -F arch=b64 -S execve -F success=0 -F auid>=1000 -k user_commands
