@@ -5,13 +5,13 @@ set -e
 python3 "/app/dind/start-services.py"
 
 # Start SSH service
-/usr/sbin/sshd -D &
+#/usr/sbin/sshd -D &
 
 # Start auditd service
-service auditd start
+#service auditd start
 
 # Start Docker daemon
-dockerd
+#dockerd
 
 # Keep the container running
-tail -f /dev/null
+#tail -f /dev/null
