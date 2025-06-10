@@ -4,32 +4,27 @@ FROM docker:dind
 # Set the working directory
 WORKDIR /app
 
-# Install Git (required for cloning repos)
-RUN apk add --no-cache git
+# INSTALL PACKAGES
+RUN apk add --no-cache git \
+        python3 py3-pip \
+        openssh \
+        audit 
 
-# Install necessary tools
-#RUN apk add openssh-server && \
-#    bash && \
-#    && rm -rf /var/lib/apt/lists/*
-
-
-# Install Python and pip
-RUN apk add --no-cache python3 py3-pip
-
-# Install OpenSSH server and utilities
-RUN apk add --no-cache openssh
-
-# Copy the Dockerfiles and other relevant files
+# COPY FILES
 COPY . .
 
-# Create a dedicated user (replace 'myuser' with your desired username and password)
 ARG SSH_USER
 ARG SSH_PASS
-ARG FLAG
+ARG FLAG="ECW{H0n3y_pr0of_pl@yer}"
 
 # Define jail directory
 ENV JAIL_DIR /jail
 RUN mkdir -p ${JAIL_DIR}
+
+
+# %%
+# USERS
+# %%
 
 RUN adduser -D ${SSH_USER}
 #RUN groupadd ${SSH_USER}
@@ -43,12 +38,9 @@ RUN echo "log-user:log" | chpasswd
 # RUN git clone https://github.com/cowrie/cowrie.git
 
 
-# Allow chroot_start.sh to execute.
-#COPY dind/only /usr/local/bin/only
-#RUN chmod +x /usr/local/bin/only
-
-
-# SSH Configuration
+# %%
+# SSH CONF
+# %%
 RUN mkdir -p /run/sshd
 
 #Password login - NOT RECOMENDED
@@ -62,25 +54,11 @@ RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config # Not root login.
 RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
-# Add user to SSHD
-
-# SSH Configuration
-#Expose a public key.
-#RUN echo "${SSH_PUB_KEY}" > /home/${SSH_USER}/.ssh/authorized_keys && \
-#  chmod 600 /home/${SSH_USER}/.ssh/authorized_keys
-#RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh/
-
-
-#Add the ForceCommands and Allow TCP, make the chroot
-
-#RUN sed -i '$a ForceCommand only ssh' /etc/ssh/sshd_config
-#RUN sed -i '$a AllowTcpForwarding no' /etc/ssh/sshd_config # This is generally a good security practice
-#RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
-
-# SSH Configuration
-
 RUN ssh-keygen -A
 
+# %%
+# JAIL
+# %%
 
 # Copy necessary binaries and libraries into the jail (minimal set for basic commands)
 RUN mkdir -p ${JAIL_DIR}/bin ${JAIL_DIR}/lib/x86_64-linux-gnu
@@ -115,24 +93,28 @@ RUN echo "Match User ${SSH_USER}" >> /etc/ssh/sshd_config
 RUN echo "    ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
 # RUN echo "Match all" >> /etc/ssh/sshd_config
 
-#RUN chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/.ssh/
+# %%
+# AUDITD conf
+# %%
 
-# Create a custom Docker network with a subnet
-# RUN docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
+COPY dind/auditd.conf /etc/audit/auditd.conf
+COPY dind/audit.rules /etc/audit/rules.d/docker.rules
 
-# Define environment variables
-#ENV CHILD_IMAGE my-child-container
-#ENV CHILD_CONTAINER_NAME child-container-1
-#ENV CHILD_IP_ADDRESS 172.20.0.10  # Static IP for child-container-1
-#ENV CHILD_SSH_PORT 22
+# Create directories for log output
+RUN mkdir -p /var/log/audit
+
+
+
+# %%
+# START
+# %%
+
+COPY dind/start.sh /app/dind/start.sh
+RUN chmod +x /app/dind/start.sh
 
 # Expose SSH Port
 EXPOSE 22
 
-# Startup script
-#RUN echo "#!/bin/sh\n/usr/sbin/sshd -D" > /start.sh
-RUN chmod +x /app/dind/start.sh
-
 # Run the build and run script, and then the log analyzer in the background
-RUN echo ${FLAG} > ssh/flag.txt
+RUN echo ${FLAG} > /app/ssh/flag.txt
 CMD ["/app/dind/start.sh"]
