@@ -21,6 +21,9 @@ RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 
 # SSH Configuration
 RUN mkdir /run/sshd
+# Create audisp directories and file
+RUN mkdir -p /etc/audisp/plugins.d
+RUN touch /etc/audisp/plugins.d/syslog.conf
 
 # Create required folder and start ssh server.
 RUN mkdir -p /home/${SSH_USER}/.ssh
