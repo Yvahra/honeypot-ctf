@@ -8,7 +8,8 @@ WORKDIR /app
 RUN apk add --no-cache git \
         python3 py3-pip \
         openssh \
-        audit 
+        audit \
+        rsyslog
 
 # COPY FILES
 COPY . .
@@ -102,6 +103,27 @@ COPY dind/audit.rules /etc/audit/rules.d/docker.rules
 
 # Create directories for log output
 RUN mkdir -p /var/log/audit
+
+# %%
+# RSYSLOG CONF
+# %%
+
+# Configure rsyslog to receive logs (UDP)
+RUN echo '$ModLoad imudp' >> /etc/rsyslog.conf
+RUN echo '$UDPServerRun 514' >> /etc/rsyslog.conf
+# Optional: Create separate log file for audit logs from Docker client
+RUN mkdir -p /var/log/11/ && \
+    mkdir -p /var/log/12/ && \
+    mkdir -p /var/log/13/ && \
+    mkdir -p /var/log/14/
+RUN echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.11" then /var/log/11/audit_from_docker.log' >> /etc/rsyslog.conf && \
+    echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.12" then /var/log/12/audit_from_docker.log' >> /etc/rsyslog.conf && \
+    echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.13" then /var/log/13/audit_from_docker.log' >> /etc/rsyslog.conf && \
+    echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.14" then /var/log/14/audit_from_docker.log' >> /etc/rsyslog.conf
+RUN echo '& stop' >> /etc/rsyslog.conf
+
+EXPOSE 22
+EXPOSE 514  # Expose port 514 for syslog
 
 
 
