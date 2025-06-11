@@ -37,15 +37,15 @@ sudo docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
 ```
 Build the docker image
 ```sh
-sudo docker build -t challenge --build-arg SSH_USER=player --build-arg SSH_PASS=iwanttheflag .
+sudo docker build -t dind_custom --build-arg SSH_USER=player --build-arg SSH_PASS=player .
 ```
 Run the Docker container
 ```sh
-sudo docker run --name challenge_c -v /var/run/docker.socket:/var/run/docker.socket --privileged -p 2222:22 challenge
+sudo docker run --name challenge -v /var/run/docker.sock:/var/run/docker.sock --privileged -p 2222:22 dind_custom
 ```
 Connect as root
 ```sh
-sudo docker exec -it challenge_c /bin/sh
+sudo docker exec -it challenge /bin/sh
 ```
 
 ## ssh
