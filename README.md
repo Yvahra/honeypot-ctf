@@ -35,13 +35,17 @@ Create Network
 ```sh
 sudo docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
 ```
+Create Shared Volume
+```sh
+docker volume create honeypot_logs_volume
+```
 Build the docker image
 ```sh
 sudo docker build -t dind_custom --build-arg SSH_USER=player --build-arg SSH_PASS=player .
 ```
 Run the Docker container
 ```sh
-sudo docker run --name challenge --net mynetwork --ip 172.20.0.2 -v /var/run/docker.sock:/var/run/docker.sock --privileged -p 2222:22 dind_custom
+sudo docker run --name challenge --net mynetwork --ip 172.20.0.2 -v /var/run/docker.sock:/var/run/docker.sock -v honeypot_logs_volume:/user_logs --privileged -p 2222:22 dind_custom
 ```
 Connect as root
 ```sh
