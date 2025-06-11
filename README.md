@@ -41,7 +41,7 @@ sudo docker build -t dind_custom --build-arg SSH_USER=player --build-arg SSH_PAS
 ```
 Run the Docker container
 ```sh
-sudo docker run --name challenge -v /var/run/docker.sock:/var/run/docker.sock --privileged -p 2222:22 dind_custom
+sudo docker run --name challenge --net mynetwork --ip 172.20.0.2 -v /var/run/docker.sock:/var/run/docker.sock --privileged -p 2222:22 dind_custom
 ```
 Connect as root
 ```sh
