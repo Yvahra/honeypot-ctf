@@ -6,9 +6,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         openssh-server \
         sudo \
-        auditd \
         rsyslog \
-        audispd-plugins \
+        bash \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
@@ -40,19 +39,21 @@ COPY flag.txt /home/root/
 
 
 ##
-# Create audit.rules file
-RUN echo "-a always,exit -F arch=b64 -S execve,execveat -F auid>=1000 -F auid!=4294967295 -k command" > /etc/audit/audit.rules
+# Configure Bash History (Larger and Persistent)
+RUN echo 'HISTSIZE=10000' >> /etc/bash.bashrc
+RUN echo 'HISTFILESIZE=20000' >> /etc/bash.bashrc
+RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /etc/bash.bashrc
+RUN echo 'shopt -s histappend' >> /etc/bash.bashrc
+RUN echo 'shopt -s checkwinsize' >> /etc/bash.bashrc
+ENV HISTFILE=/root/.bash_history
 
-# Configure audispd to send audit events to rsyslog
-RUN sed -i 's/^#log_file =.*/log_file = syslog/' /etc/audisp/plugins.d/syslog.conf
-RUN sed -i 's/^#file_location =.*/file_location = syslog/' /etc/audisp/plugins.d/syslog.conf # For Ubuntu 22 and newer
-
-# Configure rsyslog to receive audit messages
-RUN echo '$ModLoad imuxsock # provides support for local system logging' >> /etc/rsyslog.conf
-RUN echo '$ModLoad imudp' >> /etc/rsyslog.conf # UDP listener
-RUN echo '$UDPServerRun 514' >> /etc/rsyslog.conf # Listen on UDP port 514 (or any unused port)
-RUN echo 'if $programname == "auditd" then @172.20.0.2:514' >> /etc/rsyslog.conf
-RUN echo 'if $programname == "auditd" then ~' >> /etc/rsyslog.conf  # Discard the message after processing
+# Configure rsyslog to forward logs to the DinD container
+# Get the DinD container IP address at runtime.  Use Docker network to resolve by name.
+RUN echo '$ActionForwardDefaultTemplate RSYSLOG_TraditionalFormat' >> /etc/rsyslog.conf
+RUN echo '*.* @172.20.0.2:514' >> /etc/rsyslog.conf # Replace with DinD container's hostname/IP and port
+#Enable UDP reception for remote logs
+RUN echo '$ModLoad imudp' >> /etc/rsyslog.conf
+RUN echo '$UDPServerRun 514' >> /etc/rsyslog.conf
 
 ##
 
