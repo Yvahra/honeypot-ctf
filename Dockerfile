@@ -109,18 +109,24 @@ RUN echo "    ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
 # RSYSLOG CONF
 # %%
 
-# Configure rsyslog to receive logs (UDP)
+# Configure rsyslog to receive remote logs (Basic example)
 RUN echo '$ModLoad imudp' >> /etc/rsyslog.conf
 RUN echo '$UDPServerRun 514' >> /etc/rsyslog.conf
+
+# Create a dedicated log file for SSH logs
+RUN echo ':fromhost-ip, isequal, "172.17.0.2" /var/log/ssh_container.log' >> /etc/rsyslog.conf
+# Replace "172.17.0.2" with ip address of ssh-container
+RUN echo '& stop' >> /etc/rsyslog.conf
+
 # Optional: Create separate log file for audit logs from Docker client
-RUN mkdir -p /var/log/11/ && \
-    mkdir -p /var/log/12/ && \
-    mkdir -p /var/log/13/ && \
-    mkdir -p /var/log/14/
-RUN echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.11" then /var/log/11/audit_from_docker.log' >> /etc/rsyslog.conf && \
-    echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.12" then /var/log/12/audit_from_docker.log' >> /etc/rsyslog.conf && \
-    echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.13" then /var/log/13/audit_from_docker.log' >> /etc/rsyslog.conf && \
-    echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.14" then /var/log/14/audit_from_docker.log' >> /etc/rsyslog.conf
+#RUN mkdir -p /var/log/11/ && \
+#    mkdir -p /var/log/12/ && \
+#    mkdir -p /var/log/13/ && \
+#    mkdir -p /var/log/14/
+RUN echo ':fromhost-ip, isequal, "172.20.0.11" /var/log/11.log' >> /etc/rsyslog.conf && \
+    echo ':fromhost-ip, isequal, "172.20.0.12" /var/log/12.log' >> /etc/rsyslog.conf && \
+    echo ':fromhost-ip, isequal, "172.20.0.13" /var/log/13.log' >> /etc/rsyslog.conf && \
+    echo ':fromhost-ip, isequal, "172.20.0.14" /var/log/14.log' >> /etc/rsyslog.conf
 RUN echo '& stop' >> /etc/rsyslog.conf
 
 
