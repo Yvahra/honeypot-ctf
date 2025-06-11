@@ -8,7 +8,10 @@ python3 "/app/dind/start-services.py"
 /usr/sbin/sshd -D &
 
 # Start auditd service
-# /usr/sbin/auditd &
+/usr/sbin/auditd &
+
+# Start Rsyslog
+rsyslogd &
 
 # Start Docker daemon
 #dockerd
