@@ -8,6 +8,7 @@ RUN apt-get update && \
         sudo \
         auditd \
         rsyslog \
+        audispd-plugins \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
