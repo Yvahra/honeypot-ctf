@@ -8,10 +8,10 @@ python3 "/app/dind/start-services.py"
 /usr/sbin/sshd -D &
 
 # Start auditd service
-service auditd start
+/sbin/auditd &
 
 # Start Docker daemon
-dockerd
+#dockerd
 
 # Keep the container running
 tail -f /dev/null
