@@ -9,7 +9,8 @@ RUN apk add --no-cache git \
         python3 py3-pip \
         openssh \
         audit \
-        rsyslog
+        rsyslog \
+        openrc
 
 # COPY FILES
 COPY . .
