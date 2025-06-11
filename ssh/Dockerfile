@@ -49,8 +49,7 @@ RUN echo 'if $programname == "auditd" then @172.20.0.2:514' >> /etc/rsyslog.conf
 RUN echo 'if $programname == "auditd" then ~' >> /etc/rsyslog.conf # Stop processing locally
 
 # Expose the SSH port
-EXPOSE 2222
-EXPOSE 514 # Expose port 514 for rsyslog
+EXPOSE 2222 514
 
 # Start services
 CMD /usr/sbin/auditd && rsyslogd && /usr/sbin/sshd -D
