@@ -8,9 +8,9 @@ WORKDIR /app
 RUN apk add --no-cache git \
         python3 py3-pip \
         openssh \
-        audit \
-        rsyslog \
-        openrc
+        #audit \
+        rsyslog
+        #openrc
 
 # COPY FILES
 COPY . .
@@ -99,11 +99,11 @@ RUN echo "    ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
 # AUDITD conf
 # %%
 
-COPY dind/auditd.conf /etc/audit/auditd.conf
-COPY dind/audit.rules /etc/audit/rules.d/docker.rules
+#COPY dind/auditd.conf /etc/audit/auditd.conf
+#COPY dind/audit.rules /etc/audit/rules.d/docker.rules
 
 # Create directories for log output
-RUN mkdir -p /var/log/audit
+#RUN mkdir -p /var/log/audit
 
 # %%
 # RSYSLOG CONF
