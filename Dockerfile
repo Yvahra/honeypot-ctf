@@ -122,9 +122,6 @@ RUN echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.11" then /va
     echo 'if $programname == "auditd" and $fromhost-ip == "172.20.0.14" then /var/log/14/audit_from_docker.log' >> /etc/rsyslog.conf
 RUN echo '& stop' >> /etc/rsyslog.conf
 
-EXPOSE 22
-EXPOSE 514  # Expose port 514 for syslog
-
 
 
 # %%
@@ -135,7 +132,7 @@ COPY dind/start.sh /app/dind/start.sh
 RUN chmod +x /app/dind/start.sh
 
 # Expose SSH Port
-EXPOSE 22
+EXPOSE 22 514
 
 # Run the build and run script, and then the log analyzer in the background
 RUN echo ${FLAG} > /app/ssh/flag.txt
