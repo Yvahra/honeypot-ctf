@@ -30,7 +30,7 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
 
 RUN mkdir /home/root
-COPY /app/ssh/flag.txt /home/root/
+COPY flag.txt /home/root/
 
 # Expose the SSH port
 EXPOSE 2222
