@@ -1,9 +1,6 @@
 #!/bin/sh
 set -e
 
-# Start child Dockers
-python3 "/app/dind/start-services.py"
-
 # Start SSH service
 /usr/sbin/sshd -D &
 
