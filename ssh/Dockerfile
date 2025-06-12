@@ -6,7 +6,6 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         openssh-server \
         sudo \
-        rsyslog \
         bash \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
@@ -49,16 +48,11 @@ ENV HISTFILE=/root/.bash_history
 
 # Configure rsyslog to forward logs to the DinD container
 # Get the DinD container IP address at runtime.  Use Docker network to resolve by name.
-RUN echo '$ActionForwardDefaultTemplate RSYSLOG_TraditionalFormat' >> /etc/rsyslog.conf
-RUN echo '*.* @172.20.0.2:514' >> /etc/rsyslog.conf # Replace with DinD container's hostname/IP and port
-#Enable UDP reception for remote logs
-RUN echo '$ModLoad imudp' >> /etc/rsyslog.conf
-RUN echo '$UDPServerRun 514' >> /etc/rsyslog.conf
 
 ##
 
 # Expose the SSH port
-EXPOSE 2222 514
+EXPOSE 2222
 
 # Start services
  
