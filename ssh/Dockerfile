@@ -35,6 +35,7 @@ RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
 
 RUN mkdir /home/root
 COPY flag.txt /home/root/
+RUN chmod 600 /home/root/flag.txt
 
 
 ##
