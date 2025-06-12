@@ -12,8 +12,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
 # Create a non-root user (Highly Recommended for Security)
-ARG SSH_USER 
-ARG SSH_PASS 
+ARG SSH_USER='ot-user'
+ARG SSH_PASS='p@ssword'
 RUN useradd -m -s /bin/bash ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd  
 # RUN usermod -aG sudo ${SSH_USER}  # Add user to the sudo group
