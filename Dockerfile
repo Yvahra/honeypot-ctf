@@ -24,18 +24,6 @@ ENV JAIL_DIR /jail
 RUN mkdir -p ${JAIL_DIR}
 
 # %%
-# NETWORK
-# %%
-
-RUN docker network create --subnet=10.0.0.0/8 --gateway=10.0.0.1 honeynet
-
-# %%
-# LOGS
-# %%
-
-RUN docker volume create --name sharedLogs
-
-# %%
 # USERS
 # %%
 
