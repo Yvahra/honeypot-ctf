@@ -13,7 +13,7 @@ sleep 30
 if ! docker network inspect honeynet >/dev/null 2>&1; then
   # Network doesn't exist, create it
   echo "Network 'honeynet' does not exist. Creating..."
-  docker network create --subnet=10.0.0.0/8 --gateway=10.0.0.1 --driver=host honeynet
+  docker network create --subnet=10.0.0.0/8 --gateway=10.0.0.1 honeynet
   if [ $? -eq 0 ]; then
     echo "Network 'honeynet' created successfully."
   else
