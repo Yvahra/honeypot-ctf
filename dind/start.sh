@@ -15,7 +15,7 @@ python3 "/app/dind/start-services.py"
 
 
 # Start Rsyslog
-rsyslogd &
+# rsyslogd &
 
 # Start Docker daemon
 #dockerd
