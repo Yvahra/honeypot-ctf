@@ -17,6 +17,11 @@ RUN useradd -m -s /bin/bash ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd  
 # RUN usermod -aG sudo ${SSH_USER}  # Add user to the sudo group
 
+ARG SSH_ADMIN='ot-admin'
+ARG SSH_APASS='arblleabrhve2379r4b3214b9fJBDSABB@M@#KK@#$$'
+RUN useradd -m -s /bin/bash ${SSH_ADMIN}
+RUN echo "${SSH_ADMIN}:${SSH_APASS}" | chpasswd 
+
 # SSH Configuration
 RUN mkdir /run/sshd
 # Create audisp directories and file
@@ -33,10 +38,6 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 
 RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
 
-RUN mkdir /home/root
-COPY flag.txt /home/root/
-RUN chmod 600 /home/root/flag.txt
-
 
 ##
 # Configure Bash History (Larger and Persistent)
@@ -51,6 +52,19 @@ ENV HISTFILE=/root/.bash_history
 # Get the DinD container IP address at runtime.  Use Docker network to resolve by name.
 
 ##
+
+USER ${SSH_ADMIN}
+
+RUN mkdir /home/${SSH_ADMIN}
+COPY flag.txt /home/${SSH_ADMIN}/
+RUN chmod 600 /home/${SSH_ADMIN}/flag.txt
+
+RUN mkdir -p /bin/rootshell 
+WORKDIR /bin/rootshell
+COPY asadmin.c .
+RUN gcc asroot.c -o shell
+RUN chmod u+s shell
+
 
 # Expose the SSH port
 EXPOSE 2222
