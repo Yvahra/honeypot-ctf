@@ -1,6 +1,6 @@
 import random, os
 
-LIST_IP = ['172.20.0.11','172.20.0.12','172.20.0.13','172.20.0.14']
+LIST_IP = ['10.0.0.11','10.0.0.12','10.0.0.13','10.20.0.14']
 
 SSH_SERVICE = 1
 CONPOT_SERVICE = 2
@@ -32,7 +32,7 @@ def up_ssh(ind:int):
   Build and run SSH docker.
   """
   os.system("cd /app/ssh/ && docker build -t "+str(ind+1)+" --build-arg SSH_USER=user --build-arg SSH_PASS=ilovessh .")
-  os.system("cd /app/ssh/ && docker run -v honeypot_logs_volume:/user_logs -d --name "+str(ind+1)+"_c --net mynetwork --ip " + LIST_IP[ind] + " " + str(ind+1))
+  os.system("cd /app/ssh/ && docker run -v sharedLogs:/sharedLogs -d --name "+str(ind+1)+"_c --net honeynet --ip " + LIST_IP[ind] + " " + str(ind+1))
   pass
 
 
