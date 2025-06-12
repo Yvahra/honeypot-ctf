@@ -15,8 +15,8 @@ RUN apk add --no-cache git \
 # COPY FILES
 COPY . .
 
-ARG SSH_USER
-ARG SSH_PASS
+ARG SSH_USER='m95dupont'
+ARG SSH_PASS='myP@ssword!'
 ARG FLAG="ECW{H0n3y_pr0of_pl@yer}"
 
 # Define jail directory
