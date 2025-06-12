@@ -3,6 +3,9 @@ set -e
 
 unset DOCKER_HOST
 
+# Start Docker daemon
+dockerd &
+
 # Network
 # Check if the 'honeynet' network exists
 if ! docker network inspect honeynet >/dev/null 2>&1; then
@@ -33,9 +36,6 @@ python3 "/app/dind/start-services.py"
 
 # Start Rsyslog
 # rsyslogd &
-
-# Start Docker daemon
-#dockerd
 
 # Keep the container running
 tail -f /dev/null
