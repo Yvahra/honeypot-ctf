@@ -4,17 +4,9 @@
 
 ## Player's users
 
-agent : iwanttopawn -- player connection
-ssh-user : lkwf nqdjv dqfdqfvq -- user we want to get the flag
+m95dupont : myP@ssword! -- player connection
+ot-user : p@ssword -- user we want to get the flag
 
-## backend's users
-
-deploy-manager : I4mtHeM@n4geroFSsH -- handle python script
-
-deploy-1 : Iw@ntT0d3ploy!SSH -- handle localhost:22001
-deploy-2 : Iw@ntT0d3ploy!SSH -- handle localhost:22002
-deploy-3 : Iw@ntT0d3ploy!SSH -- handle localhost:22003
-deploy-4 : Iw@ntT0d3ploy!SSH -- handle localhost:22004
 
 # Services
 ## Docker in Docker
@@ -31,6 +23,21 @@ https://hub.docker.com/r/honeynet/conpot
 # Dokerfiles
 
 ## dind
+Build the docker image
+```sh
+sudo docker build -t dind_custom .
+```
+Run the Docker container
+```sh
+sudo docker run --name challenge -v /var/run/docker.sock:/var/run/docker.sock --privileged -p 2222:22 dind_custom
+```
+Connect as root
+```sh
+sudo docker exec -it challenge /bin/sh
+```
+
+## DinD config (automated)
+
 Create Network
 ```sh
 sudo docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
@@ -38,18 +45,6 @@ sudo docker network create --subnet=172.20.0.0/16 --gateway=172.20.0.1 mynetwork
 Create Shared Volume
 ```sh
 docker volume create honeypot_logs_volume
-```
-Build the docker image
-```sh
-sudo docker build -t dind_custom --build-arg SSH_USER=player --build-arg SSH_PASS=player .
-```
-Run the Docker container
-```sh
-sudo docker run --name challenge --net mynetwork --ip 172.20.0.2 -v /var/run/docker.sock:/var/run/docker.sock -v honeypot_logs_volume:/user_logs --privileged -p 2222:22 dind_custom
-```
-Connect as root
-```sh
-sudo docker exec -it challenge /bin/sh
 ```
 
 ## ssh
