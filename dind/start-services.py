@@ -31,7 +31,7 @@ def up_ssh(ind:int):
   """
   Build and run SSH docker.
   """
-  os.system("cd /app/ssh/ && docker build -t "+str(ind+1)+" --build-arg SSH_USER=user --build-arg SSH_PASS=ilovessh .")
+  os.system("cd /app/ssh/ && docker build -t "+str(ind+1)+" .")
   os.system("cd /app/ssh/ && docker run -v sharedLogs:/sharedLogs -d --name "+str(ind+1)+"_c --net honeynet --ip " + LIST_IP[ind] + " " + str(ind+1))
   pass
 
