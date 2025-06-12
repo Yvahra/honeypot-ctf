@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+unset DOCKER_HOST
+
 # Network
 # Check if the 'honeynet' network exists
 if ! docker network inspect honeynet >/dev/null 2>&1; then
