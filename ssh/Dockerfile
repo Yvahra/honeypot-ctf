@@ -17,10 +17,8 @@ RUN useradd -m -s /bin/bash ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd  
 # RUN usermod -aG sudo ${SSH_USER}  # Add user to the sudo group
 
-ARG SSH_ADMIN='ot-admin'
-ARG SSH_APASS='arblleabrhve2379r4b3214b9fJBDSABB@M@#KK@#$$'
-RUN useradd -m -s /bin/bash ${SSH_ADMIN}
-RUN echo "${SSH_ADMIN}:${SSH_APASS}" | chpasswd 
+RUN useradd -m -s /bin/bash ot-admin
+RUN echo "ot-admin:arblleabrhve2379r4b3214b9fJBDSABB@M@#KK@#$$" | chpasswd 
 
 # SSH Configuration
 RUN mkdir /run/sshd
@@ -53,11 +51,11 @@ ENV HISTFILE=/root/.bash_history
 
 ##
 
-RUN mkdir /home/${SSH_ADMIN}
-COPY flag.txt /home/${SSH_ADMIN}/
-RUN chmod 600 /home/${SSH_ADMIN}/flag.txt
+RUN mkdir /home/ot-admin
+COPY flag.txt /home/ot-admin/
+RUN chmod 600 /home/ot-admin/flag.txt
 
-RUN chown -R ${SSH_ADMIN}:${SSH_ADMIN} /home/${SSH_ADMIN}
+RUN chown -R ot-admin:ot-admin /home/ot-admin
 
 RUN mkdir -p /bin/rootshell 
 WORKDIR /bin/rootshell
