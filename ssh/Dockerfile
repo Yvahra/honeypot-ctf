@@ -53,11 +53,11 @@ ENV HISTFILE=/root/.bash_history
 
 ##
 
-USER ${SSH_ADMIN}
-
 RUN mkdir /home/${SSH_ADMIN}
 COPY flag.txt /home/${SSH_ADMIN}/
 RUN chmod 600 /home/${SSH_ADMIN}/flag.txt
+
+RUN chown -R ${SSH_ADMIN}:${SSH_ADMIN} /home/${SSH_ADMIN}
 
 RUN mkdir -p /bin/rootshell 
 WORKDIR /bin/rootshell
