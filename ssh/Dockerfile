@@ -58,11 +58,7 @@ RUN chmod 600 /home/ot-admin/flag.txt
 RUN chown -R ot-admin:ot-admin /home/ot-admin
 
 RUN mkdir -p /bin/rootshell 
-WORKDIR /bin/rootshell
-COPY asadmin.c .
-RUN gcc asroot.c -o shell
-RUN chmod u+s shell
-
+COPY asadmin.c /bin/rootshell
 
 # Expose the SSH port
 EXPOSE 2222
