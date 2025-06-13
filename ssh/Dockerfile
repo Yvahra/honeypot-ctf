@@ -51,7 +51,7 @@ ENV HISTFILE=/root/.bash_history
 
 ##
 
-RUN mkdir /home/ot-admin
+#RUN mkdir /home/ot-admin
 COPY flag.txt /home/ot-admin/
 RUN chmod 600 /home/ot-admin/flag.txt
 
