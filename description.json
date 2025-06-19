@@ -1,0 +1,22 @@
+{
+"Honeypots": {
+"author": "cybercni",
+"difficulty": "medium",
+"description": "",
+"category": "network",
+"flag": "ECW{}",
+"check": "python3 solve.py",
+"images": [],
+"deploy": {
+"dockername": "CyberCNI/Honeypots",
+"ports": {
+"2222/tcp" : {
+"port": "2222/tcp",
+"protocol": "tcp",
+"display": true,
+"name": "challenge"
+}
+}
+},
+"mem_limit": "256m"
+}
