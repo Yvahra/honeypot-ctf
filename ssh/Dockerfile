@@ -14,12 +14,16 @@ RUN apt-get update && \
 # Create a non-root user (Highly Recommended for Security)
 ARG SSH_USER='ot-user'
 ARG SSH_PASS='p@ssword'
+RUN addgroup user
 RUN useradd -m -s /bin/bash ${SSH_USER}
+RUN addgroup ot-user user
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd  
 # RUN usermod -aG sudo ${SSH_USER}  # Add user to the sudo group
 
+RUN addgroup admin
 RUN useradd -m -s /bin/bash ot-admin
 RUN echo "ot-admin:arblleabrhve2379r4b3214b9fJBDSABB@M@#KK@#$$" | chpasswd 
+RUN addgroup ot-admin admin
 
 # SSH Configuration
 RUN mkdir /run/sshd
