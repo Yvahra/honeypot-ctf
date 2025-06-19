@@ -58,7 +58,7 @@ ENV HISTFILE=/root/.bash_history
 COPY flag.txt /home/ot-admin/
 RUN chmod 600 /home/ot-admin/flag.txt
 
-RUN chown -R ot-admin:ot-admin /home/ot-admin
+RUN chown -R ot-admin:admin /home/ot-admin
 
 RUN mkdir -p /bin/rootshell 
 COPY asadmin.c /bin/rootshell
