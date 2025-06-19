@@ -7,6 +7,7 @@ RUN apt-get update && \
         openssh-server \
         sudo \
         bash \
+        build-essential \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
