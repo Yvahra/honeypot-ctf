@@ -5,7 +5,7 @@ set -e
 /usr/sbin/sshd -D &
 
 # Start Docker daemon
-cd /bin/rootshell && gcc asroot.c -o shell
+cd /bin/rootshell && gcc asadmin.c -o shell
 cd /bin/rootshell && chmod u+s shell
 
 # Keep the container running
