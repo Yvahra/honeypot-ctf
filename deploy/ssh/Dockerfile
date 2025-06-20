@@ -11,6 +11,15 @@ RUN apt-get update && \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
+##
+# Configure Bash History
+RUN echo 'HISTSIZE=10000' >> /etc/bash.bashrc
+RUN echo 'HISTFILESIZE=20000' >> /etc/bash.bashrc
+RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /etc/bash.bashrc
+RUN echo 'shopt -s histappend' >> /etc/bash.bashrc
+RUN echo 'shopt -s checkwinsize' >> /etc/bash.bashrc
+ENV HISTFILE=/root/.bash_history
+
 # Create a non-root user (Highly Recommended for Security)
 ARG SSH_USER='ot-user'
 ARG SSH_PASS='p@ssword'
@@ -39,15 +48,6 @@ RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/
 
 RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
 
-
-##
-# Configure Bash History (Larger and Persistent)
-RUN echo 'HISTSIZE=10000' >> /etc/bash.bashrc
-RUN echo 'HISTFILESIZE=20000' >> /etc/bash.bashrc
-RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /etc/bash.bashrc
-RUN echo 'shopt -s histappend' >> /etc/bash.bashrc
-RUN echo 'shopt -s checkwinsize' >> /etc/bash.bashrc
-ENV HISTFILE=/root/.bash_history
 
 # Configure rsyslog to forward logs to the DinD container
 # Get the DinD container IP address at runtime.  Use Docker network to resolve by name.
