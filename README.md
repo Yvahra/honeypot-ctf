@@ -30,7 +30,7 @@ sudo docker build -t dind_custom deploy/
 ```
 Run the Docker container
 ```sh
-sudo docker run --name challenge -v /var/run/docker.sock:/var/run/docker.sock --privileged -p 2222:22 dind_custom
+sudo docker run --name challenge --privileged -p 2222:22 dind_custom
 ```
 Connect as root
 ```sh
