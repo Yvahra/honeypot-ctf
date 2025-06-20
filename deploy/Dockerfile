@@ -8,7 +8,6 @@ WORKDIR /app
 RUN apk add --no-cache git \
         python3 py3-pip \
         openssh \
-        #audit \
         rsyslog
         #openrc
 
@@ -94,41 +93,12 @@ RUN echo "Match User ${SSH_USER}" >> /etc/ssh/sshd_config
 RUN echo "    ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
 # RUN echo "Match all" >> /etc/ssh/sshd_config
 
-# %%
-# AUDITD conf
-# %%
-
-#COPY dind/auditd.conf /etc/audit/auditd.conf
-#COPY dind/audit.rules /etc/audit/rules.d/docker.rules
-
-# Create directories for log output
-#RUN mkdir -p /var/log/audit
 
 # %%
-# RSYSLOG CONF
+# LOGS
 # %%
 
-# Configure rsyslog to receive remote logs (Basic example)
-#RUN echo '$ModLoad imudp' >> /etc/rsyslog.conf
-#RUN echo '$UDPServerRun 514' >> /etc/rsyslog.conf
-
-# Create a dedicated log file for SSH logs
-#RUN echo ':fromhost-ip, isequal, "172.17.0.2" /var/log/ssh_container.log' >> /etc/rsyslog.conf
-# Replace "172.17.0.2" with ip address of ssh-container
-#RUN echo '& stop' >> /etc/rsyslog.conf
-
-# Optional: Create separate log file for audit logs from Docker client
-#RUN mkdir -p /var/log/11/ && \
-#    mkdir -p /var/log/12/ && \
-#    mkdir -p /var/log/13/ && \
-#    mkdir -p /var/log/14/
-#RUN echo ':fromhost-ip, isequal, "172.20.0.11" /var/log/11.log' >> /etc/rsyslog.conf && \
-#    echo ':fromhost-ip, isequal, "172.20.0.12" /var/log/12.log' >> /etc/rsyslog.conf && \
-#    echo ':fromhost-ip, isequal, "172.20.0.13" /var/log/13.log' >> /etc/rsyslog.conf && \
-#    echo ':fromhost-ip, isequal, "172.20.0.14" /var/log/14.log' >> /etc/rsyslog.conf
-#RUN echo '& stop' >> /etc/rsyslog.conf
-
-
+RUN mkdir -p /logs/1/ /logs/2/ /logs/3/ /logs/4/
 
 # %%
 # START
@@ -138,7 +108,7 @@ COPY dind/start.sh /app/dind/start.sh
 RUN chmod +x /app/dind/start.sh
 
 # Expose SSH Port
-EXPOSE 22 514
+EXPOSE 22
 
 # Run the build and run script, and then the log analyzer in the background
 RUN echo ${FLAG} > /app/ssh/flag.txt
