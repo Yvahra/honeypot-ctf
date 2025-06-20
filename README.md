@@ -5,6 +5,7 @@
 ## Player's users
 
 m95dupont : myP@ssword! -- player connection
+
 ot-user : p@ssword -- user we want to get the flag
 
 
@@ -25,7 +26,7 @@ https://hub.docker.com/r/honeynet/conpot
 ## dind
 Build the docker image
 ```sh
-sudo docker build -t dind_custom .
+sudo docker build -t dind_custom deploy/
 ```
 Run the Docker container
 ```sh
