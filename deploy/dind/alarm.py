@@ -61,13 +61,13 @@ def analyze_logs(container:int) -> bool:
     return False
 
 def check_logs():
-    backup()
     for container in range(1, NB_CONTAINERS+1):
         history_size = os.path.getsize("/logs/"+str(container)+"/command_history.log")
         if history_size != 0:
+            backup()
             print("Log found")
             alarm = analyze_logs(container)
-        init_log(container)
+            init_log(container)
             
         
 
