@@ -4,9 +4,7 @@ set -e
 unset DOCKER_HOST
 
 # Start Docker daemon
-dockerd &
-
-sleep 30
+dockerd
 
 # Network
 # Check if the 'honeynet' network exists
@@ -27,7 +25,8 @@ fi
 
 
 # Logs
-docker volume create --name sharedLogs
+
+docker build -t ssh /app/ssh
 
 # Start child Dockers
 python3 "/app/dind/start-services.py"
