@@ -18,7 +18,7 @@ RUN echo 'HISTFILESIZE=20000' >> /etc/bash.bashrc
 RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /etc/bash.bashrc
 RUN echo 'shopt -s histappend' >> /etc/bash.bashrc
 RUN echo 'shopt -s checkwinsize' >> /etc/bash.bashrc
-RUN source /etc/bash.bashrc
+# RUN source /etc/bash.bashrc
 ENV HISTFILE=/root/.bash_history
 
 # Create a non-root user (Highly Recommended for Security)
