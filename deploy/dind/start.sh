@@ -4,7 +4,7 @@ set -e
 unset DOCKER_HOST
 
 # Start Docker daemon
-dockerd
+dockerd &
 
 # Network
 # Check if the 'honeynet' network exists
