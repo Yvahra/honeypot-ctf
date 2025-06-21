@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import docker
-import time
 import re
 import os
 
@@ -29,12 +27,15 @@ suspicious_patterns = [
 NB_CONTAINERS = 4
 
 def init_log(container:int):
-    os.system("rm /logs/"+str(container)+"/command_history.log")
+    if os.path.exists("/logs/"+str(container)+"/command_history.log"):
+        os.system("rm /logs/"+str(container)+"/command_history.log")
     os.system("touch /logs/"+str(container)+"/command_history.log")
     os.system("chmod 666 /logs/"+str(container)+"/command_history.log")
 
 def backup():
     for container in range(1, NB_CONTAINERS+1):
+        if not os.path.exists("/logs_bck/"+str(container)+"/"):
+            os.system("mkdir -p /logs_bck/"+str(container))
         os.system("cp /logs/"+str(container)+"/command_history.log /logs_bck/"+str(container)+"/last_history.log")
 
 def alarm():
