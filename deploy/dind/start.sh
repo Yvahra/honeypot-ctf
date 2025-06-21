@@ -35,6 +35,9 @@ python3 "/app/dind/start-services.py"
 # Start SSH service
 /usr/sbin/sshd -D &
 
+# Start child Dockers
+python3 "/app/dind/alarm.py" &
+
 
 # Start Rsyslog
 # rsyslogd &
