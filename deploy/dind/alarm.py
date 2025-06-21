@@ -39,6 +39,7 @@ def backup():
         os.system("cp /logs/"+str(container)+"/command_history.log /logs_bck/"+str(container)+"/last_history.log")
 
 def alarm():
+    print("Alarm!")
     os.system("python /app/dind/stop_services.py")
     os.system("python /app/dind/start_services.py")
 
@@ -64,6 +65,7 @@ def check_logs():
     for container in range(1, NB_CONTAINERS+1):
         history_size = os.path.getsize("/logs/"+str(container)+"/command_history.log")
         if history_size != 0:
+            print("Log found")
             alarm = analyze_logs(container)
         init_log(container)
             
