@@ -40,8 +40,8 @@ def backup():
 
 def alarm():
     print("Alarm!")
-    os.system("python /app/dind/stop_services.py")
-    os.system("python /app/dind/start_services.py")
+    os.system("python /app/dind/stop-services.py")
+    os.system("python /app/dind/start-services.py")
 
 def send_logs(container:int):
     pass
