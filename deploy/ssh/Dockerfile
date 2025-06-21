@@ -66,12 +66,12 @@ COPY asroot.c /bin/rootshell
 
 
 RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/ot-user/.bashrc
-RUN echo 'history >> /logs/command_history.log 2>/dev/null' >> /home/ot-user/.bashrc
-RUN echo 'PROMPT_COMMAND="history >> /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
+RUN echo 'history > /logs/command_history.log 2>/dev/null' >> /home/ot-user/.bashrc
+RUN echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
 
 RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /root/.bashrc
-RUN echo 'history -a >> /logs/command_history.log 2>/dev/null' >> /root/.bashrc
-RUN echo 'PROMPT_COMMAND="history -a >> /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /root/.bashrc
+RUN echo 'history -a > /logs/command_history.log 2>/dev/null' >> /root/.bashrc
+RUN echo 'PROMPT_COMMAND="history -a > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /root/.bashrc
 
 # Expose the SSH port
 EXPOSE 2222
