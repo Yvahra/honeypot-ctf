@@ -65,14 +65,13 @@ RUN mkdir -p /bin/rootshell
 COPY asroot.c /bin/rootshell
 
 
-RUN echo 'HISTTIMEFORMAT="%F %T "' >> /home/ot-user/.bashrc
-RUN echo 'history -a >(tee -a /logs/command_history.log)' >> /home/ot-user/.bashrc
-RUN echo 'PROMPT_COMMAND="history -a >(tee -a /logs/command_history.log); $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
+RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/ot-user/.bashrc
+RUN echo 'history -a >> /logs/command_history.log 2>/dev/null' >> /home/ot-user/.bashrc
+RUN echo 'PROMPT_COMMAND="history -a >> /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
 
-
-RUN echo 'HISTTIMEFORMAT="%F %T "' >> /root/.bashrc
-RUN echo 'history -a >(tee -a /logs/command_history.log)' >> /root/.bashrc
-RUN echo 'PROMPT_COMMAND="history -a >(tee -a /logs/command_history.log); $PROMPT_COMMAND"' >> /root/.bashrc
+RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /root/.bashrc
+RUN echo 'history -a >> /logs/command_history.log 2>/dev/null' >> /root/.bashrc
+RUN echo 'PROMPT_COMMAND="history -a >> /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /root/.bashrc
 
 # Expose the SSH port
 EXPOSE 2222
