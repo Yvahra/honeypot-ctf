@@ -1,10 +1,8 @@
 import os
 
-for i in range(4):
-  os.system("docker stop "+str(i+1)+"_c")
-
-for i in range(4):
-  os.system("docker remove "+str(i+1)+"_c")
+for container in ["ssh_c", "kippo_c", "cowrie_c"]:
+  os.system("docker stop "+container)
+  os.system("docker remove "+container)
 
 #os.system("rm /jail/home/player/.ssh/known_hosts")
 #os.system("touch /jail/home/player/.ssh/known_hosts")
