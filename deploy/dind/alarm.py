@@ -48,16 +48,15 @@ def send_logs(container:int):
 def analyze_logs(container:int) -> bool:
     log_file = open("/logs_bck/"+str(container)+"/last_history.log", "r")
     logs = log_file.readlines()
+    log_file.close()
     if len(logs) > 5:
         logs = logs[-5:]
     for log in logs:
-            log = log.decode('utf-8').strip()
-            if log:
-                for pattern in suspicious_patterns:
-                    if re.search(pattern, log, re.IGNORECASE):
-                        print(f"ALARM: Suspicious command detected in "+str(container)+": "+log)
-                        alarm()
-                        return True
+        for pattern in suspicious_patterns:
+            if re.search(pattern, log, re.IGNORECASE):
+                print(f"ALARM: Suspicious command detected in "+str(container)+": "+log)
+                alarm()
+                return True
     return False
 
 def check_logs():
