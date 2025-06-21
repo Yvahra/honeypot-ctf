@@ -13,13 +13,13 @@ RUN apt-get update && \
 
 ##
 # Configure Bash History
-RUN echo 'HISTSIZE=10000' >> /etc/bash.bashrc
-RUN echo 'HISTFILESIZE=20000' >> /etc/bash.bashrc
-RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /etc/bash.bashrc
-RUN echo 'shopt -s histappend' >> /etc/bash.bashrc
-RUN echo 'shopt -s checkwinsize' >> /etc/bash.bashrc
+#RUN echo 'HISTSIZE=10000' >> /etc/bash.bashrc
+#RUN echo 'HISTFILESIZE=20000' >> /etc/bash.bashrc
+#RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /etc/bash.bashrc
+#RUN echo 'shopt -s histappend' >> /etc/bash.bashrc
+#RUN echo 'shopt -s checkwinsize' >> /etc/bash.bashrc
 # RUN source /etc/bash.bashrc
-ENV HISTFILE=/root/.bash_history
+#ENV HISTFILE=/root/.bash_history
 
 # Create a non-root user (Highly Recommended for Security)
 ARG SSH_USER='ot-user'
@@ -63,6 +63,16 @@ RUN chown -R ot-admin:admin /home/ot-admin
 
 RUN mkdir -p /bin/rootshell 
 COPY asroot.c /bin/rootshell
+
+
+RUN echo 'HISTTIMEFORMAT="%F %T "' >> /home/ot-user/.bashrc
+RUN echo 'history -a >(tee -a /logs/command_history.log)' >> /home/ot-user/.bashrc
+RUN echo 'PROMPT_COMMAND="history -a >(tee -a /logs/command_history.log); $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
+
+
+RUN echo 'HISTTIMEFORMAT="%F %T "' >> /root/.bashrc
+RUN echo 'history -a >(tee -a /logs/command_history.log)' >> /root/.bashrc
+RUN echo 'PROMPT_COMMAND="history -a >(tee -a /logs/command_history.log); $PROMPT_COMMAND"' >> /root/.bashrc
 
 # Expose the SSH port
 EXPOSE 2222
