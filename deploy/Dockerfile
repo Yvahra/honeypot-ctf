@@ -8,7 +8,7 @@ WORKDIR /app
 RUN apk add --no-cache git \
         python3 py3-pip \
         openssh \
-        rsyslog
+        util-linux
         #openrc
 
 # COPY FILES
