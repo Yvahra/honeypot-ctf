@@ -24,9 +24,7 @@ else
   echo "Network 'honeynet' already exists."
 fi
 
-
-# Logs
-
+# Build images
 docker build -t ssh /app/ssh
 
 # Start child Dockers
@@ -38,9 +36,6 @@ python3 "/app/dind/start-services.py"
 # Start child Dockers
 python3 "/app/dind/alarm.py" &
 
-
-# Start Rsyslog
-# rsyslogd &
 
 # Keep the container running
 tail -f /dev/null
