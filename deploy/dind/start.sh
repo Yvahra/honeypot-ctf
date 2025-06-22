@@ -6,7 +6,7 @@ unset DOCKER_HOST
 # Start Docker daemon
 dockerd &
 
-sleep(15)
+sleep 15
 # Network
 # Check if the 'honeynet' network exists
 if ! docker network inspect honeynet >/dev/null 2>&1; then
