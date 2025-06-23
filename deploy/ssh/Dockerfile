@@ -11,7 +11,7 @@ RUN apt-get update && \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
-ARG SSH_TYPE="0"
+ARG SSH_TYPE=0
 
 
 # Expose the SSH port
