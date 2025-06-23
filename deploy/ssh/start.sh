@@ -20,7 +20,7 @@ SSH_TYPE=$1
 addgroup user
 addgroup admin
 
-if [[ $SSH_TYPE -ne 1 ]]; then
+if [[ $SSH_TYPE != 1 ]]; then
   echo "Add Real Users" 
   useradd -m -s /bin/bash -g user james
   echo "james:password" | chpasswd  
@@ -57,7 +57,7 @@ fi
 
 # CREATE PROCESS
 
-if [[ $SSH_TYPE -ne 1 ]]; then
+if [[ $SSH_TYPE != 1 ]]; then
   echo "Add Real Scripts"
   echo "while True:\npass" > /app/update.py
   python /app/update.py &
@@ -67,7 +67,7 @@ fi
 
 # CREATE DATA
 
-if [[ $SSH_TYPE -ne 1 ]]; then
+if [[ $SSH_TYPE != 1 ]]; then
   echo "Add Real Data"
   echo "N.B.: james told me that ot-user should be deleted... Robert." > /home/ot-user/README
 else
