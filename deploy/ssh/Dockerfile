@@ -12,8 +12,6 @@ RUN apt-get update && \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
-ARG SSH_TYPE=0
-
 
 # Expose the SSH port
 EXPOSE 2222
@@ -23,4 +21,4 @@ EXPOSE 2222
 RUN mkdir -p /app/ssh/
 COPY start.sh /app/ssh/
 RUN chmod +x /app/ssh/start.sh
-CMD ["/app/ssh/start.sh", ${SSH_TYPE}]
+CMD ["/app/ssh/start.sh"]
