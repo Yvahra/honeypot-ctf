@@ -11,67 +11,8 @@ RUN apt-get update && \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
-##
-# Configure Bash History
-#RUN echo 'HISTSIZE=10000' >> /etc/bash.bashrc
-#RUN echo 'HISTFILESIZE=20000' >> /etc/bash.bashrc
-#RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /etc/bash.bashrc
-#RUN echo 'shopt -s histappend' >> /etc/bash.bashrc
-#RUN echo 'shopt -s checkwinsize' >> /etc/bash.bashrc
-# RUN source /etc/bash.bashrc
-#ENV HISTFILE=/root/.bash_history
+ARG SSH_TYPE='0'
 
-# Create a non-root user (Highly Recommended for Security)
-ARG SSH_USER='ot-user'
-ARG SSH_PASS='p@ssword'
-RUN addgroup user
-RUN useradd -m -s /bin/bash -g user ${SSH_USER}
-RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd  
-# RUN usermod -aG sudo ${SSH_USER}  # Add user to the sudo group
-
-RUN addgroup admin
-RUN useradd -m -s /bin/bash -g admin ot-admin
-RUN echo "ot-admin:arblleabrhve2379r4b3214b9fJBDSABB@M@#KK@#$$" | chpasswd
-
-# SSH Configuration
-RUN mkdir /run/sshd
-# Create audisp directories and file
-RUN mkdir -p /etc/audisp/plugins.d
-RUN touch /etc/audisp/plugins.d/syslog.conf
-
-# Create required folder and start ssh server.
-RUN mkdir -p /home/${SSH_USER}/.ssh
-
-RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config # Not root login.
-# Permit password login
-RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
-RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
-
-RUN sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
-
-
-# Configure rsyslog to forward logs to the DinD container
-# Get the DinD container IP address at runtime.  Use Docker network to resolve by name.
-
-##
-
-#RUN mkdir /home/ot-admin
-COPY flag.txt /home/ot-admin/
-RUN chmod 600 /home/ot-admin/flag.txt
-
-RUN chown -R ot-admin:admin /home/ot-admin
-
-RUN mkdir -p /bin/rootshell 
-COPY asroot.c /bin/rootshell
-
-
-RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/ot-user/.bashrc
-RUN echo 'history > /logs/command_history.log 2>/dev/null' >> /home/ot-user/.bashrc
-RUN echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
-
-RUN echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /root/.bashrc
-RUN echo 'history -a > /logs/command_history.log 2>/dev/null' >> /root/.bashrc
-RUN echo 'PROMPT_COMMAND="history -a > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /root/.bashrc
 
 # Expose the SSH port
 EXPOSE 2222
@@ -81,4 +22,4 @@ EXPOSE 2222
 RUN mkdir -p /app/ssh/
 COPY start.sh /app/ssh/
 RUN chmod +x /app/ssh/start.sh
-CMD ["/app/ssh/start.sh"]
+CMD ["/app/ssh/start.sh", ${SSH_TYPE}]
