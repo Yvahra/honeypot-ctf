@@ -26,6 +26,14 @@ fi
 
 # Build images
 docker build --build-arg SSH_TYPE=0 -t ssh0 /app/ssh
+docker build --build-arg SSH_TYPE=1 -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=2 -t ssh2 /app/ssh
+docker build --build-arg SSH_TYPE=3 -t ssh3 /app/ssh
+docker build --build-arg SSH_TYPE=4 -t ssh4 /app/ssh
+docker build --build-arg SSH_TYPE=5 -t ssh5 /app/ssh
+docker build --build-arg SSH_TYPE=6 -t ssh6 /app/ssh
+docker build --build-arg SSH_TYPE=7 -t ssh7 /app/ssh
+docker build --build-arg SSH_TYPE=8 -t ssh8 /app/ssh
 
 # Start child Dockers
 python3 "/app/dind/start-services.py"
