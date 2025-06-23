@@ -14,6 +14,8 @@ RUN apt-get update && \
 
 ARG SSH_TYPE=0
 
+ENV ssh_type ${SSH_TYPE}
+
 
 # Expose the SSH port
 EXPOSE 2222
@@ -23,4 +25,4 @@ EXPOSE 2222
 RUN mkdir -p /app/ssh/
 COPY start.sh /app/ssh/
 RUN chmod +x /app/ssh/start.sh
-CMD /app/ssh/start.sh ${SSH_TYPE}
+CMD ["/app/ssh/start.sh", "${ssh_type}"]
