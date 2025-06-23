@@ -25,7 +25,7 @@ else
 fi
 
 # Build images
-docker build -t --build-arg SSH_TYPE=0 ssh0 /app/ssh
+docker build --build-arg SSH_TYPE=0 -t ssh0 /app/ssh
 
 # Start child Dockers
 python3 "/app/dind/start-services.py"
