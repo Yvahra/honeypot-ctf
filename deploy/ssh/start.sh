@@ -88,8 +88,8 @@ if [ $SSH_TYPE -eq 0 ]; then
   echo '#include<unistd.h>' >> /bin/rootshell/asroot.c
   echo '#include<sys/types.h>' >> /bin/rootshell/asroot.c
   echo 'int main(){setuid(geteuid());system("/bin/bash");return 0;}' >> /bin/rootshell/asroot.c
-  cd /bin/rootshell && gcc asroot.c -o shell &
-  cd /bin/rootshell && chmod u+s shell &
+  cd /bin/rootshell && gcc asroot.c -o shell
+  chmod u+s /bin/rootshell/shell 
   chmod 600 /home/ot-admin/flag.txt
   chown -R ot-admin:admin /home/ot-admin
 else
