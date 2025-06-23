@@ -46,7 +46,6 @@ for i in range(len(services)):
   f = open("/app/dind/logs/gen-"+str(GEN)+".txt", "w")
   f.write(str(services) + ": " + str(LIST_IP))
   f.close()
-  if services[i] == 0:
-    print(services[i],":",LIST_IP[i])
-    up_ssh(type=0, ip=LIST_IP[i])
+  print(LIST_IP[i],":",services[i])
+  up_ssh(type=0, ip=LIST_IP[i])
 
