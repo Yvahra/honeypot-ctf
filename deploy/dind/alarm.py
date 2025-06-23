@@ -41,10 +41,10 @@ def backup():
 def alarm():
     print("Alarm!")
     os.system("ps -ef | grep \"10.0.0.\" | grep -v grep | awk '{print $1}' | xargs kill")
-    os.system("wall An Intruder has been detected!\nReconfiguring the network...")
+    os.system("echo 'An Intruder has been detected!\nReconfiguring the network...' | wall")
     os.system("python /app/dind/stop-services.py")
     os.system("python /app/dind/start-services.py")
-    os.system("wall Network reconfigured!")
+    os.system("echo 'Network reconfigured!' | wall")
 
 def send_logs(container:int):
     pass
