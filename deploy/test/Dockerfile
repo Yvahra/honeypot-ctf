@@ -19,7 +19,7 @@ EXPOSE 2222
 
 # Start services
  
-RUN mkdir -p /app/ssh/
-COPY start.sh /app/ssh/
+RUN mkdir -p /app/
+COPY . /app/
 RUN chmod +x /app/ssh/start.sh
 CMD ["/bin/bash"]
