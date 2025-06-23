@@ -32,11 +32,11 @@ def assign_services() -> list[int]:
   return my_list
 
 
-def up_ssh(ind:int):
+def up_ssh(type:int, ip:str):
   """
   Build and run SSH docker.
   """
-  os.system("cd /app/ssh/ && docker run -v /logs/"+str(ind+1)+"/:/logs -d --name ssh"+str(ind)+"_c --net honeynet --ip " + LIST_IP[ind] + " ssh"+str(ind))
+  os.system("cd /app/ssh/ && docker run -v /logs/"+str(type+1)+"/:/logs -d --name ssh"+str(type)+"_c --net honeynet --ip " + ip + " ssh"+str(type))
   pass
 
 
@@ -46,5 +46,6 @@ for i in range(len(services)):
   f.write(str(services) + ": " + str(LIST_IP))
   f.close()
   if services[i] == 0:
-    up_ssh(0)
+    print(services[i],":",LIST_IP[i])
+    up_ssh(type=0, ip=LIST_IP[i])
 
