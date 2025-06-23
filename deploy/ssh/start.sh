@@ -3,6 +3,8 @@ set -e
 
 SSH_TYPE=$1
 
+echo $SSH_TYPE
+
 # 0 = Real SSH
 # 1 = EasyPot1
 # 2 = EasyPot2
