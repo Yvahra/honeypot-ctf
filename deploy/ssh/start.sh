@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-SSH_TYPE=$1
+SSH_TYPE="$1"
 
 echo $SSH_TYPE
 
