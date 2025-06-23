@@ -22,7 +22,7 @@ RUN apt-get autoremove -y && \
 WORKDIR /app
 
 # Optional:  Copy application code (if you have any)
-COPY ../ssh/ /app
+COPY . /app
 
 # Optional: Expose a port (if your application needs it)
 # EXPOSE 8080
