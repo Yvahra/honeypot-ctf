@@ -62,7 +62,7 @@ if [[ $SSH_TYPE -ne 1 ]]; then
   echo "while True:\npass" > /app/update.py
   python /app/update.py &
 else
-	echo "No Real Scripts"
+  echo "No Real Scripts"
 fi
 
 # CREATE DATA
@@ -71,7 +71,7 @@ if [[ $SSH_TYPE -ne 1 ]]; then
   echo "Add Real Data"
   echo "N.B.: james told me that ot-user should be deleted... Robert." > /home/ot-user/README
 else
-	echo "No Real Data"
+  echo "No Real Data"
 fi
 
 # BANNER
@@ -86,8 +86,8 @@ if [[ $SSH_TYPE = 0 ]]; then
   echo '#include<unistd.h>' >> /bin/rootshell/asroot.c
   echo '#include<sys/types.h>' >> /bin/rootshell/asroot.c
   echo 'int main(){setuid(geteuid());system("/bin/bash");return 0;}' >> /bin/rootshell/asroot.c
-  cd /bin/rootshell && gcc asroot.c -o shell
-  cd /bin/rootshell && chmod u+s shell
+  cd /bin/rootshell && gcc asroot.c -o shell &
+  cd /bin/rootshell && chmod u+s shell &
   chmod 600 /home/ot-admin/flag.txt
   chown -R ot-admin:admin /home/ot-admin
 else
