@@ -61,7 +61,7 @@ fi
 
 if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Scripts"
-  echo "while True:\npass" > /app/update.py
+  echo "while True:\n    pass" > /app/update.py
   python3 /app/update.py &
 else
   echo "No Real Scripts"
