@@ -20,7 +20,7 @@ SSH_TYPE=$1
 addgroup user
 addgroup admin
 
-if [ $SSH_TYPE -ne '1' ]; then
+if [ $SSH_TYPE -ne 1 ]; then
   useradd -m -s /bin/bash -g user james
   echo "james:password" | chpasswd  
   useradd -m -s /bin/bash -g admin james-adm
@@ -38,23 +38,23 @@ echo "ot-user:p@ssword" | chpasswd
 useradd -m -s /bin/bash -g admin ot-admin
 echo "ot-admin:arblleabrhve2379r4b3214b9fJBDSABB@M@#KK@#" | chpasswd
 
-if [ $SSH_TYPE = '2' ]; then
+if [ $SSH_TYPE = 2 ]; then
   useradd -m -s /bin/bash -g user user
   echo "user:password" | chpasswd  
 else
 	echo "No Common Users"
 fi
 
-if [ $SSH_TYPE = '3' ]; then
+if [ $SSH_TYPE = 3 ]; then
   useradd -m -s /bin/bash -g user honeyagent
   echo "honeyagent:password" | chpasswd  
 else
-	echo "No Common Users"
+	echo "No Honeypot Users"
 fi
 
 # CREATE PROCESS
 
-if [ $SSH_TYPE -ne '1' ]; then
+if [ $SSH_TYPE -ne 1 ]; then
   echo "while True:\npass" > /app/update.py
   python /app/update.py &
 else
@@ -63,7 +63,7 @@ fi
 
 # CREATE DATA
 
-if [ $SSH_TYPE -ne '1' ]; then
+if [ $SSH_TYPE -ne 1 ]; then
   echo "N.B.: james told me that ot-user should be deleted... Robert." > /home/ot-user/README
 else
 	echo "No Real Data"
@@ -73,7 +73,7 @@ fi
 
 # FLAG
 
-if [ $SSH_TYPE = '0' ]; then
+if [ $SSH_TYPE = 0 ]; then
   mkdir -p /bin/rootshell
   echo "ECW{H0n3y_pr0of_pl@yer}" > /home/ot-admin/flag.txt
   echo '#include<stdio.h>' > /bin/rootshell/asroot.c
