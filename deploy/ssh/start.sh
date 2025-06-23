@@ -22,7 +22,7 @@ echo $SSH_TYPE
 addgroup user
 addgroup admin
 
-if [[ $SSH_TYPE != 1 ]]; then
+if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Users" 
   useradd -m -s /bin/bash -g user james
   echo "james:password" | chpasswd  
@@ -41,7 +41,7 @@ echo "ot-user:p@ssword" | chpasswd
 useradd -m -s /bin/bash -g admin ot-admin
 echo "ot-admin:arblleabrhve2379r4b3214b9fJBDSABB@M@#KK@#" | chpasswd
 
-if [[ $SSH_TYPE = 2 ]]; then
+if [ $SSH_TYPE -eq 2 ]; then
   echo "Add Common Users"
   useradd -m -s /bin/bash -g user user
   echo "user:password" | chpasswd  
@@ -49,7 +49,7 @@ else
 	echo "No Common Users"
 fi
 
-if [[ $SSH_TYPE = 3 ]]; then
+if [ $SSH_TYPE -eq 3 ]; then
   echo "Add Honeypot Users"
   useradd -m -s /bin/bash -g user honeyagent
   echo "honeyagent:password" | chpasswd  
@@ -59,17 +59,17 @@ fi
 
 # CREATE PROCESS
 
-if [[ $SSH_TYPE != 1 ]]; then
+if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Scripts"
   echo "while True:\npass" > /app/update.py
-  python /app/update.py &
+  python3 /app/update.py &
 else
   echo "No Real Scripts"
 fi
 
 # CREATE DATA
 
-if [[ $SSH_TYPE != 1 ]]; then
+if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Data"
   echo "N.B.: james told me that ot-user should be deleted... Robert." > /home/ot-user/README
 else
@@ -80,7 +80,7 @@ fi
 
 # FLAG
 
-if [[ $SSH_TYPE = 0 ]]; then
+if [ $SSH_TYPE -eq 0 ]; then
   echo "Add Flag"
   mkdir -p /bin/rootshell
   echo "ECW{H0n3y_pr0of_pl@yer}" > /home/ot-admin/flag.txt
