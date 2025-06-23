@@ -28,7 +28,7 @@ fi
 docker build --build-arg SSH_TYPE=0 -t ssh0 /app/ssh
 
 # Start child Dockers
-python3 "/app/dind/start-services.py"
+#python3 "/app/dind/start-services.py"
 
 # Start SSH service
 /usr/sbin/sshd -D &
