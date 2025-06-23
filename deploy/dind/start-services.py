@@ -41,6 +41,7 @@ def up_ssh(type:int, ip:str):
 
 
 services = assign_services()
+os.system("docker volume prune -a -f")
 for i in range(len(services)):
   f = open("/app/dind/logs/gen-"+str(GEN)+".txt", "w")
   f.write(str(services) + ": " + str(LIST_IP))
