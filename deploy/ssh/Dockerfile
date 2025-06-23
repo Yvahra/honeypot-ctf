@@ -5,6 +5,7 @@ FROM ubuntu:latest
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         openssh-server \
+        python3 py3-pip \
         sudo \
         bash \
         build-essential \
