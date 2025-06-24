@@ -98,7 +98,6 @@ RUN mkdir /logs
 # START
 # %%
 
-COPY . /app/
 RUN chmod +x /app/dind/start.sh
 
 # Expose SSH Port
