@@ -83,7 +83,7 @@ fi
 # BANNER
 
 if [ $SSH_TYPE -ne 7 ]; then
-  echo "Banner /app/ssh/banners/ssh" >> /etc/ssh/sshd_config
+  echo "Banner /app/ssh/banners/ssh" > /var/run/motd.dynamic
 else
   echo "No Real Data"
 fi
