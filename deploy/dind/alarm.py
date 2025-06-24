@@ -26,13 +26,18 @@ suspicious_patterns = [
 
 NB_CONTAINERS = 9
 
-f = open("/app/dind/.gen","r")
-GEN = str(f.readline()[:-1])
-f.close()
+def load(path):
+    f = open(path,"r")
+    res = str(f.readline()[:-1])
+    f.close()
+    return res
 
-f = open("/app/dind/.docker_id","r")
-DID = str(f.readline()[:-1])
-f.close()
+GEN = load("/app/dind/.gen")
+DID = load("/app/dind/.docker_id")
+LOG_USER = load("/app/config/log_user","r")
+LOG_SERVER = load("/app/config/log_server","r")
+REMOTE_LOG_PATH = load("/app/config/remote_log_path","r")
+
 
 def init_log(container:int):
     if os.path.exists("/logs/"+str(container)+"/command_history.log"):
@@ -66,9 +71,13 @@ def send_logs():
             time = log.split(" ")[-3] + log.split(" ")[-2] + ";"
             command = log.split(" ")[-1]
             agg_log_file.write(docker_id + generation + time + str(container) + command)
-        log_file.close()
-        
+        log_file.close()        
     agg_log_file.close()
+    try:  
+        os.system("scp -i /app/config/log_key " + LOG_USER + "@" + LOG_SERVER + ":" + REMOTE_LOG_PATH)
+    except Exception as e:
+        print(str(e))
+
 
 def analyze_logs(container:int) -> bool:
     log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
