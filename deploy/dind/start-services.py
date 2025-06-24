@@ -17,11 +17,11 @@ GEN = int(f.readline()[:-1])
 f.close()
 
 f = open("/app/config/flag","r")
-FLAG = int(f.readline()[:-1])
+FLAG = str(f.readline()[:-1])
 f.close()
 
 f = open("/app/config/hard_password","r")
-PASS = int(f.readline()[:-1])
+PASS = str(f.readline()[:-1])
 f.close()
 
 
