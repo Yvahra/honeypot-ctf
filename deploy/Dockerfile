@@ -46,8 +46,6 @@ RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh
 RUN mkdir -p /home/${SSH_USER}/.ssh
 
 RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config # Not root login.
-# Permit password login
-RUN sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 RUN sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
 RUN ssh-keygen -A
