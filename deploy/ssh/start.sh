@@ -27,13 +27,13 @@ addgroup admin
 
 if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Users" 
-  useradd -m -s /bin/bash -g user ghost
+  useradd -m -s /bin/bash -g hacker ghost
   echo "ghost:${PASS}" | chpasswd  
   useradd -m -s /bin/bash -g admin zephyr-adm
   echo "zephyr-adm:${PASS}" | chpasswd  
-  useradd -m -s /bin/bash -g user zephyr
+  useradd -m -s /bin/bash -g hacker zephyr
   echo "zephyr:${PASS}" | chpasswd 
-  useradd -m -s /bin/bash -g user skywalker
+  useradd -m -s /bin/bash -g hacker skywalker
   echo "skywalker:${PASS}" | chpasswd 
 else
 	echo "No Real Users"
@@ -46,7 +46,7 @@ echo "ot-admin:${PASS}" | chpasswd
 
 if [ $SSH_TYPE -eq 2 ]; then
   echo "Add Common Users"
-  useradd -m -s /bin/bash -g user user
+  useradd -m -s /bin/bash -g temp user
   echo "user:password" | chpasswd  
 else
 	echo "No Common Users"
@@ -81,6 +81,12 @@ else
 fi
 
 # BANNER
+
+if [ $SSH_TYPE -ne 7 ]; then
+  echo "Banner /app/ssh/banners/ssh" >> /etc/ssh/sshd_config
+else
+  echo "No Real Data"
+fi
 
 # FLAG
 
