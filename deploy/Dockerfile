@@ -82,9 +82,17 @@ RUN mknod -m 666 ${JAIL_DIR}/dev/null c 1 3
 RUN mknod -m 666 ${JAIL_DIR}/dev/tty c 5 0
 # Add minimal device to the jail
 
+RUN echo "Host 10.0.0.*" >> /etc/ssh/sshd_config
+RUN echo "   StrictHostKeyChecking no" >> /etc/ssh/sshd_config
+RUN echo "   UserKnownHostsFile /dev/null" >> /etc/ssh/sshd_config
+RUN echo "   GlobalKnownHostsFile /dev/null" >> /etc/ssh/sshd_config
+
 # Chroot configuration
 RUN echo "Match User ${SSH_USER}" >> /etc/ssh/sshd_config
 RUN echo "    ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
+
+
+
 # RUN echo "Match all" >> /etc/ssh/sshd_config
 
 
