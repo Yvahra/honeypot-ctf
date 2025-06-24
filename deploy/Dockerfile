@@ -16,8 +16,8 @@ COPY ./dind ./dind
 COPY ./ssh ./ssh
 COPY ./config ./config
 
-ARG SSH_USER='intruder'
-ARG SSH_PASS='intruder'
+ARG SSH_USER='nobody'
+ARG SSH_PASS='password'
 
 # Unique ID
 RUN bash -c 'uuidgen > /app/dind/.container_id'
