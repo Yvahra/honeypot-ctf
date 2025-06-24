@@ -49,7 +49,7 @@ def up_ssh(type:int, ip:str):
   cmd+= " -d"
   cmd+= " --name ssh"+str(type)+"_c"
   cmd+= " --net honeynet"
-  cmd+= " --ip " + ip"
+  cmd+= " --ip " + ip
   cmd+= " ssh_image"
   cmd+= " " + str(type)
   cmd+= " " + str(FLAG)
