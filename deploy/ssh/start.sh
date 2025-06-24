@@ -2,6 +2,8 @@
 set -e
 
 SSH_TYPE="$1"
+FLAG="$2"
+PASS="$3"
 
 echo $SSH_TYPE
 
@@ -25,13 +27,13 @@ addgroup admin
 if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Users" 
   useradd -m -s /bin/bash -g user james
-  echo "james:password" | chpasswd  
+  echo "james:${PASS}" | chpasswd  
   useradd -m -s /bin/bash -g admin james-adm
-  echo "james-adm:password" | chpasswd  
-  useradd -m -s /bin/bash -g user james2
-  echo "james2:password" | chpasswd 
+  echo "james-adm:${PASS}" | chpasswd  
   useradd -m -s /bin/bash -g user robert
-  echo "robert:password" | chpasswd 
+  echo "robert:${PASS}" | chpasswd 
+  useradd -m -s /bin/bash -g user robert2
+  echo "robert2:${PASS}" | chpasswd 
 else
 	echo "No Real Users"
 fi
@@ -39,7 +41,7 @@ fi
 useradd -m -s /bin/bash -g user ot-user
 echo "ot-user:p@ssword" | chpasswd  
 useradd -m -s /bin/bash -g admin ot-admin
-echo "ot-admin:arblleabrhve2379r4b3214b9fJBDSABB@M@#KK@#" | chpasswd
+echo "ot-admin:${PASS}" | chpasswd
 
 if [ $SSH_TYPE -eq 2 ]; then
   echo "Add Common Users"
@@ -84,7 +86,7 @@ fi
 if [ $SSH_TYPE -eq 0 ]; then
   echo "Add Flag"
   mkdir -p /bin/rootshell
-  echo "ECW{H0n3y_pr0of_pl@yer}" > /home/ot-admin/flag.txt
+  echo "${FLAG}" > /home/ot-admin/flag.txt
   echo '#include<stdio.h>' > /bin/rootshell/asroot.c
   echo '#include<unistd.h>' >> /bin/rootshell/asroot.c
   echo '#include<sys/types.h>' >> /bin/rootshell/asroot.c
