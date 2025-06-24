@@ -16,6 +16,14 @@ f = open("/app/dind/.gen","r")
 GEN = int(f.readline()[:-1])
 f.close()
 
+f = open("/app/config/flag","r")
+FLAG = int(f.readline()[:-1])
+f.close()
+
+f = open("/app/config/hard_password","r")
+PASS = int(f.readline()[:-1])
+f.close()
+
 
 def assign_services() -> list[int]:
   """
@@ -36,7 +44,17 @@ def up_ssh(type:int, ip:str):
   """
   Build and run SSH docker.
   """
-  os.system("cd /app/ssh/ && docker run -v /logs/"+str(type+1)+"/:/logs -d --name ssh"+str(type)+"_c --net honeynet --ip " + ip + " ssh"+str(type) + " "+str(type))
+  cmd = "docker run"
+  cmd+= " -v /logs/"+str(type+1)+"/:/logs"
+  cmd+= " -d"
+  cmd+= " --name ssh"+str(type)+"_c"
+  cmd+= " --net honeynet"
+  cmd+= " --ip " + ip"
+  cmd+= " ssh_image"
+  cmd+= " " + str(type)
+  cmd+= " " + str(FLAG)
+  cmd+= " " + str(PASS)
+  os.system(cmd)
   pass
 
 
