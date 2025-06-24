@@ -20,5 +20,6 @@ EXPOSE 2222
  
 RUN mkdir -p /app/ssh/
 COPY start.sh /app/ssh/
+COPY banners/ /app/ssh/banners/
 RUN chmod +x /app/ssh/start.sh
 ENTRYPOINT ["/app/ssh/start.sh"]
