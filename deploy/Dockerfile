@@ -93,7 +93,7 @@ RUN echo "    ChrootDirectory ${JAIL_DIR}" >> /etc/ssh/sshd_config
 # LOGS
 # %%
 
-RUN mkdir -p /logs/1/ /logs/2/ /logs/3/ /logs/4/
+RUN mkdir /logs
 
 # %%
 # START
