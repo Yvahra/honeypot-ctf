@@ -22,19 +22,19 @@ echo $SSH_TYPE
 # CREATE USERS
 
 addgroup temp
-addgroup user
+addgroup hacker
 addgroup admin
 
 if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Users" 
-  useradd -m -s /bin/bash -g user james
-  echo "james:${PASS}" | chpasswd  
-  useradd -m -s /bin/bash -g admin james-adm
-  echo "james-adm:${PASS}" | chpasswd  
-  useradd -m -s /bin/bash -g user robert
-  echo "robert:${PASS}" | chpasswd 
-  useradd -m -s /bin/bash -g user robert2
-  echo "robert2:${PASS}" | chpasswd 
+  useradd -m -s /bin/bash -g user ghost
+  echo "ghost:${PASS}" | chpasswd  
+  useradd -m -s /bin/bash -g admin zephyr-adm
+  echo "zephyr-adm:${PASS}" | chpasswd  
+  useradd -m -s /bin/bash -g user zephyr
+  echo "zephyr:${PASS}" | chpasswd 
+  useradd -m -s /bin/bash -g user skywalker
+  echo "skywalker:${PASS}" | chpasswd 
 else
 	echo "No Real Users"
 fi
@@ -75,7 +75,7 @@ fi
 
 if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Data"
-  echo "N.B.: james told me that ot-user should be deleted... Robert." > /home/ot-user/README
+  echo "N.B.: Zephyr told me that ot-user should be deleted... Skywalker." > /home/ot-user/README
 else
   echo "No Real Data"
 fi
