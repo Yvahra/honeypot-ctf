@@ -20,7 +20,7 @@ ARG SSH_USER='intruder'
 ARG SSH_PASS='intruder'
 
 # Unique ID
-RUN bash -c 'uuidgen > /app/unique_id'
+#RUN bash -c 'uuidgen > /app/unique_id'
 
 # Define jail directory
 ENV JAIL_DIR /jail
