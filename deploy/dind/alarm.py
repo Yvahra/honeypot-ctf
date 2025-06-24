@@ -26,6 +26,14 @@ suspicious_patterns = [
 
 NB_CONTAINERS = 9
 
+f = open("/app/dind/.gen","r")
+GEN = str(f.readline()[:-1])
+f.close()
+
+f = open("/app/dind/.docker_id","r")
+DID = str(f.readline()[:-1])
+f.close()
+
 def init_log(container:int):
     if os.path.exists("/logs/"+str(container)+"/command_history.log"):
         os.system("rm /logs/"+str(container)+"/command_history.log")
@@ -36,7 +44,7 @@ def backup():
     for container in range(1, NB_CONTAINERS+1):
         if not os.path.exists("/logs_bck/"+str(container)+"/"):
             os.system("mkdir -p /logs_bck/"+str(container))
-        os.system("cp /logs/"+str(container)+"/command_history.log /logs_bck/"+str(container)+"/last_history.log")
+        os.system("cp /logs/"+str(container)+"/command_history.log /app/dind/logs/history_ssh"+str(container)+".log")
 
 def alarm():
     print("Alarm!")
@@ -46,11 +54,24 @@ def alarm():
     os.system("python /app/dind/start-services.py")
     os.system("echo 'Network reconfigured!' | wall")
 
-def send_logs(container:int):
-    pass
+def send_logs():
+    agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "r")
+    agg_log_file.write("docker_id;generation;full_time;service;command\n")
+    for container in range(NB_CONTAINERS):
+        log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
+        logs = log_file.readlines()
+        for log in logs:
+            docker_id = str(DID) + ";"
+            generation = str(GEN) + ";"
+            time = log.split(" ")[-3] + log.split(" ")[-2] + ";"
+            command = log.split(" ")[-1]
+            agg_log_file.write(docker_id + generation + time + str(container) + command)
+        log_file.close()
+        
+    agg_log_file.close()
 
 def analyze_logs(container:int) -> bool:
-    log_file = open("/logs_bck/"+str(container)+"/last_history.log", "r")
+    log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
     logs = log_file.readlines()
     log_file.close()
     if len(logs) > 5:
