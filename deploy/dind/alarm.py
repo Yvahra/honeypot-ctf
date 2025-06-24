@@ -24,7 +24,7 @@ suspicious_patterns = [
     r".*su.*",             # Switch User
 ]
 
-NB_CONTAINERS = 4
+NB_CONTAINERS = 9
 
 def init_log(container:int):
     if os.path.exists("/logs/"+str(container)+"/command_history.log"):
