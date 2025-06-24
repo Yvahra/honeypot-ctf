@@ -51,33 +51,20 @@ def backup():
             os.system("mkdir -p /logs_bck/"+str(container))
         os.system("cp /logs/"+str(container)+"/command_history.log /app/dind/logs/history_ssh"+str(container)+".log")
 
-def alarm():
-    print("Alarm!")
-    os.system("ps -ef | grep \"10.0.0.\" | grep -v grep | awk '{print $1}' | xargs kill")
-    os.system("echo 'An Intruder has been detected!\nReconfiguring the network...' | wall")
-    os.system("python /app/dind/stop-services.py")
-    os.system("python /app/dind/start-services.py")
-    os.system("echo 'Network reconfigured!' | wall")
-
 def send_logs():
-    agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "r")
-    agg_log_file.write("docker_id;generation;full_time;service;command\n")
-    for container in range(NB_CONTAINERS):
-        log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
-        logs = log_file.readlines()
-        for log in logs:
-            docker_id = str(DID) + ";"
-            generation = str(GEN) + ";"
-            time = log.split(" ")[-3] + log.split(" ")[-2] + ";"
-            command = log.split(" ")[-1]
-            agg_log_file.write(docker_id + generation + time + str(container) + command)
-        log_file.close()        
-    agg_log_file.close()
     try:  
         os.system("scp -i /app/config/log_key " + LOG_USER + "@" + LOG_SERVER + ":" + REMOTE_LOG_PATH)
     except Exception as e:
         print(str(e))
 
+def alarm():
+    print("Alarm!")
+    os.system("ps -ef | grep \"10.0.0.\" | grep -v grep | awk '{print $1}' | xargs kill")
+    os.system("echo 'An Intruder has been detected!\nReconfiguring the network...' | wall")
+    os.system("python /app/dind/stop-services.py")
+    send_logs()
+    os.system("python /app/dind/start-services.py")
+    os.system("echo 'Network reconfigured!' | wall")
 
 def analyze_logs(container:int) -> bool:
     log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
@@ -91,10 +78,23 @@ def analyze_logs(container:int) -> bool:
                 print(f"ALARM: Suspicious command detected in "+str(container)+": "+log)
                 alarm()
                 return True
+    agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "r")
+    agg_log_file.write("docker_id;generation;full_time;service;command\n")
+    for container in range(NB_CONTAINERS):
+        log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
+        logs = log_file.readlines()
+        for log in logs:
+            docker_id = str(DID) + ";"
+            generation = str(GEN) + ";"
+            time = log.split(" ")[-3] + log.split(" ")[-2] + ";"
+            command = log.split(" ")[-1]
+            agg_log_file.write(docker_id + generation + time + str(container) + command)
+        log_file.close()        
+    agg_log_file.close()
     return False
 
 def check_logs():
-    for container in range(1, NB_CONTAINERS+1):
+    for container in range(0, NB_CONTAINERS):
         history_size = os.path.getsize("/logs/"+str(container)+"/command_history.log")
         if history_size != 0:
             backup()
