@@ -88,7 +88,7 @@ def analyze_logs(container:int) -> bool:
             generation = str(GEN) + ";"
             time = log.split(" ")[5] + " " + log.split(" ")[6] + ";"
             command = ""
-            for arg in log.split(" ")[7:]
+            for arg in log.split(" ")[7:]:
                 command += arg + " "
             command[-1] = '\n'
             agg_log_file.write(docker_id + generation + time + str(container) + ";" + command)
