@@ -34,9 +34,9 @@ def load(path):
 
 GEN = load("/app/dind/.gen")
 DID = load("/app/dind/.container_id")
-LOG_USER = load("/app/config/log_user","r")
-LOG_SERVER = load("/app/config/log_server","r")
-REMOTE_LOG_PATH = load("/app/config/remote_log_path","r")
+LOG_USER = load("/app/config/log_user")
+LOG_SERVER = load("/app/config/log_server")
+REMOTE_LOG_PATH = load("/app/config/remote_log_path")
 
 
 def init_log(container:int):
