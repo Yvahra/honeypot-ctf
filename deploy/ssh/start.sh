@@ -21,6 +21,7 @@ echo $SSH_TYPE
 
 # CREATE USERS
 
+addgroup temp
 addgroup user
 addgroup admin
 
@@ -38,7 +39,7 @@ else
 	echo "No Real Users"
 fi
 
-useradd -m -s /bin/bash -g user ot-user
+useradd -m -s /bin/bash -g temp ot-user
 echo "ot-user:p@ssword" | chpasswd  
 useradd -m -s /bin/bash -g admin ot-admin
 echo "ot-admin:${PASS}" | chpasswd
