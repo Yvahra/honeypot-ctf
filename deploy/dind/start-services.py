@@ -47,5 +47,5 @@ for i in range(len(services)):
   f.write(str(services) + ": " + str(LIST_IP))
   f.close()
   print(LIST_IP[i],":",services[i])
-  up_ssh(type=i, ip=LIST_IP[i])
+  up_ssh(type=services[i], ip=LIST_IP[i])
 
