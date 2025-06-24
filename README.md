@@ -32,6 +32,10 @@ Run the Docker container
 ```sh
 sudo docker run --name challenge --privileged -p 2222:22 dind_custom
 ```
+One command
+```sh
+sudo docker build -t dind_custom deploy/ && sudo docker run --name challenge --privileged -p 2222:22 dind_custom
+```
 Connect as root
 ```sh
 sudo docker exec -it challenge /bin/sh
