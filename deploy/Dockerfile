@@ -16,11 +16,11 @@ COPY . .
 
 ARG SSH_USER='m95dupont'
 ARG SSH_PASS='myP@ssword!'
-ARG FLAG="ECW{H0n3y_pr0of_pl@yer}"
 
 # Define jail directory
 ENV JAIL_DIR /jail
 RUN mkdir -p ${JAIL_DIR}
+
 
 # %%
 # USERS
@@ -30,12 +30,11 @@ RUN adduser -D ${SSH_USER}
 RUN echo "${SSH_USER}:${SSH_PASS}" | chpasswd
 RUN mkdir -p ${JAIL_DIR}/home/${USER}
 
-# RUN git clone https://github.com/cowrie/cowrie.git
-
 
 # %%
 # SSH CONF
 # %%
+
 RUN mkdir -p /run/sshd
 
 #Password login - NOT RECOMENDED
@@ -99,12 +98,11 @@ RUN mkdir /logs
 # START
 # %%
 
-COPY dind/start.sh /app/dind/start.sh
+COPY . /app/
 RUN chmod +x /app/dind/start.sh
 
 # Expose SSH Port
 EXPOSE 22
 
 # Run the build and run script, and then the log analyzer in the background
-RUN echo ${FLAG} > /app/ssh/flag.txt
 CMD ["/app/dind/start.sh"]
