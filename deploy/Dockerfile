@@ -8,8 +8,8 @@ WORKDIR /app
 RUN apk add --no-cache git \
         python3 py3-pip \
         openssh \
-        util-linux
-        #openrc
+        util-linux \ 
+        coreutils
 
 # COPY FILES
 COPY ./dind ./dind
@@ -18,6 +18,9 @@ COPY ./config ./config
 
 ARG SSH_USER='intruder'
 ARG SSH_PASS='intruder'
+
+# Unique ID
+RUN bash -c 'uuidgen > /app/unique_id'
 
 # Define jail directory
 ENV JAIL_DIR /jail
