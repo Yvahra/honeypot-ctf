@@ -46,7 +46,7 @@ def init_log(container:int):
     os.system("chmod 666 /logs/"+str(container)+"/command_history.log")
 
 def backup():
-    for container in range(1, NB_CONTAINERS+1):
+    for container in range(NB_CONTAINERS):
         if not os.path.exists("/logs_bck/"+str(container)+"/"):
             os.system("mkdir -p /logs_bck/"+str(container))
         os.system("cp /logs/"+str(container)+"/command_history.log /app/dind/logs/history_ssh"+str(container)+".log")
@@ -94,7 +94,7 @@ def analyze_logs(container:int) -> bool:
     return False
 
 def check_logs():
-    for container in range(0, NB_CONTAINERS):
+    for container in range(NB_CONTAINERS):
         history_size = os.path.getsize("/logs/"+str(container)+"/command_history.log")
         if history_size != 0:
             backup()
@@ -106,7 +106,7 @@ def check_logs():
 
 def main():
     # Keep the script running
-    for container in range(1, NB_CONTAINERS+1):
+    for container in range(NB_CONTAINERS):
         init_log(container)
     while True:
         check_logs()
