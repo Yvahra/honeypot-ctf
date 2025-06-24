@@ -78,7 +78,7 @@ def analyze_logs(container:int) -> bool:
                 print(f"ALARM: Suspicious command detected in "+str(container)+": "+log)
                 alarm()
                 return True
-    agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "r")
+    agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "w")
     agg_log_file.write("docker_id;generation;full_time;service;command\n")
     for container in range(NB_CONTAINERS):
         log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
