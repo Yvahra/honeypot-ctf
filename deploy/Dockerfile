@@ -12,7 +12,9 @@ RUN apk add --no-cache git \
         #openrc
 
 # COPY FILES
-COPY . .
+COPY ./dind ./dind
+COPY ./ssh ./ssh
+COPY ./config ./config
 
 ARG SSH_USER='m95dupont'
 ARG SSH_PASS='myP@ssword!'
