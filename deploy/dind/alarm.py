@@ -90,7 +90,7 @@ def analyze_logs(container:int) -> bool:
             command = ""
             for arg in log.split(" ")[7:]:
                 command += arg + " "
-            command[-1] = '\n'
+            command= command[:-1] + '\n'
             agg_log_file.write(docker_id + generation + time + str(container) + ";" + command)
         log_file.close()        
     agg_log_file.close()
