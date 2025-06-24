@@ -33,7 +33,7 @@ def load(path):
     return res
 
 GEN = load("/app/dind/.gen")
-DID = load("/app/dind/.docker_id")
+DID = load("/app/dind/.container_id")
 LOG_USER = load("/app/config/log_user","r")
 LOG_SERVER = load("/app/config/log_server","r")
 REMOTE_LOG_PATH = load("/app/config/remote_log_path","r")
