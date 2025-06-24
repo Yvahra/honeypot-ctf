@@ -82,7 +82,7 @@ RUN mknod -m 666 ${JAIL_DIR}/dev/null c 1 3
 RUN mknod -m 666 ${JAIL_DIR}/dev/tty c 5 0
 # Add minimal device to the jail
 
-RUN echo "Match Host 10.0.0.*" >> /etc/ssh/sshd_config && \
+RUN echo "Match Address 10.0.0.0/8" >> /etc/ssh/sshd_config && \
     echo "    StrictHostKeyChecking no" >> /etc/ssh/sshd_config && \
     echo "    UserKnownHostsFile /dev/null" >> /etc/ssh/sshd_config && \
     echo "    GlobalKnownHostsFile /dev/null" >> /etc/ssh/sshd_config
