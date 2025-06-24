@@ -16,8 +16,8 @@ COPY ./dind ./dind
 COPY ./ssh ./ssh
 COPY ./config ./config
 
-ARG SSH_USER='m95dupont'
-ARG SSH_PASS='myP@ssword!'
+ARG SSH_USER='intruder'
+ARG SSH_PASS='intruder'
 
 # Define jail directory
 ENV JAIL_DIR /jail
