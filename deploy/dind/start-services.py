@@ -51,9 +51,9 @@ def up_ssh(type:int, ip:str):
   cmd+= " --net honeynet"
   cmd+= " --ip " + ip
   cmd+= " ssh_image"
-  cmd+= " " + str(type)
-  cmd+= " " + str(FLAG)
-  cmd+= " " + str(PASS)
+  cmd+= " --build-arg SSH_TYPE=" + str(type)
+  cmd+= " --build-arg FLAG=" + str(FLAG)
+  cmd+= " --build-arg PASS=" + str(PASS)
   os.system(cmd)
   pass
 
