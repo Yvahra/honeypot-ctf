@@ -6,6 +6,8 @@ unset DOCKER_HOST
 FLAG=$(cat /app/config/flag)
 PASS=$(cat /app/config/hard_password)
 
+mkdir -p /logs/-1
+mount --bind /logs/-1 /jail/logs
 
 # Start Docker daemon
 dockerd &
