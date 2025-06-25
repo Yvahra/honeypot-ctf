@@ -55,7 +55,7 @@ fi
 
 if [ $SSH_TYPE -eq 3 ]; then
   echo "Add Honeypot Users"
-  useradd -m -s /bin/bash -g user cowrie
+  useradd -m -s /bin/bash -g cowrie cowrie
   echo "cowrie:password" | chpasswd  
 else
 	echo "No Honeypot Users"
