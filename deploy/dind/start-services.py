@@ -50,7 +50,7 @@ def up_ssh(type:int, ip:str):
   cmd+= " --name ssh" + str(type) + "_c"
   cmd+= " --net honeynet"
   cmd+= " --ip " + ip
-  cmd+= " ssh_" + str(type)
+  cmd+= " ssh" + str(type)
   os.system(cmd)
   pass
 
