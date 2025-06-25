@@ -9,7 +9,8 @@ RUN apk add --no-cache bash \
         python3 py3-pip \
         openssh \
         util-linux \ 
-        coreutils
+        coreutils \
+        nmap
 
 # COPY FILES
 COPY ./dind ./dind
