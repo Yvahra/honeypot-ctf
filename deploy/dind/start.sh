@@ -30,15 +30,15 @@ fi
 
 # Build images
 #docker build -t ssh_image /app/ssh
-docker build --build-arg SSH_TYPE=0 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh0 /app/ssh
-docker build --build-arg SSH_TYPE=1 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
-docker build --build-arg SSH_TYPE=2 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh2 /app/ssh
-docker build --build-arg SSH_TYPE=3 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh3 /app/ssh
-docker build --build-arg SSH_TYPE=4 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh4 /app/ssh
-docker build --build-arg SSH_TYPE=5 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh5 /app/ssh
-docker build --build-arg SSH_TYPE=6 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh6 /app/ssh
-docker build --build-arg SSH_TYPE=7 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh7 /app/ssh
-docker build --build-arg SSH_TYPE=8 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh8 /app/ssh
+docker build --build-arg SSH_TYPE=0 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh0 /app/ssh
+docker build --build-arg SSH_TYPE=1 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=2 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh2 /app/ssh
+docker build --build-arg SSH_TYPE=3 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh3 /app/ssh
+docker build --build-arg SSH_TYPE=4 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh4 /app/ssh
+docker build --build-arg SSH_TYPE=5 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh5 /app/ssh
+docker build --build-arg SSH_TYPE=6 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh6 /app/ssh
+docker build --build-arg SSH_TYPE=7 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh7 /app/ssh
+docker build --build-arg SSH_TYPE=8 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh8 /app/ssh
 # Start child Dockers
 python3 "/app/dind/start-services.py"
 
