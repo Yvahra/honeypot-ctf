@@ -45,15 +45,12 @@ def up_ssh(type:int, ip:str):
   Build and run SSH docker.
   """
   cmd = "docker run"
-  cmd+= " -v /logs/"+str(type)+"/:/logs"
+  cmd+= " -v /logs/" + str(type) + "/:/logs"
   cmd+= " -d"
-  cmd+= " --name ssh"+str(type)+"_c"
+  cmd+= " --name ssh" + str(type) + "_c"
   cmd+= " --net honeynet"
   cmd+= " --ip " + ip
-  cmd+= " ssh_image"
-  cmd+= " --build-arg SSH_TYPE=" + str(type)
-  cmd+= " --build-arg FLAG=" + str(FLAG)
-  cmd+= " --build-arg PASS=" + str(PASS)
+  cmd+= " ssh_" + str(type)
   os.system(cmd)
   pass
 
