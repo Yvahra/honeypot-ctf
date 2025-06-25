@@ -3,10 +3,14 @@ set -e
 
 unset DOCKER_HOST
 
+FLAG=$(</app/config/FLAG)
+PASS=$(</app/config/hard_password)
+
+
 # Start Docker daemon
 dockerd &
 
-sleep 15
+sleep 5
 # Network
 # Check if the 'honeynet' network exists
 if ! docker network inspect honeynet >/dev/null 2>&1; then
@@ -25,16 +29,16 @@ else
 fi
 
 # Build images
-docker build -t ssh_image /app/ssh
-#docker build --build-arg SSH_TYPE=1 -t ssh1 /app/ssh
-#docker build --build-arg SSH_TYPE=2 -t ssh2 /app/ssh
-#docker build --build-arg SSH_TYPE=3 -t ssh3 /app/ssh
-#docker build --build-arg SSH_TYPE=4 -t ssh4 /app/ssh
-#docker build --build-arg SSH_TYPE=5 -t ssh5 /app/ssh
-#docker build --build-arg SSH_TYPE=6 -t ssh6 /app/ssh
-#docker build --build-arg SSH_TYPE=7 -t ssh7 /app/ssh
-#docker build --build-arg SSH_TYPE=8 -t ssh8 /app/ssh
-
+#docker build -t ssh_image /app/ssh
+docker build --build-arg SSH_TYPE=0 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=1 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=2 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=3 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=4 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=5 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=6 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=7 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
+docker build --build-arg SSH_TYPE=8 --build-arg FLAG=$FLAG --build-arg PASS=$PASS -t ssh1 /app/ssh
 # Start child Dockers
 python3 "/app/dind/start-services.py"
 
