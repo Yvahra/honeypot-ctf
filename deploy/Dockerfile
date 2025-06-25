@@ -10,8 +10,7 @@ RUN apk add --no-cache bash \
         openssh \
         util-linux \ 
         coreutils \
-        nmap \
-        hydra
+        nmap
 
 # COPY FILES
 COPY ./dind ./dind
