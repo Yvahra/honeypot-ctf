@@ -110,6 +110,11 @@ fi
 
 # LOG SYSTEM
 
+rm /app/flag
+rm /app/pass
+rm /app/ssh_type
+
+
 echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/ot-user/.bashrc
 echo 'history > /logs/command_history.log 2>/dev/null' >> /home/ot-user/.bashrc
 echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
