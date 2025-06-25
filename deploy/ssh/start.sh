@@ -21,9 +21,10 @@ echo $SSH_TYPE
 
 # CREATE USERS
 
-addgroup temp
 addgroup hacker
 addgroup admin
+addgroup temp
+addgroup cowrie
 
 if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Users" 
@@ -54,8 +55,8 @@ fi
 
 if [ $SSH_TYPE -eq 3 ]; then
   echo "Add Honeypot Users"
-  useradd -m -s /bin/bash -g user honeyagent
-  echo "honeyagent:password" | chpasswd  
+  useradd -m -s /bin/bash -g user cowrie
+  echo "cowrie:password" | chpasswd  
 else
 	echo "No Honeypot Users"
 fi
