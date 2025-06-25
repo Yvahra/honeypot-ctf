@@ -16,16 +16,17 @@ ARG FLAG
 ARG SSH_TYPE
 ARG PASS
 
-RUN echo "$FLAG" > /app/flag
-RUN echo "$SSH_TYPE" > /app/ssh_type
-RUN echo "$PASS" > /app/pass
-
 # Expose the SSH port
 EXPOSE 2222
 
 # Start services
  
 RUN mkdir -p /app/ssh/
+
+RUN echo "$FLAG" > /app/flag
+RUN echo "$SSH_TYPE" > /app/ssh_type
+RUN echo "$PASS" > /app/pass
+
 COPY start.sh /app/ssh/
 COPY banners/ /app/ssh/banners/
 RUN chmod +x /app/ssh/start.sh
