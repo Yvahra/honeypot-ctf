@@ -80,6 +80,9 @@ RUN cp /usr/lib/libssl.so.3 ${JAIL_DIR}/usr/lib/
 RUN cp /usr/lib/liblua-5.4.so.0 ${JAIL_DIR}/usr/lib/
 RUN cp /usr/lib/libstdc++.so.6 ${JAIL_DIR}/usr/lib/
 RUN cp /usr/lib/libgcc_s.so.1 ${JAIL_DIR}/usr/lib/
+RUN cp /usr/bin/nmap ${JAIL_DIR}/usr/bin/
+RUN cp /etc/services ${JAIL_DIR}/etc/
+RUN cp /etc/protocols ${JAIL_DIR}/etc/
 
 # for ssh
 RUN cp /usr/bin/ssh ${JAIL_DIR}/usr/bin/
