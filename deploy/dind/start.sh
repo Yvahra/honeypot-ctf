@@ -3,8 +3,8 @@ set -e
 
 unset DOCKER_HOST
 
-FLAG=$(</app/config/flag)
-PASS=$(</app/config/hard_password)
+FLAG=$(cat /app/config/flag)
+PASS=$(cat /app/config/hard_password)
 
 
 # Start Docker daemon
