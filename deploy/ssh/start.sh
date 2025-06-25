@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-SSH_TYPE=$(</app/flag)
-FLAG=$(</app/ssh_type)
-PASS=$(</app/pass)
+SSH_TYPE="0"#$(</app/flag)
+FLAG="ECW{}"#$(</app/ssh_type)
+PASS="pass"#$(</app/pass)
 
 echo $SSH_TYPE
 
