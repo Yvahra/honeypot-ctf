@@ -46,7 +46,7 @@ def init_log(container:int):
     os.system("chmod 666 /logs/"+str(container)+"/command_history.log")
 
 def backup():
-    for container in range(NB_CONTAINERS):
+    for container in range(-1,NB_CONTAINERS):
         if not os.path.exists("/logs_bck/"+str(container)+"/"):
             os.system("mkdir -p /logs_bck/"+str(container))
         os.system("cp /logs/"+str(container)+"/command_history.log /app/dind/logs/history_ssh"+str(container)+".log")
@@ -80,7 +80,7 @@ def analyze_logs(container:int) -> bool:
                 return True
     agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "w")
     agg_log_file.write("docker_id;generation;full_time;service;command\n")
-    for container in range(NB_CONTAINERS):
+    for container in range(-1,NB_CONTAINERS):
         log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
         logs = log_file.readlines()
         for log in logs:
@@ -97,7 +97,7 @@ def analyze_logs(container:int) -> bool:
     return False
 
 def check_logs():
-    for container in range(NB_CONTAINERS):
+    for container in range(-1,NB_CONTAINERS):
         history_size = os.path.getsize("/logs/"+str(container)+"/command_history.log")
         if history_size != 0:
             backup()
