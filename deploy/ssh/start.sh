@@ -86,7 +86,7 @@ fi
 if [ $SSH_TYPE -ne 7 ]; then
   cat /app/ssh/banners/ssh > /etc/motd
 else
-  echo "No Real Data"
+  echo "Debian GNU/Linux 7 \n \l" > /etc/motd
 fi
 
 # FLAG
