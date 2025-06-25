@@ -113,9 +113,9 @@ echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/ot-user/.bashrc
 echo 'history > /logs/command_history.log 2>/dev/null' >> /home/ot-user/.bashrc
 echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
 
-echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /root/.bashrc
-echo 'history -a > /logs/command_history.log 2>/dev/null' >> /root/.bashrc
-echo 'PROMPT_COMMAND="history -a > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /root/.bashrc
+#echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /root/.bashrc
+#echo 'history -a > /logs/command_history.log 2>/dev/null' >> /root/.bashrc
+#echo 'PROMPT_COMMAND="history -a > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /root/.bashrc
 
 
 # SERVICES
