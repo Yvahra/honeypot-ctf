@@ -10,7 +10,8 @@ RUN apk add --no-cache bash \
         openssh \
         util-linux \ 
         coreutils \
-        nmap
+        nmap \
+        hydra
 
 # COPY FILES
 COPY ./dind ./dind
@@ -71,6 +72,16 @@ RUN cp /usr/lib/libcrypto.so.3 ${JAIL_DIR}/usr/lib/
 RUN cp /usr/lib/libz.so.1 ${JAIL_DIR}/usr/lib/
 RUN cp /lib/libc.musl-x86_64.so.1 ${JAIL_DIR}/usr/lib/
 RUN cp /lib/ld-musl-x86_64.so.1 ${JAIL_DIR}/lib/
+
+# nmap
+RUN cp /usr/lib/libpcap.so.1 ${JAIL_DIR}/usr/lib/
+RUN cp /usr/lib/libssh2.so.1 ${JAIL_DIR}/usr/lib/
+RUN cp /usr/lib/libssl.so.3 ${JAIL_DIR}/usr/lib/
+RUN cp /usr/lib/liblua-5.4.so.0 ${JAIL_DIR}/usr/lib/
+RUN cp /usr/lib/libstdc++.so.6 ${JAIL_DIR}/usr/lib/
+RUN cp /usr/lib/libgcc_s.so.1 ${JAIL_DIR}/usr/lib/
+
+# for ssh
 RUN cp /usr/bin/ssh ${JAIL_DIR}/usr/bin/
 RUN getent passwd > ${JAIL_DIR}/etc/passwd
 RUN getent group > ${JAIL_DIR}/etc/group
