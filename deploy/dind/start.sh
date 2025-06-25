@@ -3,7 +3,7 @@ set -e
 
 unset DOCKER_HOST
 
-FLAG=$(</app/config/FLAG)
+FLAG=$(</app/config/flag)
 PASS=$(</app/config/hard_password)
 
 
