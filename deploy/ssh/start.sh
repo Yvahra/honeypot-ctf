@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-SSH_TYPE="$1"
-FLAG="$2"
-PASS="$3"
+SSH_TYPE=$(</app/flag/)
+FLAG=$(</app/ssh_type)
+PASS=$(</app/pass/)
 
 echo $SSH_TYPE
 
@@ -17,7 +17,7 @@ echo $SSH_TYPE
 # 7 = KnownPot1
 # 8 = KnownPot2
 
-echo "#!/bin/bash" > /app/start.sh
+
 
 # CREATE USERS
 
@@ -67,7 +67,7 @@ if [ $SSH_TYPE -ne 1 ]; then
   echo "Add Real Scripts"
   echo "while True:" > /app/update.py
   echo "    pass" >> /app/update.py
-  echo "python3 /app/update.py &" >> /app/start.sh
+  python3 /app/update.py &
 else
   echo "No Real Scripts"
 fi
@@ -134,14 +134,9 @@ sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd
 sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
 
 # Start SSH service
-echo "/usr/sbin/sshd -D &" >> /app/start.sh
+/usr/sbin/sshd -D &
+
+
+
 # Keep the container running
-echo "tail -f /dev/null" >> /app/start.sh
-
-chmod +x /app/start.sh
-
-/app/start.sh
-
-
-
-
+tail -f /dev/null
