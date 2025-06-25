@@ -12,6 +12,13 @@ RUN apt-get update && \
         && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
+ARG FLAG 
+ARG SSH_TYPE
+ARG PASS
+
+RUN echo "${FLAG}" > /app/flag
+RUN echo "${SSH_TYPE}" > /app/ssh_type
+RUN echo "${PASS}" > /app/pass
 
 # Expose the SSH port
 EXPOSE 2222
@@ -19,7 +26,7 @@ EXPOSE 2222
 # Start services
  
 RUN mkdir -p /app/ssh/
-COPY config.sh /app/ssh/
+COPY start.sh /app/ssh/
 COPY banners/ /app/ssh/banners/
-RUN chmod +x /app/ssh/config.sh
-ENTRYPOINT ["/app/ssh/config.sh"]
+RUN chmod +x /app/ssh/start.sh
+ENTRYPOINT ["/app/ssh/start.sh"]
