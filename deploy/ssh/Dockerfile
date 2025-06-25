@@ -19,7 +19,7 @@ EXPOSE 2222
 # Start services
  
 RUN mkdir -p /app/ssh/
-COPY start.sh /app/ssh/
+COPY config.sh /app/ssh/
 COPY banners/ /app/ssh/banners/
-RUN chmod +x /app/ssh/start.sh
+RUN chmod +x /app/ssh/config.sh
 ENTRYPOINT ["/app/ssh/config.sh"]
