@@ -65,7 +65,7 @@ def save_dind_log():
         
         (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat("/jail/home/nobody1/.ash_history")
 
-        if last_modified != "-1" and last_modified != time.ctime(mtime):
+        if last_modified == "-1" and last_modified != time.ctime(mtime):
         
             result = subprocess.run(
                 ["tail", "-n", "1", os.path.expanduser("/jail/home//.ash_history")],
@@ -86,6 +86,8 @@ def save_dind_log():
                 with open("/logs/-1/.ash_history", "a") as f:
                     f.write(log_entry)
                 os.system("cp /logs/-1/.ash_history /logs/-1/.command_history.log")
+                with open("/app/dind/.last_dind_log", "w") as f:
+                    f.write(time.ctime(mtime))
             except Exception as e:
                 print(f"Error writing to log file {log_file}: {e}")
 
