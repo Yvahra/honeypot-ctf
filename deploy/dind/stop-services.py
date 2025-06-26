@@ -12,7 +12,7 @@ import os
 
 for x in range(9):
   container = "ssh"+str(x)+"_c"
-  os.system("docker stop "+container)
+  os.system("docker kill "+container)
   os.system("docker remove "+container)
 
 
