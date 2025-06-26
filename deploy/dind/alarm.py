@@ -4,6 +4,7 @@ import re
 import os
 import datetime
 import subprocess
+import time
 
 # Define patterns that indicate suspicious commands (expand this list!)
 suspicious_patterns = [
