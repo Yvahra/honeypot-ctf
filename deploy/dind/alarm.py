@@ -63,7 +63,7 @@ def save_dind_log():
 
         last_modified = load("/app/dind/.last_dind_log").split("\n")[0]
         
-        (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat(file)
+        (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat("/jail/home/nobody1/.ash_history")
 
         if last_modified != "-1" and last_modified != time.ctime(mtime):
         
