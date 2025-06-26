@@ -36,6 +36,7 @@ cp -r /home/nobody1 /jail/home/nobody1
 echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /jail/home/nobody1/.bashrc
 echo 'history > /logs/command_history.log 2>/dev/null' >> /jail/home/nobody1/.bashrc
 echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /jail/home/nobody1/.bashrc
+chown nobody1:nobody1 /jail/home/nobody1/.bashrc
 
 
 # Build images
