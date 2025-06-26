@@ -106,7 +106,7 @@ def send_logs():
     try:  
         cmd = "scp "
         cmd+= "-i /app/config/log_key "
-        cmd+= "-i /app/dind/logs/agg_logs_" + GEN + ".csv "
+        cmd+= "/app/dind/logs/agg_logs_" + GEN + ".csv "
         cmd+= LOG_USER + "@" + LOG_SERVER + ":" + REMOTE_LOG_PATH
         os.system(cmd)
     except Exception as e:
