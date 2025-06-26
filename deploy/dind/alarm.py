@@ -66,7 +66,7 @@ def save_dind_log():
         
         (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat("/jail/home/nobody1/.ash_history")
 
-        if last_modified == "-1" and last_modified != time.ctime(mtime):
+        if last_modified == "-1" or last_modified != time.ctime(mtime):
         
             result = subprocess.run(
                 ["tail", "-n", "1", os.path.expanduser("/jail/home//.ash_history")],
