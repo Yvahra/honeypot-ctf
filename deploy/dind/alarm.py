@@ -132,7 +132,7 @@ def analyze_logs(container:int) -> bool:
     agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "w")
     agg_log_file.write("docker_id;generation;full_time;service;command\n")
     for container in range(-1,NB_CONTAINERS):
-        if os.path.exists("/app/dind/logs/history_ssh"):
+        if os.path.exists("/app/dind/logs/history_ssh"+str(container)+".log"):
             log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
             logs = log_file.readlines()
             for log in logs:
