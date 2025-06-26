@@ -81,10 +81,10 @@ def save_dind_log():
             log_entry = f"    X  {timestamp} {command}\n"
     
             # 4. Append the log entry to the log file
-            try:
-                with open("/logs/-1/.ash_history", "a") as f:
-                    f.write(log_entry)
-                #os.system("cp /logs/-1/.ash_history /logs/-1/command_history.log")
+            
+            with open("/logs/-1/.ash_history", "a") as f:
+                f.write(log_entry)
+            #os.system("cp /logs/-1/.ash_history /logs/-1/command_history.log")
     
             with open("/app/dind/.last_dind_log", "w") as f:
                 f.write(time.ctime(mtime))
