@@ -104,7 +104,11 @@ def save_dind_log():
 
 def send_logs():
     try:  
-        os.system("scp -i /app/config/log_key " + LOG_USER + "@" + LOG_SERVER + ":" + REMOTE_LOG_PATH)
+        cmd = "scp "
+        cmd+= "-i /app/config/log_key "
+        cmd+= "-i /app/dind/logs/agg_logs_" + GEN + ".csv "
+        cmd+= LOG_USER + "@" + LOG_SERVER + ":" + REMOTE_LOG_PATH
+        os.system(cmd)
     except Exception as e:
         print(str(e))
 
@@ -168,6 +172,7 @@ def main():
         init_log(container)
     os.system("touch /logs/-1/.ash_history")
     while True:
+        GEN = load("/app/dind/.gen")
         save_dind_log()
         check_logs()
 
