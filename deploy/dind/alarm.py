@@ -109,7 +109,7 @@ def check_logs():
 
 def main():
     # Keep the script running
-    for container in range(NB_CONTAINERS):
+    for container in range(-1,NB_CONTAINERS):
         init_log(container)
     while True:
         check_logs()
