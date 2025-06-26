@@ -30,6 +30,11 @@ else
   echo "Network 'honeynet' already exists."
 fi
 
+echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/nobody1/.bashrc
+echo 'history > /logs/command_history.log 2>/dev/null' >> /home/nobody1/.bashrc
+echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/nobody1/.bashrc
+
+
 # Build images
 #docker build -t ssh_image /app/ssh
 docker build --build-arg SSH_TYPE=0 --build-arg FLAG="$FLAG" --build-arg PASS="$PASS" -t ssh0 /app/ssh
