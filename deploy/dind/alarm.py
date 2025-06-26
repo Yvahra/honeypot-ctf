@@ -66,27 +66,25 @@ def save_dind_log():
         
         (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat("/jail/home/nobody1/.ash_history")
 
-        if last_modified == "-1" or last_modified != time.ctime(mtime):
+        if last_modified != time.ctime(mtime):
         
             result = subprocess.run(
-                ["tail", "-n", "1", os.path.expanduser("/jail/home//.ash_history")],
+                ["tail", "-n", "1", os.path.expanduser("/jail/home/nobody1/.ash_history")],
                 capture_output=True,
                 text=True,
                 shell=False  # Use shell=False for security, unless you need shell features.
             )
             command = result.stdout.strip()
-    
             # 2. Get the current timestamp
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
             # 3. Format the log entry
             log_entry = f"    X  {timestamp} {command}\n"
     
             # 4. Append the log entry to the log file
-            #try:
-            #    with open("/logs/-1/.ash_history", "a") as f:
-            #        f.write(log_entry)
-            #    os.system("cp /logs/-1/.ash_history /logs/-1/command_history.log")
+            try:
+                with open("/logs/-1/.ash_history", "a") as f:
+                    f.write(log_entry)
+                #os.system("cp /logs/-1/.ash_history /logs/-1/command_history.log")
     
             with open("/app/dind/.last_dind_log", "w") as f:
                 f.write(time.ctime(mtime))
