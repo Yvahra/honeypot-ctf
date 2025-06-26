@@ -132,18 +132,19 @@ def analyze_logs(container:int) -> bool:
     agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "w")
     agg_log_file.write("docker_id;generation;full_time;service;command\n")
     for container in range(-1,NB_CONTAINERS):
-        log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
-        logs = log_file.readlines()
-        for log in logs:
-            docker_id = str(DID) + ";"
-            generation = str(GEN) + ";"
-            time = log.split(" ")[6] + " " + log.split(" ")[7] + ";"
-            command = ""
-            for arg in log.split(" ")[8:]:
-                command += arg + " "
-            command= command[:-1]
-            agg_log_file.write(docker_id + generation + time + str(container) + ";" + command)
-        log_file.close()        
+        if os.path.exists("/app/dind/logs/history_ssh"):
+            log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
+            logs = log_file.readlines()
+            for log in logs:
+                docker_id = str(DID) + ";"
+                generation = str(GEN) + ";"
+                time = log.split(" ")[6] + " " + log.split(" ")[7] + ";"
+                command = ""
+                for arg in log.split(" ")[8:]:
+                    command += arg + " "
+                command= command[:-1]
+                agg_log_file.write(docker_id + generation + time + str(container) + ";" + command)
+            log_file.close()        
     agg_log_file.close()
     return False
 
