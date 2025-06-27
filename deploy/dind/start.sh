@@ -10,6 +10,12 @@ mkdir -p /logs/-1
 mkdir -p /jail//logs
 mount --bind /logs/-1 /jail/logs
 
+session-id=$(bash -c 'uuidgen')
+echo "${session-id}" > /app/dind/.container_id
+cat /app/dind/banners/motd >> /etc/motd
+echo "Banner /app/dind/banners/warning" >> /etc/ssh/sshd_config 
+sed -i 's/%session-id%/${session-id}/g' /etc/ssh/sshd_config
+
 # Start Docker daemon
 dockerd &
 
