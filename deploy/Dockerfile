@@ -20,11 +20,6 @@ COPY ./config ./config
 ARG SSH_USER='nobody1'
 ARG SSH_PASS='password'
 
-# Unique ID
-RUN bash -c 'uuidgen > /app/dind/.container_id'
-RUN cat /app/dind/banners/motd >> /etc/motd
-RUN echo "Banner /app/dind/banners/warning" >> /etc/ssh/sshd_config 
-
 # Define jail directory
 ENV JAIL_DIR /jail
 RUN mkdir -p ${JAIL_DIR}
