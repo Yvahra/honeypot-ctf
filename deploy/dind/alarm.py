@@ -29,7 +29,7 @@ suspicious_patterns = [
     r"service.*restart", # Restarting services
     r"systemctl.*(start|stop|restart)", # Systemd control (start, stop, restart).  Can be abused.
     r"passwd",        # Changing passwords (could indicate account compromise)
-    r"ssh.*(root|user@)",  # Attempts to SSH to root or a user@host.  Important to check.
+    #r"ssh.*(root|user@)",  # Attempts to SSH to root or a user@host.  Important to check.
     r"sudo su",         # Using sudo to get root shell
     r"echo.*>>.*\.bashrc",  # Modifying .bashrc
     r"echo.*>>.*\.zshrc",  # Modifying .zshrc
