@@ -8,23 +8,61 @@ import time
 
 # Define patterns that indicate suspicious commands (expand this list!)
 suspicious_patterns = [
-    r".*rm -rf \/.*",     # Attempt to delete everything
-    r".*wget.*",           # Download files
-    r".*curl.*",           # Download files
-    r".*dd if=\/dev\/.*",  # Low-level disk access
-    r".*nc -l.*",          # Start a listening netcat
-    r".*python -m http\.server.*", # Start a web server
-    r".*perl.*",            # Run Perl scripts
-    r".*lua.*",             # Run Lua Scripts
-    r".*whoami.*",         # Getting the current user
-    r".*uname -a.*",        # Kernel Version Information
-    r".*id.*",              # Get User IDs and Group IDs
-    r".*ps aux.*",        # Process Listing
-    r".*netstat -ant.*", # List Network Connections
-    r".*ifconfig.*",    # Interface information
-    r".*service ssh start.*",  # Attempt to start ssh service
-    r".*sudo.*",           # Try to use sudo commands
-    r".*su.*",             # Switch User
+    r"rm -rf",          # Recursive and force delete (dangerous!)
+    r"wget",            # Downloading files from the web
+    r"curl",            # Similar to wget
+    r"nc -l",           # Netcat listen (potential backdoors)
+    r"chmod \+x",       # Making files executable
+    r"eval",           # Dangerous execution of code
+    r"python -c",      # Running Python one-liners (can be malicious)
+    r"bash -i",        # Interactive bash shell (potential access)
+    r"cat /etc/shadow", # Viewing password hash file
+    r"find .* -perm",    # Finding files with specific permissions
+    r"ps aux",          # Examining running processes
+    r"> /dev/null 2>&1", # Redirection to hide output (can be used maliciously)
+    r"apt-get install",  # Installing packages (potentially malicious)
+    r"apt install",  # Modern apt install command.
+    r"dpkg -i",         # Installing .deb packages (can install malware)
+    r"addgroup",      # Adding a group. Usually harmless, but can be part of an attack.
+    r"adduser",       # Adding a user. Similar to addgroup.
+    r"crontab -e",    # Editing crontab (persistent backdoor)
+    r"service.*restart", # Restarting services
+    r"systemctl.*(start|stop|restart)", # Systemd control (start, stop, restart).  Can be abused.
+    r"passwd",        # Changing passwords (could indicate account compromise)
+    r"ssh.*(root|user@)",  # Attempts to SSH to root or a user@host.  Important to check.
+    r"sudo su",         # Using sudo to get root shell
+    r"echo.*>>.*\.bashrc",  # Modifying .bashrc
+    r"echo.*>>.*\.zshrc",  # Modifying .zshrc
+    r"ifconfig",      # (deprecated but still used) - network configuration. Check for malicious configuration changes.
+    r"ip addr",       # Modern replacement for ifconfig.
+    r"iptables",       # Firewall manipulation
+    r"ufw",           # Uncomplicated Firewall control (Ubuntu default).
+    r"netstat",         # Network connections.  Check for suspicious connections.
+    r"tcpdump",        # Packet capture (could be used for sniffing)
+    r"wget .*--spider", # Spidering, potentially malicious
+    r"screen",         # Screen session (can be used to hide activity)
+    r"tmux",           # Tmux session (similar to screen)
+    r"history.*-c",    # Clear shell history (attempting to hide activity)
+    r"killall",       # Kill all process of some name (can be used maliciously)
+    r"kill -9",          # Forcefully kill processes (can disrupt services)
+    r"\.pyc",         # Attempt to run compiled python files.
+    r"perl -e",        # Running Perl one-liners (can be malicious)
+    r"ruby -e",        # Running Ruby one-liners (can be malicious)
+    r"sed -i",        # In-place text substitution (can be used to inject code)
+    r"awk",            # Powerful text processing tool, can be misused.
+    r"tail -f",        # Following a log file, can be used to monitor.
+    r"whoami",         # Typically harmless, but useful to check.
+    r"id",           # Similar to whoami. Useful to check.
+    r"uname -a",       # Get system information, can be a recon step.
+    r"mount",          # Check for malicious mount operations.
+    r"umount",         # Unmount (can be used to disrupt services)
+    r"tar.*-cf",        # Creating tar archives (can be used to exfiltrate data)
+    r"zip",            # Compressing files, could be used to exfiltrate data.
+    r"unzip",          # Unzipping archives.
+    r"find .* -name \.ssh", # Find .ssh directories
+    r"ssh-keygen",      # SSH key generation (often a precursor to exploitation)
+    r"ssh-copy-id",     # Copying SSH keys to a server
+    r"cat /root/.ssh/authorized_keys", # Viewing authorized keys.
 ]
 
 NB_CONTAINERS = 9
