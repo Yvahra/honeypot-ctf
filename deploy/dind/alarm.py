@@ -106,8 +106,8 @@ def save_dind_log():
 def reset_logs():
     if os.path.exists("/logs/-1/.ash_history"):
             os.system("rm /logs/-1/.ash_history")
-        os.system("touch /logs/-1/.ash_history")
-        os.system("chmod 666 /logs/-1/.ash_history")
+    os.system("touch /logs/-1/.ash_history")
+    os.system("chmod 666 /logs/-1/.ash_history")
     for container in range(-1,NB_CONTAINERS):
             if os.path.exists("/app/dind/logs/history_ssh"+str(container)+".log"):
                  os.system("rm /app/dind/logs/history_ssh"+str(container)+".log")
