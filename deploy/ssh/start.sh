@@ -87,7 +87,7 @@ if [ $SSH_TYPE -ne 6 ]; then
   echo "Match User ot-user" >> /etc/ssh/sshd_config
   echo "  ForceCommand /app/bin/analyze" >> /etc/ssh/sshd_config
 else
-  echo "Debian GNU/Linux 7 \n \l" > /etc/motd
+  echo "No latency"
 fi
 
 # BANNER
