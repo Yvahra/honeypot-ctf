@@ -14,8 +14,8 @@ sessionID=$(bash -c 'uuidgen')
 echo "${sessionID}" > /app/dind/.container_id
 touch /etc/jail/motd
 cat /app/dind/banners/motd >> /jail/etc/motd
+sed -i "s/%session-id%/${sessionID}/g" /app/dind/banners/warning
 echo "Banner /app/dind/banners/warning" >> /etc/ssh/sshd_config 
-sed -i "s/%session-id%/${sessionID}/g" /etc/ssh/sshd_config
 
 # Start Docker daemon
 dockerd &
