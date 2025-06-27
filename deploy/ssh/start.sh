@@ -164,19 +164,8 @@ if [ $SSH_TYPE -eq 2 ]; then
   echo 'Port 80' >> /etc/ssh/sshd_config
   echo 'Port 443' >> /etc/ssh/sshd_config
 elif [ $SSH_TYPE -eq 8 ]; then
-  echo 'Port 2200' >> /etc/ssh/sshd_config
-  echo 'Port 22000' >> /etc/ssh/sshd_config
-  echo 'Port 22222' >> /etc/ssh/sshd_config
-  echo 'Port 22220' >> /etc/ssh/sshd_config
-  echo 'Port 2221' >> /etc/ssh/sshd_config
   echo 'Port 2222' >> /etc/ssh/sshd_config
   echo 'Port 2223' >> /etc/ssh/sshd_config
-  echo 'Port 2224' >> /etc/ssh/sshd_config
-  echo 'Port 2225' >> /etc/ssh/sshd_config
-  echo 'Port 2226' >> /etc/ssh/sshd_config
-  echo 'Port 2227' >> /etc/ssh/sshd_config
-  echo 'Port 2228' >> /etc/ssh/sshd_config
-  echo 'Port 2229' >> /etc/ssh/sshd_config
 else
   sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
 fi
