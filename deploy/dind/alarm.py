@@ -102,6 +102,18 @@ def save_dind_log():
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
+
+def reset_logs():
+    if os.path.exists("/logs/-1/.ash_history"):
+            os.system("rm /logs/-1/.ash_history")
+        os.system("touch /logs/-1/.ash_history")
+        os.system("chmod 666 /logs/-1/.ash_history")
+    for container in range(-1,NB_CONTAINERS):
+            if os.path.exists("/app/dind/logs/history_ssh"+str(container)+".log"):
+                 os.system("rm /app/dind/logs/history_ssh"+str(container)+".log")
+    
+    
+
 def send_logs():
     try:  
         GEN = load("/app/dind/.gen")
@@ -122,10 +134,6 @@ def alarm():
     os.system("echo 'An Intruder has been detected!\nReconfiguring the network...' | wall")
     os.system("python /app/dind/stop-services.py")
     send_logs()
-    if os.path.exists("/logs/-1/.ash_history"):
-        os.system("rm /logs/-1/.ash_history")
-    os.system("touch /logs/-1/.ash_history")
-    os.system("chmod 666 /logs/-1/.ash_history")
     os.system("python /app/dind/start-services.py")
     os.system("echo 'Network reconfigured!' | wall")
 
