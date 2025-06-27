@@ -121,6 +121,17 @@ rm /app/pass
 rm /app/ssh_type
 
 
+echo 'command_not_found_handle() {' >> /home/ot-user/.bashrc
+echo '    if [[ -z "$1" ]]; then' >> /home/ot-user/.bashrc
+echo '        echo "Error: No command specified." >&2' >> /home/ot-user/.bashrc
+echo '    else' >> /home/ot-user/.bashrc
+echo '        echo "My Custom Message: Command not found.  Please check the spelling or install the necessary package." >&2' >> /home/ot-user/.bashrc
+echo '    fi' >> /home/ot-user/.bashrc
+echo '    return 127' >> /home/ot-user/.bashrc
+echo '}' >> /home/ot-user/.bashrc
+
+
+
 echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/ot-user/.bashrc
 echo 'history > /logs/command_history.log 2>/dev/null' >> /home/ot-user/.bashrc
 if [ $SSH_TYPE -eq 6 ]; then
