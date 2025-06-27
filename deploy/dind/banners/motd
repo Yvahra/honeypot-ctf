@@ -1,1 +1,11 @@
+Welcome agent.
 
+We have detected 9 machines likely to control attack drones.
+We're looking to connect to them via SSH on port 2222.
+Unfortunately, some of these machines are honeypots.
+Our opponents are cautious and look for the slightest action that could be an attack.
+As soon as a suspicious action is detected, the machines reconfigure themselves and swap randomly their IP addresses.
+
+The IPs to be studied range from 10.0.0.11 to 10.0.0.19.
+
+We wish you good luck.
