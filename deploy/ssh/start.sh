@@ -81,14 +81,6 @@ else
   echo "No Real Data"
 fi
 
-# LATENCY
-
-if [ $SSH_TYPE -ne 6 ]; then
-  echo "Match User ot-user" >> /etc/ssh/sshd_config
-  echo "  ForceCommand /bin/analyze" >> /etc/ssh/sshd_config
-else
-  echo "No latency"
-fi
 
 # BANNER
 
@@ -131,7 +123,12 @@ rm /app/ssh_type
 
 echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/ot-user/.bashrc
 echo 'history > /logs/command_history.log 2>/dev/null' >> /home/ot-user/.bashrc
-echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
+if [ $SSH_TYPE -eq 6 ]; then
+  echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; sleep 2; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
+else
+  echo 'PROMPT_COMMAND="history > /logs/command_history.log 2>/dev/null; $PROMPT_COMMAND"' >> /home/ot-user/.bashrc
+fi
+
 
 #echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /root/.bashrc
 #echo 'history -a > /logs/command_history.log 2>/dev/null' >> /root/.bashrc
