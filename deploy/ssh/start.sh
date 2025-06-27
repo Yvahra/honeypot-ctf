@@ -104,7 +104,12 @@ if [ $SSH_TYPE -eq 0 ]; then
   chmod 600 /home/ot-admin/flag.txt
   chown -R ot-admin:admin /home/ot-admin
 else
-	echo "No Flag Here"
+  mkdir -p /bin/rootshell
+  echo '#include<stdio.h>' > /bin/rootshell/asroot.c
+  echo '#include<unistd.h>' >> /bin/rootshell/asroot.c
+  echo '#include<sys/types.h>' >> /bin/rootshell/asroot.c
+  echo 'int main(){return 0;}' >> /bin/rootshell/asroot.c
+  cd /bin/rootshell && gcc asroot.c -o shell
 fi
 
 
