@@ -158,6 +158,10 @@ echo 'PermitRootLogin no' >> /etc/ssh/sshd_config # Not root login.
 sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
+if [ $SSH_TYPE -eq 5 ]; then
+  sed -i "s/^#MaxAuthTries 6.*/MaxAuthTries 1000/g" /etc/ssh/sshd_config
+fi
+
 if [ $SSH_TYPE -eq 2 ]; then
   echo 'Port 2222' >> /etc/ssh/sshd_config
   echo 'Port 22' >> /etc/ssh/sshd_config
