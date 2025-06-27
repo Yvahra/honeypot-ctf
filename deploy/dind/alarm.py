@@ -124,18 +124,7 @@ def alarm():
     os.system("python /app/dind/start-services.py")
     os.system("echo 'Network reconfigured!' | wall")
 
-def analyze_logs(container:int) -> bool:
-    log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
-    logs = log_file.readlines()
-    log_file.close()
-    if len(logs) > 5:
-        logs = logs[-5:]
-    for log in logs:
-        for pattern in suspicious_patterns:
-            if re.search(pattern, log, re.IGNORECASE):
-                print(f"ALARM: Suspicious command detected in "+str(container)+": "+log)
-                alarm()
-                return True
+def aggregate_logs():
     agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "w")
     agg_log_file.write("docker_id;generation;full_time;service;command\n")
     for container in range(-1,NB_CONTAINERS):
@@ -153,19 +142,31 @@ def analyze_logs(container:int) -> bool:
                 agg_log_file.write(docker_id + generation + time + str(container) + ";" + command)
             log_file.close()        
     agg_log_file.close()
-    return False
+    
 
+def analyze_logs(container:int):
+    aggregate_logs()
+    log_file = open("/app/dind/logs/history_ssh"+str(container)+".log", "r")
+    logs = log_file.readlines()
+    log_file.close()
+    if len(logs) > 5:
+        logs = logs[-5:]
+    for log in logs:
+        for pattern in suspicious_patterns:
+            if re.search(pattern, log, re.IGNORECASE):
+                print(f"ALARM: Suspicious command detected in "+str(container)+": "+log)
+                alarm()
+               
 def check_logs():
     for container in range(-1,NB_CONTAINERS):
         history_size = os.path.getsize("/logs/"+str(container)+"/command_history.log")
         if history_size != 0:
             backup(container)
             print("Log found")
-            alarm = analyze_logs(container)
+            analyze_logs(container)
             init_log(container)
             
         
-
 def main():
     f = open("/app/dind/.last_dind_log", "w")
     f.write("-1\n")
