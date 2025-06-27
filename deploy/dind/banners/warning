@@ -1,1 +1,13 @@
+---------------- WARNING ----------------
 
+This challenge collects logs.
+Logs contain: session-ID, generation number, time of the command, service number, shell command.
+Not more, not less!
+This is annonymized depending on what you decided to type in the shell...
+
+If you want to request to delete or modify the logs we collect, please note this session-ID:
+%session-id%
+
+/!\ the sessions-ID changes every time the challenge is generating /!\ 
+
+----------------- ENJOY -----------------
