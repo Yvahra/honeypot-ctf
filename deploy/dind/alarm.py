@@ -130,6 +130,7 @@ def alarm():
     os.system("echo 'Network reconfigured!' | wall")
 
 def aggregate_logs():
+    GEN = load("/app/dind/.gen")
     agg_log_file = open("/app/dind/logs/agg_logs_" + GEN + ".csv", "w")
     agg_log_file.write("docker_id;generation;full_time;service;command\n")
     for container in range(-1,NB_CONTAINERS):
