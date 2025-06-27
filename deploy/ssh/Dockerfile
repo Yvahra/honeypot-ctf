@@ -28,6 +28,7 @@ RUN echo "$SSH_TYPE" > /app/ssh_type
 RUN echo "$PASS" > /app/pass
 
 COPY start.sh /app/ssh/
+COPY analyze /app/bin/
 COPY banners/ /app/ssh/banners/
 RUN chmod +x /app/ssh/start.sh
 ENTRYPOINT ["/app/ssh/start.sh"]
