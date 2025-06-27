@@ -120,16 +120,16 @@ rm /app/flag
 rm /app/pass
 rm /app/ssh_type
 
-
-echo 'command_not_found_handle() {' >> /home/ot-user/.bashrc
-echo '    if [[ -z "$1" ]]; then' >> /home/ot-user/.bashrc
-echo '        echo "Error: No command specified." >&2' >> /home/ot-user/.bashrc
-echo '    else' >> /home/ot-user/.bashrc
-echo '        echo "Permission denied." >&2' >> /home/ot-user/.bashrc
-echo '    fi' >> /home/ot-user/.bashrc
-echo '    return 127' >> /home/ot-user/.bashrc
-echo '}' >> /home/ot-user/.bashrc
-
+if [ $SSH_TYPE -eq 4 ]; then
+	echo 'command_not_found_handle() {' >> /home/ot-user/.bashrc
+	echo '    if [[ -z "$1" ]]; then' >> /home/ot-user/.bashrc
+	echo '        echo "Error: No command specified." >&2' >> /home/ot-user/.bashrc
+	echo '    else' >> /home/ot-user/.bashrc
+	echo '        echo "Permission denied." >&2' >> /home/ot-user/.bashrc
+	echo '    fi' >> /home/ot-user/.bashrc
+	echo '    return 127' >> /home/ot-user/.bashrc
+	echo '}' >> /home/ot-user/.bashrc
+fi
 
 
 echo 'HISTTIMEFORMAT="%Y-%m-%d %T "' >> /home/ot-user/.bashrc
