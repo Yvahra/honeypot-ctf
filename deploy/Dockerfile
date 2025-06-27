@@ -124,6 +124,7 @@ RUN mkdir /logs
 # %%
 
 RUN chmod +x /app/dind/start.sh
+RUN chmod 600 /app/config/log_key
 
 # Expose SSH Port
 EXPOSE 22
