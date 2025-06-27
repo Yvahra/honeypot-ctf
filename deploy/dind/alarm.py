@@ -104,10 +104,13 @@ def save_dind_log():
 
 def send_logs():
     try:  
+        log_name = "log_" + DID + "_" + GEN + ".log"
         cmd = "scp "
+        cmd+= "-o StrictHostKeyChecking=no "
+        cmd+= "-o UserKnownHostsFile=/dev/null "
         cmd+= "-i /app/config/log_key "
         cmd+= "/app/dind/logs/agg_logs_" + GEN + ".csv "
-        cmd+= LOG_USER + "@" + LOG_SERVER + ":" + REMOTE_LOG_PATH
+        cmd+= LOG_USER + "@" + LOG_SERVER + ":" + REMOTE_LOG_PATH + log_name
         os.system(cmd)
     except Exception as e:
         print(str(e))
