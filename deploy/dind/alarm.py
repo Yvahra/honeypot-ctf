@@ -122,10 +122,10 @@ def alarm():
     os.system("echo 'An Intruder has been detected!\nReconfiguring the network...' | wall")
     os.system("python /app/dind/stop-services.py")
     send_logs()
-    if os.path.exists("/logs/"+str(container)+"/.ash_history"):
-        os.system("rm /logs/"+str(container)+"/.ash_history")
-    os.system("touch /logs/"+str(container)+"/.ash_history")
-    os.system("chmod 666 /logs/"+str(container)+"/.ash_history")
+    if os.path.exists("/logs/-1/.ash_history"):
+        os.system("rm /logs/-1/.ash_history")
+    os.system("touch /logs/-1/.ash_history")
+    os.system("chmod 666 /logs/-1/.ash_history")
     os.system("python /app/dind/start-services.py")
     os.system("echo 'Network reconfigured!' | wall")
 
