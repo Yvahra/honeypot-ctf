@@ -194,6 +194,7 @@ def aggregate_logs():
                 agg_log_file.write(docker_id + generation + time + str(container) + ";" + command)
             log_file.close()        
     agg_log_file.close()
+    send_logs()
     
 
 def analyze_logs(container:int):
