@@ -159,7 +159,7 @@ sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 sed -i "s/^#PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
 if [ $SSH_TYPE -eq 5 ]; then
-  sed -i "s/^#MaxAuthTries 6.*/MaxAuthTries 1000/g" /etc/ssh/sshd_config
+  sed -i "s/^#MaxAuthTries 6.*/MaxAuthTries 2/g" /etc/ssh/sshd_config
 fi
 
 if [ $SSH_TYPE -eq 2 ]; then
