@@ -6,7 +6,7 @@
   "category": "network",
   "flag": "ECW{}"
   "check": "python3 solve.py",
-  "images": [],
+  "images": ["honeydrone.jpg"],
   "deploy": {
     "dockername": "CyberCNI/Honeypots",
     "ports": {
