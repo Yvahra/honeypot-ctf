@@ -94,24 +94,20 @@ fi
 
 if [ $SSH_TYPE -eq 0 ]; then
   echo "Add Flag"
-  mkdir -p /bin/rootshell
   echo "${FLAG}" > /home/ot-admin/flag.txt
-  echo '#include<stdio.h>' > /bin/rootshell/asroot.c
-  echo '#include<unistd.h>' >> /bin/rootshell/asroot.c
-  echo '#include<sys/types.h>' >> /bin/rootshell/asroot.c
-  echo 'int main(){setuid(geteuid());system("/bin/bash");return 0;}' >> /bin/rootshell/asroot.c
-  cd /bin/rootshell && gcc asroot.c -o shell
-  chmod u+s /bin/rootshell/shell 
   chmod 600 /home/ot-admin/flag.txt
-  chown -R ot-admin:admin /home/ot-admin
-else
-  mkdir -p /bin/rootshell
-  echo '#include<stdio.h>' > /bin/rootshell/asroot.c
-  echo '#include<unistd.h>' >> /bin/rootshell/asroot.c
-  echo '#include<sys/types.h>' >> /bin/rootshell/asroot.c
-  echo 'int main(){return 0;}' >> /bin/rootshell/asroot.c
-  cd /bin/rootshell && gcc asroot.c -o shell
 fi
+
+mkdir -p /bin/rootshell
+echo '#include<stdio.h>' > /bin/rootshell/asroot.c
+echo '#include<unistd.h>' >> /bin/rootshell/asroot.c
+echo '#include<sys/types.h>' >> /bin/rootshell/asroot.c
+echo 'int main(){setuid(geteuid());system("/bin/bash");return 0;}' >> /bin/rootshell/asroot.c
+cd /bin/rootshell && gcc asroot.c -o myShell
+if [ $SSH_TYPE -ne 5 ]; then
+  chmod u+s /bin/rootshell/shell 
+fi
+chown -R ot-admin:admin /home/ot-admin
 
 
 # LOG SYSTEM
