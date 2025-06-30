@@ -20,6 +20,5 @@
     "run": {
       "privileged": true
     }
-  },
-  "mem_limit": "256m"
+  }
 }
