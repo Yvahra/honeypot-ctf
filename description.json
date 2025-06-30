@@ -1,24 +1,25 @@
 {
-"Honeypots": {
-  "author": "cybercni",
-  "difficulty": "medium",
-  "description": "This challenge collects logs. See Privacy Policy.<br/>You’ve gained access to a restricted network via a backdoored SSH service. Your task is to navigate this environment and identify the real target: a vulnerable SSH server ripe for exploitation. However, Honeypots are scattered throughout, designed to mislead and trap you. <br/> Carefully explore the network, analyzing the SSH services you find. Distinguish between legitimate targets and deceptive traps. Once you’ve identified the correct server, exploit its weaknesses, gain access, and escalate your privileges to root. Good luck, and be cautious!", 
-  "category": "network",
-  "flag": "ECW{}",
-  "check": "python3 solve.py",
-  "images": ["honeydrone.jpg"],
-  "deploy": {
-    "dockername": "CyberCNI/Honeypots",
-    "ports": {
-      "2222/tcp" : {
-        "port": "2222/tcp",
-        "protocol": "tcp",
-        "display": true,
-        "name": "challenge"
+  "Honeypots": {
+    "author": "cybercni",
+    "difficulty": "medium",
+    "description": "This challenge collects logs. See Privacy Policy.<br/>You’ve gained access to a restricted network via a backdoored SSH service. Your task is to navigate this environment and identify the real target: a vulnerable SSH server ripe for exploitation. However, Honeypots are scattered throughout, designed to mislead and trap you. <br/> Carefully explore the network, analyzing the SSH services you find. Distinguish between legitimate targets and deceptive traps. Once you’ve identified the correct server, exploit its weaknesses, gain access, and escalate your privileges to root. Good luck, and be cautious!", 
+    "category": "network",
+    "flag": "ECW{}",
+    "check": "python3 solve.py",
+    "images": ["honeydrone.jpg"],
+    "deploy": {
+      "dockername": "CyberCNI/Honeypots",
+      "ports": {
+        "2222/tcp" : {
+          "port": "2222/tcp",
+          "protocol": "tcp",
+          "display": true,
+          "name": "challenge"
+        }
+      },
+      "run": {
+        "privileged": true
       }
-    },
-    "run": {
-      "privileged": true
     }
   }
 }
