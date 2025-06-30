@@ -8,17 +8,17 @@ import time
 
 # Define patterns that indicate suspicious commands (expand this list!)
 suspicious_patterns = [
-    r"rm -rf",          # Recursive and force delete (dangerous!)
+    r"rm",          # Recursive and force delete (dangerous!)
     r"wget",            # Downloading files from the web
     r"curl",            # Similar to wget
     r"nc -l",           # Netcat listen (potential backdoors)
-    r"chmod \+x",       # Making files executable
+    r"chmod",       # Making files executable
     r"eval",           # Dangerous execution of code
     r"python -c",      # Running Python one-liners (can be malicious)
     r"bash -i",        # Interactive bash shell (potential access)
     r"cat /etc/shadow", # Viewing password hash file
     r"find .* -perm",    # Finding files with specific permissions
-    r"ps aux",          # Examining running processes
+    #r"ps aux",          # Examining running processes
     r"> /dev/null 2>&1", # Redirection to hide output (can be used maliciously)
     r"apt-get install",  # Installing packages (potentially malicious)
     r"apt install",  # Modern apt install command.
@@ -209,6 +209,12 @@ def analyze_logs(container:int):
             if re.search(pattern, log, re.IGNORECASE):
                 print(f"ALARM: Suspicious command detected in "+str(container)+": "+log)
                 alarm()
+                return 1
+        if re.search("myshell", log, re.IGNORECASE) and container != 0:
+            print(f"ALARM: Suspicious command detected in "+str(container)+": "+log)
+            alarm()
+            return 1
+        return 0
                
 def check_logs():
     for container in range(-1,NB_CONTAINERS):
