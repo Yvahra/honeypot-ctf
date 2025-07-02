@@ -3,7 +3,7 @@ FROM ubuntu:latest
 
 # Update the package lists and install OpenSSH server, auditd, and rsyslog
 RUN apt-get update && \
-    apt-get upgrade && \
+    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         openssh-server \
         python3 \
