@@ -3,20 +3,24 @@
 
 This CTF Challenge and the Researchers (We, Us or Our) are committed to protecting and respecting your privacy in accordance with applicable data protection legislation.
 
-This policy sets out the basis on which any personal data We collect from You or that You provide to Us will be processed by Us. Please read the following carefully to understand Our views and practices regarding your personal information and how We will treat it.
+This policy sets out the basis on which any personal data We collect from You or that You provide to Us will be processed by Us. 
+However, resolving the CTF challenge do not need any of your personal.
+We will delete any personal data found in the data collection.
+Please read the following carefully to understand Our views and practices regarding your personal information and how We will treat it.
 
 Please direct any queries about this privacy policy or the academic study to Mathis DURAND (mathis.durand@imt-atlantique.fr).
 
 ## GDPR Statement
 
+No personal data 
 The legal basis for using your personal data is to carry out a task (i.e. academic research) in the public interest.
 
 Please contact Mathis DURAND (mathis.durand@imt-atlantique.fr) with any questions about this privacy policy or the academic study.
 
 ## Information we may collect about you
 
-We do not seek to collect or store information that would allow us to identify individuals trying to capture the flag. 
-To protect your privacy, we will only collect shell commands that you choose to type during the challenge and in the container shell if you agree to participate to this challenge.
+We do not seek to collect or store any personal data that would.
+We will only collect shell commands that you choose to type during the challenge and in the container shell if you agree to participate to this challenge.
 Data is collected as a log.
 Logs contain:
 - session-ID (generated when the Docker container starts)
@@ -25,6 +29,7 @@ Logs contain:
 - service number (from -1 to 8)
 - shell command (the exact command the player typed)
 No other data will be stored.
+Please, do not enter any personal in shell commands.
 All information we collect is stored on a IMT Atlantique server accessible only to academic researchers.
 
 ## Data Retention
@@ -46,7 +51,8 @@ All information you provide to us will be stored on secure servers, both within 
 Where international data processors are used, all appropriate technical and legal safeguards are in place to ensure that you receive the same level of protection as within the EEA.
 
 Once We have received your information, We will use strict procedures and security features to try to prevent unauthorized access. 
-We will retain personal information for as long as necessary or permitted in light of the purpose(s) for which it was collected and in accordance with applicable law.
+Any personal information collected will be deleted as soon as possible.
+Non-personal data will be kept as long as necessary or permitted in light of the purpose(s) for which it was collected and in accordance with applicable law.
 
 ## Data Analysis
 
