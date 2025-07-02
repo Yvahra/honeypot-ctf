@@ -4,7 +4,7 @@
 
 ## Player's users
 
-m95dupont : myP@ssword! -- player connection
+nobody1 : password -- player connection
 
 ot-user : p@ssword -- user we want to get the flag
 
